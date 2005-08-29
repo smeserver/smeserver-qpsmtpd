@@ -2,7 +2,7 @@ Summary: SME Server qpsmtpd module
 %define name smeserver-qpsmtpd
 Name: %{name}
 %define version 1.0.0
-%define release 03
+%define release 04
 Version: %{version}
 Release: %{release}
 License: GPL
@@ -11,11 +11,16 @@ Group: Networking/Daemons
 Source: %{name}-%{version}.tar.gz
 Patch0: smeserver-qpsmtpd-1.0.0-RBLListComma.patch2
 Patch1: smeserver-qpsmtpd-1.0.0-sqpsmtpd.patch
+Patch2: smeserver-qpsmtpd-1.0.0-sqpsmtpd-0_31.patch
+Patch3: smeserver-qpsmtpd-1.0.0-sqpsmtpd-0_31.patch2
+Patch4: smeserver-qpsmtpd-1.0.0-removeplugins.patch
+Patch5: smeserver-qpsmtpd-1.0.0-runscripts.patch
 Packager: Gordon Rowell <gordonr@gormand.com.au>
 BuildRoot: /var/tmp/%{name}-%{version}-%{release}-buildroot
-Requires: qpsmtpd daemontools
-Requires: qpsmtpd-plugins
-Requires: smeserver-qpsmtpd-tnef2mime
+Requires: qpsmtpd >= 0.31
+Requires: daemontools
+Requires: qpsmtpd-plugins >= 0.0.1-sme04
+Requires: smeserver-qpsmtpd-tnef2mime >= 0.0.2-0sme02
 Requires: ipsvd
 Requires: smeserver-clamav
 Requires: e-smith-spamassassin
@@ -35,6 +40,16 @@ AutoReqProv: no
 SME Server qpsmtpd smtpd module
 
 %changelog
+* Mon Aug 29 2005 Gordon Rowell <gordonr@gormand.com.au> 1.0.0-04
+- Updated Requires for qpsmtpd to 0.31 [SF: 1231314]
+- Change paths to match Peter Holtzer's RPMs - /usr/share/qpsmtpd/
+  instead of /usr/lib/qpsmtpd [SF: 1231314]
+- Updated Requires for plugins to pick up new paths [SF: 1231314]
+- Remove symlinks from /var/service[s]qpsmtpd since they can
+  now be done with environment or qpsmtpd config variables [SF: 1231314]
+- Remove plugins auth/cvm_unix_local, check_norelay and
+  check_badrcptto_patterns which are now in the qpsmtpd tarball [SF: 1231314]
+
 * Mon Aug 29 2005 Gordon Rowell <gordonr@gormand.com.au> 1.0.0-03
 - Fix sqpsmtpd script to call sslio with -u and -U args [SF: 1257284]
 
@@ -235,6 +250,10 @@ SME Server qpsmtpd smtpd module
 %setup
 %patch0 -p1
 %patch1 -p1
+%patch2 -p1
+%patch3 -p1
+%patch4 -p1
+%patch5 -p1
 
 %build
 perl createlinks
@@ -250,11 +269,6 @@ do
     touch 				root/var/service/$service/down
     mkdir -p 				root/var/service/$service/log/supervise
     mkdir -p 				root/var/log/$service
-
-    ln -s /usr/lib/qpsmtpd/lib		root/var/service/$service/
-    ln -s /usr/lib/qpsmtpd/plugins	root/var/service/$service/
-    ln -s /usr/bin/qpsmtpd		root/var/service/$service/
-    ln -s /usr/bin/qpsmtpd-forkserver	root/var/service/$service/
 done
 
 for dir in env peers ssl config

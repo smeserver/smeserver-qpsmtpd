@@ -16,3 +16,8 @@ Mon Aug 29 00:23:30 2005                       Gordon Rowell (gordonr)
 
 Call sslio with -u and -U
 ----------------------------------------------------------------------
+Mon Aug 29 03:26:48 2005                       Gordon Rowell (gordonr)
+
+Update to 0.31 with cleanups of paths and symlinks
+
+----------------------------------------------------------------------
