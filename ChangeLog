@@ -12,3 +12,7 @@ Wed Aug 24 20:16:35 2005                       Gordon Rowell (gordonr)
 Use comma for RBLList separator, but allow both to ease migration
 for us and other people
 ----------------------------------------------------------------------
+Mon Aug 29 00:23:30 2005                       Gordon Rowell (gordonr)
+
+Call sslio with -u and -U
+----------------------------------------------------------------------

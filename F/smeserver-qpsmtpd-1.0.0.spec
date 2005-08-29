@@ -2,7 +2,7 @@ Summary: SME Server qpsmtpd module
 %define name smeserver-qpsmtpd
 Name: %{name}
 %define version 1.0.0
-%define release 02
+%define release 03
 Version: %{version}
 Release: %{release}
 License: GPL
@@ -10,6 +10,7 @@ Vendor: SME Server developers
 Group: Networking/Daemons
 Source: %{name}-%{version}.tar.gz
 Patch0: smeserver-qpsmtpd-1.0.0-RBLListComma.patch2
+Patch1: smeserver-qpsmtpd-1.0.0-sqpsmtpd.patch
 Packager: Gordon Rowell <gordonr@gormand.com.au>
 BuildRoot: /var/tmp/%{name}-%{version}-%{release}-buildroot
 Requires: qpsmtpd daemontools
@@ -34,6 +35,9 @@ AutoReqProv: no
 SME Server qpsmtpd smtpd module
 
 %changelog
+* Mon Aug 29 2005 Gordon Rowell <gordonr@gormand.com.au> 1.0.0-03
+- Fix sqpsmtpd script to call sslio with -u and -U args [SF: 1257284]
+
 * Wed Aug 24 2005 Gordon Rowell <gordonr@gormand.com.au> 1.0.0-02
 - Configure qpsmtpd{RBLList} with comma separator, but allow 
   either since people are used to colons and we then don't have
@@ -230,6 +234,7 @@ SME Server qpsmtpd smtpd module
 %prep
 %setup
 %patch0 -p1
+%patch1 -p1
 
 %build
 perl createlinks
