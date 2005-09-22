@@ -21,3 +21,8 @@ Mon Aug 29 03:26:48 2005                       Gordon Rowell (gordonr)
 Update to 0.31 with cleanups of paths and symlinks
 
 ----------------------------------------------------------------------
+Thu Sep 22 00:06:13 2005                       Gordon Rowell (growell)
+
+Set memory_threshold of 1
+
+----------------------------------------------------------------------

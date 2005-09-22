@@ -1,0 +1,11 @@
+diff -Nur -x '*.orig' -x '*.rej' smeserver-qpsmtpd-1.0.0/createlinks mezzanine_patched_smeserver-qpsmtpd-1.0.0/createlinks
+--- smeserver-qpsmtpd-1.0.0/createlinks	2005-09-22 00:04:51.637092960 -0600
++++ mezzanine_patched_smeserver-qpsmtpd-1.0.0/createlinks	2005-09-22 00:04:41.895573896 -0600
+@@ -69,6 +69,7 @@
+ 				badrcptto_patterns
+ 				dnsbl_zones
+ 				loglevel
++				memory_threshold
+ 				plugins
+ 				relayclients norelayclients
+ 				require_resolvable_fromhost

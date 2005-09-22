@@ -1,0 +1,5 @@
+diff -Nur -x '*.orig' -x '*.rej' smeserver-qpsmtpd-1.0.0/root/etc/e-smith/templates/var/service/qpsmtpd/config/memory_threshold/template-begin mezzanine_patched_smeserver-qpsmtpd-1.0.0/root/etc/e-smith/templates/var/service/qpsmtpd/config/memory_threshold/template-begin
+--- smeserver-qpsmtpd-1.0.0/root/etc/e-smith/templates/var/service/qpsmtpd/config/memory_threshold/template-begin	1969-12-31 17:00:00.000000000 -0700
++++ mezzanine_patched_smeserver-qpsmtpd-1.0.0/root/etc/e-smith/templates/var/service/qpsmtpd/config/memory_threshold/template-begin	2005-09-21 23:59:53.190463744 -0600
+@@ -0,0 +1 @@
++1

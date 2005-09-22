@@ -2,7 +2,7 @@ Summary: SME Server qpsmtpd module
 %define name smeserver-qpsmtpd
 Name: %{name}
 %define version 1.0.0
-%define release 04
+%define release 05
 Version: %{version}
 Release: %{release}
 License: GPL
@@ -15,6 +15,8 @@ Patch2: smeserver-qpsmtpd-1.0.0-sqpsmtpd-0_31.patch
 Patch3: smeserver-qpsmtpd-1.0.0-sqpsmtpd-0_31.patch2
 Patch4: smeserver-qpsmtpd-1.0.0-removeplugins.patch
 Patch5: smeserver-qpsmtpd-1.0.0-runscripts.patch
+Patch6: smeserver-qpsmtpd-1.0.0-memory_threshold.patch
+Patch7: smeserver-qpsmtpd-1.0.0-memory_threshold.patch2
 Packager: Gordon Rowell <gordonr@gormand.com.au>
 BuildRoot: /var/tmp/%{name}-%{version}-%{release}-buildroot
 Requires: qpsmtpd >= 0.31
@@ -40,6 +42,10 @@ AutoReqProv: no
 SME Server qpsmtpd smtpd module
 
 %changelog
+* Thu Sep 22 2005 Gordon Rowell <gordonr@gormand.com.au> 1.0.0-05
+- Set memory_threshold to 1 so that qpsmtpd writes all mail messages
+  to disk so that scanners can look at them. Default is 10K [SF: 1298343]
+
 * Mon Aug 29 2005 Gordon Rowell <gordonr@gormand.com.au> 1.0.0-04
 - Updated Requires for qpsmtpd to 0.31 [SF: 1231314]
 - Change paths to match Peter Holtzer's RPMs - /usr/share/qpsmtpd/
@@ -254,6 +260,8 @@ SME Server qpsmtpd smtpd module
 %patch3 -p1
 %patch4 -p1
 %patch5 -p1
+%patch6 -p1
+%patch7 -p1
 
 %build
 perl createlinks
