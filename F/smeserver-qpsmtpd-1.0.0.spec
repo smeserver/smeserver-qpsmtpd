@@ -2,7 +2,7 @@ Summary: SME Server qpsmtpd module
 %define name smeserver-qpsmtpd
 Name: %{name}
 %define version 1.0.0
-%define release 06
+%define release 07
 Version: %{version}
 Release: %{release}
 License: GPL
@@ -18,6 +18,7 @@ Patch5: smeserver-qpsmtpd-1.0.0-runscripts.patch
 Patch6: smeserver-qpsmtpd-1.0.0-memory_threshold.patch
 Patch7: smeserver-qpsmtpd-1.0.0-memory_threshold.patch2
 Patch8: smeserver-qpsmtpd-1.0.0-softlimit.patch
+Patch9: smeserver-qpsmtpd-1.0.0-MaxScannerSize.patch2
 Packager: Gordon Rowell <gordonr@gormand.com.au>
 BuildRoot: /var/tmp/%{name}-%{version}-%{release}-buildroot
 Requires: qpsmtpd >= 0.31
@@ -43,7 +44,10 @@ AutoReqProv: no
 SME Server qpsmtpd smtpd module
 
 %changelog
-* Thu Sep 22 2005 Gordon Rowell <gordonr@gormand.com.au> 1.0.0-05
+* Thu Sep 22 2005 Gordon Rowell <gordonr@gormand.com.au> 1.0.0-07
+- Configure qpsmtpd{MaxScannerSize}, defaulting to 25MBytes [SF: 1245756]
+
+* Thu Sep 22 2005 Gordon Rowell <gordonr@gormand.com.au> 1.0.0-06
 - Set separate softlimit values for data/stack/locked [SF: 1298123]
 
 * Thu Sep 22 2005 Gordon Rowell <gordonr@gormand.com.au> 1.0.0-05
@@ -267,6 +271,7 @@ SME Server qpsmtpd smtpd module
 %patch6 -p1
 %patch7 -p1
 %patch8 -p1
+%patch9 -p1
 
 %build
 perl createlinks
