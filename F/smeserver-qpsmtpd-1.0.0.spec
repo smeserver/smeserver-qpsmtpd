@@ -2,7 +2,7 @@ Summary: SME Server qpsmtpd module
 %define name smeserver-qpsmtpd
 Name: %{name}
 %define version 1.0.0
-%define release 07
+%define release 08
 Version: %{version}
 Release: %{release}
 License: GPL
@@ -19,6 +19,7 @@ Patch6: smeserver-qpsmtpd-1.0.0-memory_threshold.patch
 Patch7: smeserver-qpsmtpd-1.0.0-memory_threshold.patch2
 Patch8: smeserver-qpsmtpd-1.0.0-softlimit.patch
 Patch9: smeserver-qpsmtpd-1.0.0-MaxScannerSize.patch2
+Patch10: smeserver-qpsmtpd-1.0.0-MaxScannerSize.patch3
 Packager: Gordon Rowell <gordonr@gormand.com.au>
 BuildRoot: /var/tmp/%{name}-%{version}-%{release}-buildroot
 Requires: qpsmtpd >= 0.31
@@ -44,6 +45,10 @@ AutoReqProv: no
 SME Server qpsmtpd smtpd module
 
 %changelog
+* Thu Sep 22 2005 Gordon Rowell <gordonr@gormand.com.au> 1.0.0-08
+- And pick correct value from clamav entry: [SF: 1245756]
+  $qpsmtpd{MaxScannerSize} || $clamav{StreamMaxLength} || "25M";
+
 * Thu Sep 22 2005 Gordon Rowell <gordonr@gormand.com.au> 1.0.0-07
 - Configure qpsmtpd{MaxScannerSize}, defaulting to 25MBytes [SF: 1245756]
 
@@ -272,6 +277,7 @@ SME Server qpsmtpd smtpd module
 %patch7 -p1
 %patch8 -p1
 %patch9 -p1
+%patch10 -p1
 
 %build
 perl createlinks
