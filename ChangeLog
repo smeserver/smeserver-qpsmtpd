@@ -41,3 +41,8 @@ Fri Sep 23 00:47:37 2005                       Gordon Rowell (growell)
 And retrieve correct property from clamav entry
 
 ----------------------------------------------------------------------
+Fri Sep 23 05:47:13 2005                       Gordon Rowell (growell)
+
+Allow external mail for root@domain, controllable with Visible|internal
+
+----------------------------------------------------------------------

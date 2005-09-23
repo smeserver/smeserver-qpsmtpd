@@ -2,7 +2,7 @@ Summary: SME Server qpsmtpd module
 %define name smeserver-qpsmtpd
 Name: %{name}
 %define version 1.0.0
-%define release 08
+%define release 09
 Version: %{version}
 Release: %{release}
 License: GPL
@@ -20,6 +20,7 @@ Patch7: smeserver-qpsmtpd-1.0.0-memory_threshold.patch2
 Patch8: smeserver-qpsmtpd-1.0.0-softlimit.patch
 Patch9: smeserver-qpsmtpd-1.0.0-MaxScannerSize.patch2
 Patch10: smeserver-qpsmtpd-1.0.0-MaxScannerSize.patch3
+Patch11: smeserver-qpsmtpd-1.0.0-AllowRootMail.patch
 Packager: Gordon Rowell <gordonr@gormand.com.au>
 BuildRoot: /var/tmp/%{name}-%{version}-%{release}-buildroot
 Requires: qpsmtpd >= 0.31
@@ -45,6 +46,10 @@ AutoReqProv: no
 SME Server qpsmtpd smtpd module
 
 %changelog
+* Thu Sep 22 2005 Gordon Rowell <gordonr@gormand.com.au> 1.0.0-09
+- Allow mail to root@domain. If you want to block it,
+  db accounts setprop root Visible internal [SF: 1252375]
+
 * Thu Sep 22 2005 Gordon Rowell <gordonr@gormand.com.au> 1.0.0-08
 - And pick correct value from clamav entry: [SF: 1245756]
   $qpsmtpd{MaxScannerSize} || $clamav{StreamMaxLength} || "25M";
@@ -278,6 +283,7 @@ SME Server qpsmtpd smtpd module
 %patch8 -p1
 %patch9 -p1
 %patch10 -p1
+%patch11 -p1
 
 %build
 perl createlinks
