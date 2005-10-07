@@ -1,0 +1,12 @@
+diff -Nur -x '*.orig' -x '*.rej' smeserver-qpsmtpd-1.0.1/root/var/service/sqpsmtpd/run mezzanine_patched_smeserver-qpsmtpd-1.0.1/root/var/service/sqpsmtpd/run
+--- smeserver-qpsmtpd-1.0.1/root/var/service/sqpsmtpd/run	2005-10-07 11:21:58.000000000 +1000
++++ mezzanine_patched_smeserver-qpsmtpd-1.0.1/root/var/service/sqpsmtpd/run	2005-10-07 18:00:27.947017549 +1000
+@@ -20,7 +20,7 @@
+ # Please visit our web site www.mitel.com/sme/ for details.
+ #----------------------------------------------------------------------
+ 
+-[ -f ./runenv ] && . ./runenv
++[ -f ../qpsmtpd/runenv ] && . ../qpsmtpd/runenv
+ 
+ export QPSMTPD_CONFIG=/var/service/sqpsmtpd/config
+ 

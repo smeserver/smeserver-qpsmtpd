@@ -1,0 +1,12 @@
+diff -Nur -x '*.orig' -x '*.rej' smeserver-qpsmtpd-1.0.1/root/var/service/sqpsmtpd/run mezzanine_patched_smeserver-qpsmtpd-1.0.1/root/var/service/sqpsmtpd/run
+--- smeserver-qpsmtpd-1.0.1/root/var/service/sqpsmtpd/run	2005-10-07 18:06:18.203598036 +1000
++++ mezzanine_patched_smeserver-qpsmtpd-1.0.1/root/var/service/sqpsmtpd/run	2005-10-07 18:05:53.523503056 +1000
+@@ -22,7 +22,7 @@
+ 
+ [ -f ../qpsmtpd/runenv ] && . ../qpsmtpd/runenv
+ 
+-export QPSMTPD_CONFIG=/var/service/sqpsmtpd/config
++export QPSMTPD_CONFIG=/var/service/qpsmtpd/config
+ 
+ exec 2>&1
+ exec /usr/bin/tcpsvd \

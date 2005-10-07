@@ -1,26 +1,17 @@
 Summary: SME Server qpsmtpd module
 %define name smeserver-qpsmtpd
 Name: %{name}
-%define version 1.0.0
-%define release 09
+%define version 1.0.1
+%define release 04
 Version: %{version}
 Release: %{release}
 License: GPL
 Vendor: SME Server developers
 Group: Networking/Daemons
 Source: %{name}-%{version}.tar.gz
-Patch0: smeserver-qpsmtpd-1.0.0-RBLListComma.patch2
-Patch1: smeserver-qpsmtpd-1.0.0-sqpsmtpd.patch
-Patch2: smeserver-qpsmtpd-1.0.0-sqpsmtpd-0_31.patch
-Patch3: smeserver-qpsmtpd-1.0.0-sqpsmtpd-0_31.patch2
-Patch4: smeserver-qpsmtpd-1.0.0-removeplugins.patch
-Patch5: smeserver-qpsmtpd-1.0.0-runscripts.patch
-Patch6: smeserver-qpsmtpd-1.0.0-memory_threshold.patch
-Patch7: smeserver-qpsmtpd-1.0.0-memory_threshold.patch2
-Patch8: smeserver-qpsmtpd-1.0.0-softlimit.patch
-Patch9: smeserver-qpsmtpd-1.0.0-MaxScannerSize.patch2
-Patch10: smeserver-qpsmtpd-1.0.0-MaxScannerSize.patch3
-Patch11: smeserver-qpsmtpd-1.0.0-AllowRootMail.patch
+Patch0: smeserver-qpsmtpd-1.0.1-removesymlinks.patch3
+Patch1: smeserver-qpsmtpd-1.0.1-sqpsmtpdconfig.patch
+Patch2: smeserver-qpsmtpd-1.0.1-sqpsmtpdconfig.patch2
 Packager: Gordon Rowell <gordonr@gormand.com.au>
 BuildRoot: /var/tmp/%{name}-%{version}-%{release}-buildroot
 Requires: qpsmtpd >= 0.31
@@ -46,6 +37,25 @@ AutoReqProv: no
 SME Server qpsmtpd smtpd module
 
 %changelog
+* Fri Oct 7 2005 Gordon Rowell <gordonr@gormand.com.au> 1.0.1-04
+- And the path to the runenv directory [SF: 1313800]
+
+* Fri Oct 7 2005 Gordon Rowell <gordonr@gormand.com.au> 1.0.1-03
+- And fix up path to config directory [SF: 1313800]
+
+* Fri Oct 7 2005 Gordon Rowell <gordonr@gormand.com.au> 1.0.1-02
+- Remove symlinks from sqpsmtpd directory [SF: 1313800]
+
+* Fri Oct 7 2005 Gordon Rowell <gordonr@gormand.com.au> 1.0.1-01
+- Roll new tarball, including patches to 1.0.0-11
+
+* Fri Oct 7 2005 Gordon Rowell <gordonr@gormand.com.au> 1.0.0-11
+- Added missing = to max_size parameter for clamav plugin [SF: 1308976]
+
+* Thu Oct 6 2005 Gordon Rowell <gordonr@gormand.com.au> 1.0.0-10
+- Added db defaults for qpsmtpd{LogLevel}=='8' and
+  $qpsmtpd{RequireResolvableFromHost}=='yes' [SF: 1314202]
+
 * Thu Sep 22 2005 Gordon Rowell <gordonr@gormand.com.au> 1.0.0-09
 - Allow mail to root@domain. If you want to block it,
   db accounts setprop root Visible internal [SF: 1252375]
@@ -275,15 +285,6 @@ SME Server qpsmtpd smtpd module
 %patch0 -p1
 %patch1 -p1
 %patch2 -p1
-%patch3 -p1
-%patch4 -p1
-%patch5 -p1
-%patch6 -p1
-%patch7 -p1
-%patch8 -p1
-%patch9 -p1
-%patch10 -p1
-%patch11 -p1
 
 %build
 perl createlinks
@@ -301,11 +302,6 @@ do
     mkdir -p 				root/var/log/$service
 done
 
-for dir in env peers ssl config
-do
-    mkdir -p 				root/var/service/qpsmtpd/$dir
-    ln -s ../qpsmtpd/$dir 		root/var/service/sqpsmtpd/$dir
-done
 mkdir -p root/var/service/qpsmtpd/peers/
 mkdir -p root/etc/e-smith/templates/var/service/qpsmtpd/peers/{0,local}
 touch root/etc/e-smith/templates/var/service/qpsmtpd/peers/{0,local}/template-begin
