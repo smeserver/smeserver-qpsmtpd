@@ -55,3 +55,7 @@ Mon Oct 10 12:36:49 2005                       Gordon Rowell (gordonr)
 
 Missed ssl directory in cleanup
 ----------------------------------------------------------------------
+Mon Oct 10 13:28:35 2005                       Gordon Rowell (gordonr)
+
+And we need a config output directory as well
+----------------------------------------------------------------------

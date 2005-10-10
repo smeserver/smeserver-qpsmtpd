@@ -2,7 +2,7 @@ Summary: SME Server qpsmtpd module
 %define name smeserver-qpsmtpd
 Name: %{name}
 %define version 1.0.1
-%define release 05
+%define release 06
 Version: %{version}
 Release: %{release}
 License: GPL
@@ -37,6 +37,9 @@ AutoReqProv: no
 SME Server qpsmtpd smtpd module
 
 %changelog
+* Mon Oct 10 2005 Gordon Rowell <gordonr@gormand.com.au> 1.0.1-05
+- And the config directory [SF: 1313800]
+
 * Mon Oct 10 2005 Gordon Rowell <gordonr@gormand.com.au> 1.0.1-05
 - Need to create ssl directory to allow template expansion [SF: 1313800]
 
@@ -305,8 +308,11 @@ do
     mkdir -p 				root/var/log/$service
 done
 
-mkdir -p root/var/service/qpsmtpd/ssl/
-mkdir -p root/var/service/qpsmtpd/peers/
+for dir in config peers ssl
+do
+    mkdir -p root/var/service/qpsmtpd/$dir
+done
+
 mkdir -p root/etc/e-smith/templates/var/service/qpsmtpd/peers/{0,local}
 touch root/etc/e-smith/templates/var/service/qpsmtpd/peers/{0,local}/template-begin
 
