@@ -59,3 +59,8 @@ Mon Oct 10 13:28:35 2005                       Gordon Rowell (gordonr)
 
 And we need a config output directory as well
 ----------------------------------------------------------------------
+Mon Oct 10 13:30:54 2005                       Gordon Rowell (gordonr)
+
+Check back to 1.0.1-01 where we created the directories as side-effects
+of creating the symlinks.
+----------------------------------------------------------------------

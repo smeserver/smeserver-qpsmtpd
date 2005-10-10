@@ -2,7 +2,7 @@ Summary: SME Server qpsmtpd module
 %define name smeserver-qpsmtpd
 Name: %{name}
 %define version 1.0.1
-%define release 06
+%define release 07
 Version: %{version}
 Release: %{release}
 License: GPL
@@ -37,7 +37,10 @@ AutoReqProv: no
 SME Server qpsmtpd smtpd module
 
 %changelog
-* Mon Oct 10 2005 Gordon Rowell <gordonr@gormand.com.au> 1.0.1-05
+* Mon Oct 10 2005 Gordon Rowell <gordonr@gormand.com.au> 1.0.1-07
+- And finally, the env directory [SF: 1313800]
+
+* Mon Oct 10 2005 Gordon Rowell <gordonr@gormand.com.au> 1.0.1-06
 - And the config directory [SF: 1313800]
 
 * Mon Oct 10 2005 Gordon Rowell <gordonr@gormand.com.au> 1.0.1-05
@@ -308,7 +311,7 @@ do
     mkdir -p 				root/var/log/$service
 done
 
-for dir in config peers ssl
+for dir in env config peers ssl
 do
     mkdir -p root/var/service/qpsmtpd/$dir
 done
