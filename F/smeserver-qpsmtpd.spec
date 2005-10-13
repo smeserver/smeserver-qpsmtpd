@@ -2,7 +2,7 @@ Summary: SME Server qpsmtpd module
 %define name smeserver-qpsmtpd
 Name: %{name}
 %define version 1.0.1
-%define release 07
+%define release 08
 Version: %{version}
 Release: %{release}
 License: GPL
@@ -12,6 +12,7 @@ Source: %{name}-%{version}.tar.gz
 Patch0: smeserver-qpsmtpd-1.0.1-removesymlinks.patch3
 Patch1: smeserver-qpsmtpd-1.0.1-sqpsmtpdconfig.patch
 Patch2: smeserver-qpsmtpd-1.0.1-sqpsmtpdconfig.patch2
+Patch3: smeserver-qpsmtpd-1.0.1-reconfigure.patch2
 Packager: Gordon Rowell <gordonr@gormand.com.au>
 BuildRoot: /var/tmp/%{name}-%{version}-%{release}-buildroot
 Requires: qpsmtpd >= 0.31
@@ -37,6 +38,9 @@ AutoReqProv: no
 SME Server qpsmtpd smtpd module
 
 %changelog
+* Thu Oct 13 2005 Gordon Rowell <gordonr@gormand.com.au> 1.0.1-08
+- SIGHUP [s]qpsmtpd to re-read config in email-update [SF: 1252072]
+
 * Mon Oct 10 2005 Gordon Rowell <gordonr@gormand.com.au> 1.0.1-07
 - And finally, the env directory [SF: 1313800]
 
@@ -294,6 +298,7 @@ SME Server qpsmtpd smtpd module
 %patch0 -p1
 %patch1 -p1
 %patch2 -p1
+%patch3 -p1
 
 %build
 perl createlinks
