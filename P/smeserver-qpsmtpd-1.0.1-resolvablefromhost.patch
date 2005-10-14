@@ -1,0 +1,6 @@
+diff -Nur -x '*.orig' -x '*.rej' smeserver-qpsmtpd-1.0.1/root/etc/e-smith/db/configuration/defaults/qpsmtpd/RequireResolvableFromHost mezzanine_patched_smeserver-qpsmtpd-1.0.1/root/etc/e-smith/db/configuration/defaults/qpsmtpd/RequireResolvableFromHost
+--- smeserver-qpsmtpd-1.0.1/root/etc/e-smith/db/configuration/defaults/qpsmtpd/RequireResolvableFromHost	2005-10-07 11:21:58.000000000 +1000
++++ mezzanine_patched_smeserver-qpsmtpd-1.0.1/root/etc/e-smith/db/configuration/defaults/qpsmtpd/RequireResolvableFromHost	2005-10-14 10:07:30.326722053 +1000
+@@ -1 +1 @@
+-yes
++no

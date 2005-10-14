@@ -2,7 +2,7 @@ Summary: SME Server qpsmtpd module
 %define name smeserver-qpsmtpd
 Name: %{name}
 %define version 1.0.1
-%define release 08
+%define release 09
 Version: %{version}
 Release: %{release}
 License: GPL
@@ -13,6 +13,7 @@ Patch0: smeserver-qpsmtpd-1.0.1-removesymlinks.patch3
 Patch1: smeserver-qpsmtpd-1.0.1-sqpsmtpdconfig.patch
 Patch2: smeserver-qpsmtpd-1.0.1-sqpsmtpdconfig.patch2
 Patch3: smeserver-qpsmtpd-1.0.1-reconfigure.patch2
+Patch4: smeserver-qpsmtpd-1.0.1-resolvablefromhost.patch
 Packager: Gordon Rowell <gordonr@gormand.com.au>
 BuildRoot: /var/tmp/%{name}-%{version}-%{release}-buildroot
 Requires: qpsmtpd >= 0.31
@@ -38,6 +39,9 @@ AutoReqProv: no
 SME Server qpsmtpd smtpd module
 
 %changelog
+* Thu Oct 13 2005 Gordon Rowell <gordonr@gormand.com.au> 1.0.1-09
+- Default RequireResolvableFromHost to "no" [SF: 1269382]
+
 * Thu Oct 13 2005 Gordon Rowell <gordonr@gormand.com.au> 1.0.1-08
 - SIGHUP [s]qpsmtpd to re-read config in email-update [SF: 1252072]
 
@@ -299,6 +303,7 @@ SME Server qpsmtpd smtpd module
 %patch1 -p1
 %patch2 -p1
 %patch3 -p1
+%patch4 -p1
 
 %build
 perl createlinks
