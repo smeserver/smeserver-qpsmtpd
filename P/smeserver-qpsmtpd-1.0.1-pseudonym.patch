@@ -1,0 +1,31 @@
+diff -Nur -x '*.orig' -x '*.rej' smeserver-qpsmtpd-1.0.1/root/etc/e-smith/templates/var/qmail/control/mailrules.default/40ValidLocalRecipients mezzanine_patched_smeserver-qpsmtpd-1.0.1/root/etc/e-smith/templates/var/qmail/control/mailrules.default/40ValidLocalRecipients
+--- smeserver-qpsmtpd-1.0.1/root/etc/e-smith/templates/var/qmail/control/mailrules.default/40ValidLocalRecipients	2005-04-20 23:19:07.000000000 -0400
++++ mezzanine_patched_smeserver-qpsmtpd-1.0.1/root/etc/e-smith/templates/var/qmail/control/mailrules.default/40ValidLocalRecipients	2006-01-12 20:11:13.000000000 -0500
+@@ -14,7 +14,7 @@
+         next unless $valid{$account->prop('type')};
+ 
+         $OUT .= "p*:$key:\n";
+-        $OUT .= "p*:$key\@*:\n";
+-        $OUT .= "p*:$key-*:\n" unless ($account->prop('type') eq 'group' || $account->prop('type') eq 'pseudonum');
++        $OUT .= "p*:$key\@*:\n" unless ($key =~ /\@/);
++        $OUT .= "p*:$key-*:\n" unless ($account->prop('type') eq 'group' || $account->prop('type') eq 'pseudonym');
+     }
+ }
+diff -Nur -x '*.orig' -x '*.rej' smeserver-qpsmtpd-1.0.1/root/etc/e-smith/templates/var/service/qpsmtpd/config/goodrcptto/40ValidLocalRecipients mezzanine_patched_smeserver-qpsmtpd-1.0.1/root/etc/e-smith/templates/var/service/qpsmtpd/config/goodrcptto/40ValidLocalRecipients
+--- smeserver-qpsmtpd-1.0.1/root/etc/e-smith/templates/var/service/qpsmtpd/config/goodrcptto/40ValidLocalRecipients	2005-04-29 17:55:05.000000000 -0400
++++ mezzanine_patched_smeserver-qpsmtpd-1.0.1/root/etc/e-smith/templates/var/service/qpsmtpd/config/goodrcptto/40ValidLocalRecipients	2006-01-12 20:17:07.000000000 -0500
+@@ -12,6 +12,13 @@
+         my $key = $account->key;
+         next unless $valid{$account->prop('type')};
+ 
+-	$OUT .= "$key\@$_\n" for (@domains);
++	if ($key =~ /\@/)
++	{
++	    $OUT .= "$key\n";
++	}
++	else
++	{
++	    $OUT .= "$key\@$_\n" for (@domains);
++	}
+     }
+ }
