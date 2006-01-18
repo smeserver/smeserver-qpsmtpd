@@ -2,7 +2,7 @@ Summary: SME Server qpsmtpd module
 %define name smeserver-qpsmtpd
 Name: %{name}
 %define version 1.0.1
-%define release 10
+%define release 11
 Version: %{version}
 Release: %{release}
 License: GPL
@@ -15,6 +15,7 @@ Patch2: smeserver-qpsmtpd-1.0.1-sqpsmtpdconfig.patch2
 Patch3: smeserver-qpsmtpd-1.0.1-reconfigure.patch2
 Patch4: smeserver-qpsmtpd-1.0.1-resolvablefromhost.patch
 Patch5: smeserver-qpsmtpd-1.0.1-pseudonym.patch
+Patch6: smeserver-qpsmtpd-1.0.1-loglevel.patch
 Packager: Gordon Rowell <gordonr@gormand.com.au>
 BuildRoot: /var/tmp/%{name}-%{version}-%{release}-buildroot
 Requires: qpsmtpd >= 0.31
@@ -40,6 +41,9 @@ AutoReqProv: no
 SME Server qpsmtpd smtpd module
 
 %changelog
+* Wed Jan 18 2006 Gordon Rowell <gordonr@gormand.com.au> 1.0.1-11
+- Reduce default qpsmtpd{LogLevel} to LOGINFO (7) [SME: 503]
+
 * Thu Jan 12 2006 Charlie Brady <charlieb@e-smith.com> 1.0.1-10
 - Fix goodrcptto and mailrules templates for single domain
   pseudonym entries. [SME: 368]
@@ -310,6 +314,7 @@ SME Server qpsmtpd smtpd module
 %patch3 -p1
 %patch4 -p1
 %patch5 -p1
+%patch6 -p1
 
 %build
 perl createlinks
