@@ -2,7 +2,7 @@ Summary: SME Server qpsmtpd module
 %define name smeserver-qpsmtpd
 Name: %{name}
 %define version 1.0.1
-%define release 11
+%define release 12
 Version: %{version}
 Release: %{release}
 License: GPL
@@ -16,6 +16,7 @@ Patch3: smeserver-qpsmtpd-1.0.1-reconfigure.patch2
 Patch4: smeserver-qpsmtpd-1.0.1-resolvablefromhost.patch
 Patch5: smeserver-qpsmtpd-1.0.1-pseudonym.patch
 Patch6: smeserver-qpsmtpd-1.0.1-loglevel.patch
+Patch7: smeserver-qpsmtpd-1.0.1-loglevel.patch2
 Packager: Gordon Rowell <gordonr@gormand.com.au>
 BuildRoot: /var/tmp/%{name}-%{version}-%{release}-buildroot
 Requires: qpsmtpd >= 0.31
@@ -41,6 +42,9 @@ AutoReqProv: no
 SME Server qpsmtpd smtpd module
 
 %changelog
+* Wed Jan 18 2006 Gordon Rowell <gordonr@gormand.com.au> 1.0.1-12
+- Really reduce default qpsmtpd{LogLevel} to LOGINFO (6) [SME: 503]
+
 * Wed Jan 18 2006 Gordon Rowell <gordonr@gormand.com.au> 1.0.1-11
 - Reduce default qpsmtpd{LogLevel} to LOGINFO (7) [SME: 503]
 
@@ -315,6 +319,7 @@ SME Server qpsmtpd smtpd module
 %patch4 -p1
 %patch5 -p1
 %patch6 -p1
+%patch7 -p1
 
 %build
 perl createlinks
