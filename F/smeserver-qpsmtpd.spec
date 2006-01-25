@@ -2,7 +2,7 @@ Summary: SME Server qpsmtpd module
 %define name smeserver-qpsmtpd
 Name: %{name}
 %define version 1.0.1
-%define release 12
+%define release 13
 Version: %{version}
 Release: %{release}
 License: GPL
@@ -17,6 +17,7 @@ Patch4: smeserver-qpsmtpd-1.0.1-resolvablefromhost.patch
 Patch5: smeserver-qpsmtpd-1.0.1-pseudonym.patch
 Patch6: smeserver-qpsmtpd-1.0.1-loglevel.patch
 Patch7: smeserver-qpsmtpd-1.0.1-loglevel.patch2
+Patch8: smeserver-qpsmtpd-1.0.1-bcc.patch 
 Packager: Gordon Rowell <gordonr@gormand.com.au>
 BuildRoot: /var/tmp/%{name}-%{version}-%{release}-buildroot
 Requires: qpsmtpd >= 0.31
@@ -42,6 +43,13 @@ AutoReqProv: no
 SME Server qpsmtpd smtpd module
 
 %changelog
+* Wed Jan 25 2006 Gordon Rowell <gordonr@gormand.com.au> 1.0.1-13
+- Add defaults qpsmtpd{Bcc} == disabled and qpsmtpd{BccUser} == maillog 
+- To enable mail logging:
+  - Create maillog user
+  - config setprop qpsmtpd Bcc enabled 
+  - signal-event email-update [SME: 13]
+
 * Wed Jan 18 2006 Gordon Rowell <gordonr@gormand.com.au> 1.0.1-12
 - Really reduce default qpsmtpd{LogLevel} to LOGINFO (6) [SME: 503]
 
@@ -320,6 +328,7 @@ SME Server qpsmtpd smtpd module
 %patch5 -p1
 %patch6 -p1
 %patch7 -p1
+%patch8 -p1
 
 %build
 perl createlinks
