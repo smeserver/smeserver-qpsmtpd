@@ -2,7 +2,7 @@ Summary: SME Server qpsmtpd module
 %define name smeserver-qpsmtpd
 Name: %{name}
 %define version 1.0.1
-%define release 13
+%define release 14
 Version: %{version}
 Release: %{release}
 License: GPL
@@ -43,6 +43,10 @@ AutoReqProv: no
 SME Server qpsmtpd smtpd module
 
 %changelog
+* Thu Jan 26 2006 Charlie Brady <charlieb@e-smith.com> 1.0.1-14
+- Remove remnant mailrules.default templates and template
+  expansions. [SME: 454]
+
 * Wed Jan 25 2006 Gordon Rowell <gordonr@gormand.com.au> 1.0.1-13
 - Add defaults qpsmtpd{Bcc} == disabled and qpsmtpd{BccUser} == maillog 
 - To enable mail logging:
@@ -329,6 +333,20 @@ SME Server qpsmtpd smtpd module
 %patch6 -p1
 %patch7 -p1
 %patch8 -p1
+
+rm -r root/etc/e-smith/templates/var/qmail/control/mailrules.default
+rm root/etc/e-smith/events/email-update/templates2expand/var/qmail/control/mailrules.default
+rm root/etc/e-smith/events/domain-create/templates2expand/var/qmail/control/mailrules.default
+rm root/etc/e-smith/events/pseudonym-create/templates2expand/var/qmail/control/mailrules.default
+rm root/etc/e-smith/events/pseudonym-modify/templates2expand/var/qmail/control/mailrules.default
+rm root/etc/e-smith/events/user-create/templates2expand/var/qmail/control/mailrules.default
+rm root/etc/e-smith/events/console-save/templates2expand/var/qmail/control/mailrules.default
+rm root/etc/e-smith/events/bootstrap-console-save/templates2expand/var/qmail/control/mailrules.default
+rm root/etc/e-smith/events/pseudonym-delete/templates2expand/var/qmail/control/mailrules.default
+rm root/etc/e-smith/events/domain-delete/templates2expand/var/qmail/control/mailrules.default
+rm root/etc/e-smith/events/user-delete/templates2expand/var/qmail/control/mailrules.default
+rm root/etc/e-smith/events/user-modify/templates2expand/var/qmail/control/mailrules.default
+rm root/etc/e-smith/events/ip-change/templates2expand/var/qmail/control/mailrules.default
 
 %build
 perl createlinks
