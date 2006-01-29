@@ -1,0 +1,21 @@
+diff -Nur -x '*.orig' -x '*.rej' e-smith-qpsmtpd-0.0.4/root/etc/e-smith/db/configuration/defaults/qpsmtpd/SBLList mezzanine_patched_e-smith-qpsmtpd-0.0.4/root/etc/e-smith/db/configuration/defaults/qpsmtpd/SBLList
+--- e-smith-qpsmtpd-0.0.4/root/etc/e-smith/db/configuration/defaults/qpsmtpd/SBLList	1970-01-01 10:00:00.000000000 +1000
++++ mezzanine_patched_e-smith-qpsmtpd-0.0.4/root/etc/e-smith/db/configuration/defaults/qpsmtpd/SBLList	2006-01-29 02:42:13.415268309 +1100
+@@ -0,0 +1 @@
++dsn.rfc-ignorant.org
+diff -Nur -x '*.orig' -x '*.rej' e-smith-qpsmtpd-0.0.4/root/etc/e-smith/templates/var/service/qpsmtpd/config/rhsbl_zones/10SBLList mezzanine_patched_e-smith-qpsmtpd-0.0.4/root/etc/e-smith/templates/var/service/qpsmtpd/config/rhsbl_zones/10SBLList
+--- e-smith-qpsmtpd-0.0.4/root/etc/e-smith/templates/var/service/qpsmtpd/config/rhsbl_zones/10SBLList	1970-01-01 10:00:00.000000000 +1000
++++ mezzanine_patched_e-smith-qpsmtpd-0.0.4/root/etc/e-smith/templates/var/service/qpsmtpd/config/rhsbl_zones/10SBLList	2006-01-29 02:35:00.921517362 +1100
+@@ -0,0 +1,7 @@
++{
++    my @rbllist = split /[,:]/, ${qpsmtpd}{SBLList} || '';
++
++    return "# No SBLs are defined" unless (scalar @rbllist);
++
++    return join "\n", @rbllist;
++}
+diff -Nur -x '*.orig' -x '*.rej' e-smith-qpsmtpd-0.0.4/root/etc/e-smith/templates/var/service/qpsmtpd/config/rhsbl_zones/template-begin mezzanine_patched_e-smith-qpsmtpd-0.0.4/root/etc/e-smith/templates/var/service/qpsmtpd/config/rhsbl_zones/template-begin
+--- e-smith-qpsmtpd-0.0.4/root/etc/e-smith/templates/var/service/qpsmtpd/config/rhsbl_zones/template-begin	2005-04-21 13:30:45.000000000 +1000
++++ mezzanine_patched_e-smith-qpsmtpd-0.0.4/root/etc/e-smith/templates/var/service/qpsmtpd/config/rhsbl_zones/template-begin	1970-01-01 10:00:00.000000000 +1000
+@@ -1 +0,0 @@
+-dsn.rfc-ignorant.org does not accept bounces. This violates RFC 821/2505/2821 http://www.rfc-ignorant.org/

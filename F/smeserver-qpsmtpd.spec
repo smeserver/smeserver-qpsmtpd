@@ -2,7 +2,7 @@ Summary: SME Server qpsmtpd module
 %define name smeserver-qpsmtpd
 Name: %{name}
 %define version 1.0.1
-%define release 14
+%define release 15
 Version: %{version}
 Release: %{release}
 License: GPL
@@ -18,6 +18,7 @@ Patch5: smeserver-qpsmtpd-1.0.1-pseudonym.patch
 Patch6: smeserver-qpsmtpd-1.0.1-loglevel.patch
 Patch7: smeserver-qpsmtpd-1.0.1-loglevel.patch2
 Patch8: smeserver-qpsmtpd-1.0.1-bcc.patch 
+Patch9: smeserver-qpsmtpd-1.0.1-rhsbl.patch 
 Packager: Gordon Rowell <gordonr@gormand.com.au>
 BuildRoot: /var/tmp/%{name}-%{version}-%{release}-buildroot
 Requires: qpsmtpd >= 0.31
@@ -43,6 +44,9 @@ AutoReqProv: no
 SME Server qpsmtpd smtpd module
 
 %changelog
+* Sat Jan 28 2006 Shad L. Lords <slords@mail.com> 1.0.1-15
+- Add support for rhsbl entries to db [SME: 596]
+
 * Thu Jan 26 2006 Charlie Brady <charlieb@e-smith.com> 1.0.1-14
 - Remove remnant mailrules.default templates and template
   expansions. [SME: 454]
@@ -333,6 +337,7 @@ SME Server qpsmtpd smtpd module
 %patch6 -p1
 %patch7 -p1
 %patch8 -p1
+%patch9 -p1
 
 rm -r root/etc/e-smith/templates/var/qmail/control/mailrules.default
 rm root/etc/e-smith/events/email-update/templates2expand/var/qmail/control/mailrules.default
