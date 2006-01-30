@@ -2,7 +2,7 @@ Summary: SME Server qpsmtpd module
 %define name smeserver-qpsmtpd
 Name: %{name}
 %define version 1.0.1
-%define release 15
+%define release 16
 Version: %{version}
 Release: %{release}
 License: GPL
@@ -19,15 +19,13 @@ Patch6: smeserver-qpsmtpd-1.0.1-loglevel.patch
 Patch7: smeserver-qpsmtpd-1.0.1-loglevel.patch2
 Patch8: smeserver-qpsmtpd-1.0.1-bcc.patch 
 Patch9: smeserver-qpsmtpd-1.0.1-rhsbl.patch 
+Patch10: smeserver-qpsmtpd-1.0.1-services_missing.patch
 Packager: Gordon Rowell <gordonr@gormand.com.au>
 BuildRoot: /var/tmp/%{name}-%{version}-%{release}-buildroot
 Requires: qpsmtpd >= 0.31
 Requires: daemontools
 Requires: qpsmtpd-plugins >= 0.0.1-sme04
-Requires: smeserver-qpsmtpd-tnef2mime >= 0.0.2-0sme02
 Requires: ipsvd
-Requires: smeserver-clamav
-Requires: e-smith-spamassassin
 Requires: e-smith-lib >= 1.15.1-33
 Obsoletes: e-smith-obtuse-smtpd
 Obsoletes: e-smith-qmail-smtpd
@@ -44,6 +42,13 @@ AutoReqProv: no
 SME Server qpsmtpd smtpd module
 
 %changelog
+* Mon Jan 30 2006 Charlie Brady <charlie_brady@mitel.com> 1.0.1-16
+- Fix warnings during template expansion, if spamassassin and/or clamd
+  is not installed/configured. Remove dependencies on packages which
+  are optional. Ensure that clamav group exists before installation.
+  Remove one redundant template fragment (which consisted of only comments).
+  [SME: 606]
+
 * Sat Jan 28 2006 Shad L. Lords <slords@mail.com> 1.0.1-15
 - Add support for rhsbl entries to db [SME: 596]
 
@@ -338,6 +343,7 @@ SME Server qpsmtpd smtpd module
 %patch7 -p1
 %patch8 -p1
 %patch9 -p1
+%patch10 -p1
 
 rm -r root/etc/e-smith/templates/var/qmail/control/mailrules.default
 rm root/etc/e-smith/events/email-update/templates2expand/var/qmail/control/mailrules.default
@@ -411,6 +417,7 @@ rm -f %{name}-%{version}-%{release}-filelist
 %pre
 /sbin/e-smith/create-system-user qpsmtpd 453 \
 	'qpsmtpd system user' /var/service/qpsmtpd /bin/false
+/usr/sbin/groupadd -r clamav 2>/dev/null || :
 %post
 
 %clean

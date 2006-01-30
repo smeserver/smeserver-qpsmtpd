@@ -1,0 +1,40 @@
+diff -Nur -x '*.orig' -x '*.rej' smeserver-qpsmtpd-1.0.1/root/etc/e-smith/templates/var/service/qpsmtpd/config/plugins/70spamassassin mezzanine_patched_smeserver-qpsmtpd-1.0.1/root/etc/e-smith/templates/var/service/qpsmtpd/config/plugins/70spamassassin
+--- smeserver-qpsmtpd-1.0.1/root/etc/e-smith/templates/var/service/qpsmtpd/config/plugins/70spamassassin	2005-08-19 17:31:01.000000000 -0400
++++ mezzanine_patched_smeserver-qpsmtpd-1.0.1/root/etc/e-smith/templates/var/service/qpsmtpd/config/plugins/70spamassassin	2006-01-30 16:11:40.000000000 -0500
+@@ -8,8 +8,8 @@
+ #
+ # spamassassin reject_threshold 20 munge_subject_threshold 10
+ 
+-    return "# spamassassin disabled" 
+-	unless ($spamassassin{status} eq "enabled");
++    my $status = $spamassassin{status} || 'disabled';
++    return "# spamassassin disabled" unless ($status eq "enabled");
+ 
+     my @options = qw(spamassassin);
+ 
+diff -Nur -x '*.orig' -x '*.rej' smeserver-qpsmtpd-1.0.1/root/etc/e-smith/templates/var/service/qpsmtpd/config/plugins/80clamav mezzanine_patched_smeserver-qpsmtpd-1.0.1/root/etc/e-smith/templates/var/service/qpsmtpd/config/plugins/80clamav
+--- smeserver-qpsmtpd-1.0.1/root/etc/e-smith/templates/var/service/qpsmtpd/config/plugins/80clamav	2005-10-06 21:21:58.000000000 -0400
++++ mezzanine_patched_smeserver-qpsmtpd-1.0.1/root/etc/e-smith/templates/var/service/qpsmtpd/config/plugins/80clamav	2006-01-30 16:26:01.000000000 -0500
+@@ -1,7 +1,10 @@
+ {
+     # run the clamdscan virus checking plugin
+ 
+-    return "# clamav disabled" unless ($smtpd{VirusScan} eq "enabled");
++    my $s = $clamd{status} || 'disabled';
++    return "# clamd disabled" unless ($s eq "enabled");
++    $s = $smtpd{VirusScan} || 'disabled';
++    return "# clamav disabled" unless ($s eq "enabled");
+ 
+     my $max_size = $qpsmtpd{MaxScannerSize} || 
+ 		   $clamav{StreamMaxLength} || 
+diff -Nur -x '*.orig' -x '*.rej' smeserver-qpsmtpd-1.0.1/root/etc/e-smith/templates/var/service/qpsmtpd/config/plugins/80clamdscan mezzanine_patched_smeserver-qpsmtpd-1.0.1/root/etc/e-smith/templates/var/service/qpsmtpd/config/plugins/80clamdscan
+--- smeserver-qpsmtpd-1.0.1/root/etc/e-smith/templates/var/service/qpsmtpd/config/plugins/80clamdscan	2005-08-19 17:31:01.000000000 -0400
++++ mezzanine_patched_smeserver-qpsmtpd-1.0.1/root/etc/e-smith/templates/var/service/qpsmtpd/config/plugins/80clamdscan	1969-12-31 19:00:00.000000000 -0500
+@@ -1,7 +0,0 @@
+-# {
+-#    run the clamdscan virus checking plugin
+-# 
+-#    return "# clamdscan disabled" unless ($smtpd{VirusScan} eq "enabled");
+-#
+-#    "virus/clamdscan clamd_socket=/var/lib/clamd/clamd.sock deny_viruses=yes";
+-# }
