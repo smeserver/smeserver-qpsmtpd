@@ -2,7 +2,7 @@ Summary: SME Server qpsmtpd module
 %define name smeserver-qpsmtpd
 Name: %{name}
 %define version 1.0.1
-%define release 16
+%define release 17
 Version: %{version}
 Release: %{release}
 License: GPL
@@ -20,6 +20,7 @@ Patch7: smeserver-qpsmtpd-1.0.1-loglevel.patch2
 Patch8: smeserver-qpsmtpd-1.0.1-bcc.patch 
 Patch9: smeserver-qpsmtpd-1.0.1-rhsbl.patch 
 Patch10: smeserver-qpsmtpd-1.0.1-services_missing.patch
+Patch11: smeserver-qpsmtpd-1.0.1-invalid_resolvable_fromhost.patch
 Packager: Gordon Rowell <gordonr@gormand.com.au>
 BuildRoot: /var/tmp/%{name}-%{version}-%{release}-buildroot
 Requires: qpsmtpd >= 0.31
@@ -42,6 +43,10 @@ AutoReqProv: no
 SME Server qpsmtpd smtpd module
 
 %changelog
+* Thu Feb  2 2006 <charlie_brady@mitel.com> 1.0.1-17
+- Add template for invalid_resolvable_fromhost configuration file
+  [SME: 638]
+
 * Mon Jan 30 2006 Charlie Brady <charlie_brady@mitel.com> 1.0.1-16
 - Fix warnings during template expansion, if spamassassin and/or clamd
   is not installed/configured. Remove dependencies on packages which
@@ -344,6 +349,7 @@ SME Server qpsmtpd smtpd module
 %patch8 -p1
 %patch9 -p1
 %patch10 -p1
+%patch11 -p1
 
 rm -r root/etc/e-smith/templates/var/qmail/control/mailrules.default
 rm root/etc/e-smith/events/email-update/templates2expand/var/qmail/control/mailrules.default
