@@ -2,7 +2,7 @@ Summary: SME Server qpsmtpd module
 %define name smeserver-qpsmtpd
 Name: %{name}
 %define version 1.0.1
-%define release 18
+%define release 19
 Version: %{version}
 Release: %{release}
 License: GPL
@@ -44,6 +44,9 @@ AutoReqProv: no
 SME Server qpsmtpd smtpd module
 
 %changelog
+* Fri Feb 3 2006 Shad L. Lords <slords@mail.com> 1.0.1-19
+- Add missing template-begin file in rhsbl directory [SME: 596]
+
 * Fri Feb  3 2006 <carletti@mobilia.it> 1.0.1-18
 - Expand config/relayclients in network-(create|delete) events
   [SME: 649]
@@ -394,6 +397,7 @@ done
 
 mkdir -p root/etc/e-smith/templates/var/service/qpsmtpd/peers/{0,local}
 touch root/etc/e-smith/templates/var/service/qpsmtpd/peers/{0,local}/template-begin
+touch root/etc/e-smith/templates/var/service/qpsmtpd/config/rhsbl_zones/template-begin
 
 %install
 rm -rf $RPM_BUILD_ROOT
