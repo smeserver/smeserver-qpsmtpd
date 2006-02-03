@@ -1,0 +1,18 @@
+diff -Nur -x '*.orig' -x '*.rej' smeserver-qpsmtpd-1.0.1/createlinks mezzanine_patched_smeserver-qpsmtpd-1.0.1/createlinks
+--- smeserver-qpsmtpd-1.0.1/createlinks	2006-02-03 23:15:39.766954291 +1100
++++ mezzanine_patched_smeserver-qpsmtpd-1.0.1/createlinks	2006-02-03 23:12:57.952108256 +1100
+@@ -5,6 +5,14 @@
+ my $service = "/var/service/qpsmtpd";
+ 
+ foreach $event (qw(
++		    network-create
++		    network-delete
++		))
++{
++    templates2events("$service/config/relayclients", $event);
++}
++
++foreach $event (qw(
+ 		    bootstrap-console-save
+ 		    console-save
+ 		    email-update

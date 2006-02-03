@@ -2,7 +2,7 @@ Summary: SME Server qpsmtpd module
 %define name smeserver-qpsmtpd
 Name: %{name}
 %define version 1.0.1
-%define release 17
+%define release 18
 Version: %{version}
 Release: %{release}
 License: GPL
@@ -21,6 +21,7 @@ Patch8: smeserver-qpsmtpd-1.0.1-bcc.patch
 Patch9: smeserver-qpsmtpd-1.0.1-rhsbl.patch 
 Patch10: smeserver-qpsmtpd-1.0.1-services_missing.patch
 Patch11: smeserver-qpsmtpd-1.0.1-invalid_resolvable_fromhost.patch
+Patch12: smeserver-qpsmtpd-1.0.1-relayclients.patch
 Packager: Gordon Rowell <gordonr@gormand.com.au>
 BuildRoot: /var/tmp/%{name}-%{version}-%{release}-buildroot
 Requires: qpsmtpd >= 0.31
@@ -43,6 +44,10 @@ AutoReqProv: no
 SME Server qpsmtpd smtpd module
 
 %changelog
+* Fri Feb  3 2006 <carletti@mobilia.it> 1.0.1-18
+- Expand config/relayclients in network-(create|delete) events
+  [SME: 649]
+
 * Thu Feb  2 2006 <charlie_brady@mitel.com> 1.0.1-17
 - Add template for invalid_resolvable_fromhost configuration file
   [SME: 638]
@@ -350,6 +355,7 @@ SME Server qpsmtpd smtpd module
 %patch9 -p1
 %patch10 -p1
 %patch11 -p1
+%patch12 -p1
 
 rm -r root/etc/e-smith/templates/var/qmail/control/mailrules.default
 rm root/etc/e-smith/events/email-update/templates2expand/var/qmail/control/mailrules.default
