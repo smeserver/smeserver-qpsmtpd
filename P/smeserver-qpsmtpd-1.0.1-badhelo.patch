@@ -1,0 +1,18 @@
+diff -Nur -x '*.orig' -x '*.rej' smeserver-qpsmtpd-1.0.1/createlinks mezzanine_patched_smeserver-qpsmtpd-1.0.1/createlinks
+--- smeserver-qpsmtpd-1.0.1/createlinks	2006-02-04 19:57:50.000000000 -0500
++++ mezzanine_patched_smeserver-qpsmtpd-1.0.1/createlinks	2006-02-04 19:47:54.000000000 -0500
+@@ -87,6 +87,7 @@
+ 				spool_dir
+ 				invalid_resolvable_fromhost
+ 				));
++templates2events("$config/badhelo", 'ip-change');
+ 
+ templates2events("$config/goodrcptto", qw(
+ 				bootstrap-console-save
+diff -Nur -x '*.orig' -x '*.rej' smeserver-qpsmtpd-1.0.1/root/etc/e-smith/templates/var/qmail/control/badhelo/template-begin mezzanine_patched_smeserver-qpsmtpd-1.0.1/root/etc/e-smith/templates/var/qmail/control/badhelo/template-begin
+--- smeserver-qpsmtpd-1.0.1/root/etc/e-smith/templates/var/qmail/control/badhelo/template-begin	2005-04-20 23:19:07.000000000 -0400
++++ mezzanine_patched_smeserver-qpsmtpd-1.0.1/root/etc/e-smith/templates/var/qmail/control/badhelo/template-begin	1969-12-31 19:00:00.000000000 -0500
+@@ -1,3 +0,0 @@
+-# these domains never uses their domain when greeting us, so reject transactions
+-aol.com
+-yahoo.com

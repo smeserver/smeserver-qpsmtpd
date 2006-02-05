@@ -2,7 +2,7 @@ Summary: SME Server qpsmtpd module
 %define name smeserver-qpsmtpd
 Name: %{name}
 %define version 1.0.1
-%define release 19
+%define release 20
 Version: %{version}
 Release: %{release}
 License: GPL
@@ -22,6 +22,7 @@ Patch9: smeserver-qpsmtpd-1.0.1-rhsbl.patch
 Patch10: smeserver-qpsmtpd-1.0.1-services_missing.patch
 Patch11: smeserver-qpsmtpd-1.0.1-invalid_resolvable_fromhost.patch
 Patch12: smeserver-qpsmtpd-1.0.1-relayclients.patch
+Patch13: smeserver-qpsmtpd-1.0.1-badhelo.patch
 Packager: Gordon Rowell <gordonr@gormand.com.au>
 BuildRoot: /var/tmp/%{name}-%{version}-%{release}-buildroot
 Requires: qpsmtpd >= 0.31
@@ -44,6 +45,10 @@ AutoReqProv: no
 SME Server qpsmtpd smtpd module
 
 %changelog
+* Sat Feb  4 2006 <charlie_brady@mitel.com> 1.0.1-20
+- Expand badhelo template during ip-change event, and remove
+  bogus expansions /var/qmail/control/badhelo templates. [SME: 651]
+
 * Fri Feb 3 2006 Shad L. Lords <slords@mail.com> 1.0.1-19
 - Add missing template-begin file in rhsbl directory [SME: 596]
 
@@ -359,6 +364,7 @@ SME Server qpsmtpd smtpd module
 %patch10 -p1
 %patch11 -p1
 %patch12 -p1
+%patch13 -p1
 
 rm -r root/etc/e-smith/templates/var/qmail/control/mailrules.default
 rm root/etc/e-smith/events/email-update/templates2expand/var/qmail/control/mailrules.default
@@ -373,6 +379,12 @@ rm root/etc/e-smith/events/domain-delete/templates2expand/var/qmail/control/mail
 rm root/etc/e-smith/events/user-delete/templates2expand/var/qmail/control/mailrules.default
 rm root/etc/e-smith/events/user-modify/templates2expand/var/qmail/control/mailrules.default
 rm root/etc/e-smith/events/ip-change/templates2expand/var/qmail/control/mailrules.default
+
+rm root/etc/e-smith/events/bootstrap-console-save/templates2expand/var/qmail/control/badhelo
+rm root/etc/e-smith/events/console-save/templates2expand/var/qmail/control/badhelo
+rm root/etc/e-smith/events/email-update/templates2expand/var/qmail/control/badhelo
+rm root/etc/e-smith/events/ip-change/templates2expand/var/qmail/control/badhelo
+
 
 %build
 perl createlinks
