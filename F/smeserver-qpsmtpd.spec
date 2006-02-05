@@ -1,28 +1,14 @@
 Summary: SME Server qpsmtpd module
 %define name smeserver-qpsmtpd
 Name: %{name}
-%define version 1.0.1
-%define release 21
+%define version 1.0.2
+%define release 01
 Version: %{version}
 Release: %{release}
 License: GPL
 Vendor: SME Server developers
 Group: Networking/Daemons
 Source: %{name}-%{version}.tar.gz
-Patch0: smeserver-qpsmtpd-1.0.1-removesymlinks.patch3
-Patch1: smeserver-qpsmtpd-1.0.1-sqpsmtpdconfig.patch
-Patch2: smeserver-qpsmtpd-1.0.1-sqpsmtpdconfig.patch2
-Patch3: smeserver-qpsmtpd-1.0.1-reconfigure.patch2
-Patch4: smeserver-qpsmtpd-1.0.1-resolvablefromhost.patch
-Patch5: smeserver-qpsmtpd-1.0.1-pseudonym.patch
-Patch6: smeserver-qpsmtpd-1.0.1-loglevel.patch
-Patch7: smeserver-qpsmtpd-1.0.1-loglevel.patch2
-Patch8: smeserver-qpsmtpd-1.0.1-bcc.patch 
-Patch9: smeserver-qpsmtpd-1.0.1-rhsbl.patch 
-Patch10: smeserver-qpsmtpd-1.0.1-services_missing.patch
-Patch11: smeserver-qpsmtpd-1.0.1-invalid_resolvable_fromhost.patch
-Patch12: smeserver-qpsmtpd-1.0.1-relayclients.patch
-Patch13: smeserver-qpsmtpd-1.0.1-badhelo.patch
 Packager: Gordon Rowell <gordonr@gormand.com.au>
 BuildRoot: /var/tmp/%{name}-%{version}-%{release}-buildroot
 Requires: qpsmtpd >= 0.31
@@ -45,6 +31,9 @@ AutoReqProv: no
 SME Server qpsmtpd smtpd module
 
 %changelog
+* Sun Feb  5 2006 <charlie_brady@mitel.com> 1.0.2-01
+- Roll new tarball. [SME: 651]
+
 * Sun Feb  5 2006 <charlie_brady@mitel.com> 1.0.1-21
 - Remove unused patterns.default remnants. Ensure that all
   templates2expand directories are populated only by createlinks
@@ -356,25 +345,6 @@ SME Server qpsmtpd smtpd module
 
 %prep
 %setup
-%patch0 -p1
-%patch1 -p1
-%patch2 -p1
-%patch3 -p1
-%patch4 -p1
-%patch5 -p1
-%patch6 -p1
-%patch7 -p1
-%patch8 -p1
-%patch9 -p1
-%patch10 -p1
-%patch11 -p1
-%patch12 -p1
-%patch13 -p1
-
-rm -r root/etc/e-smith/templates/var/qmail/control/mailrules.default
-rm -r root/etc/e-smith/templates/var/qmail/control/patterns.default
-
-rm -r root/etc/e-smith/events/*/templates2expand
 
 %build
 perl createlinks
