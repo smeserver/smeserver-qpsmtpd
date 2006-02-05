@@ -2,7 +2,7 @@ Summary: SME Server qpsmtpd module
 %define name smeserver-qpsmtpd
 Name: %{name}
 %define version 1.0.1
-%define release 20
+%define release 21
 Version: %{version}
 Release: %{release}
 License: GPL
@@ -45,6 +45,11 @@ AutoReqProv: no
 SME Server qpsmtpd smtpd module
 
 %changelog
+* Sun Feb  5 2006 <charlie_brady@mitel.com> 1.0.1-21
+- Remove unused patterns.default remnants. Ensure that all
+  templates2expand directories are populated only by createlinks
+  script. [SME: 651]
+
 * Sat Feb  4 2006 <charlie_brady@mitel.com> 1.0.1-20
 - Expand badhelo template during ip-change event, and remove
   bogus expansions /var/qmail/control/badhelo templates. [SME: 651]
@@ -367,24 +372,9 @@ SME Server qpsmtpd smtpd module
 %patch13 -p1
 
 rm -r root/etc/e-smith/templates/var/qmail/control/mailrules.default
-rm root/etc/e-smith/events/email-update/templates2expand/var/qmail/control/mailrules.default
-rm root/etc/e-smith/events/domain-create/templates2expand/var/qmail/control/mailrules.default
-rm root/etc/e-smith/events/pseudonym-create/templates2expand/var/qmail/control/mailrules.default
-rm root/etc/e-smith/events/pseudonym-modify/templates2expand/var/qmail/control/mailrules.default
-rm root/etc/e-smith/events/user-create/templates2expand/var/qmail/control/mailrules.default
-rm root/etc/e-smith/events/console-save/templates2expand/var/qmail/control/mailrules.default
-rm root/etc/e-smith/events/bootstrap-console-save/templates2expand/var/qmail/control/mailrules.default
-rm root/etc/e-smith/events/pseudonym-delete/templates2expand/var/qmail/control/mailrules.default
-rm root/etc/e-smith/events/domain-delete/templates2expand/var/qmail/control/mailrules.default
-rm root/etc/e-smith/events/user-delete/templates2expand/var/qmail/control/mailrules.default
-rm root/etc/e-smith/events/user-modify/templates2expand/var/qmail/control/mailrules.default
-rm root/etc/e-smith/events/ip-change/templates2expand/var/qmail/control/mailrules.default
+rm -r root/etc/e-smith/templates/var/qmail/control/patterns.default
 
-rm root/etc/e-smith/events/bootstrap-console-save/templates2expand/var/qmail/control/badhelo
-rm root/etc/e-smith/events/console-save/templates2expand/var/qmail/control/badhelo
-rm root/etc/e-smith/events/email-update/templates2expand/var/qmail/control/badhelo
-rm root/etc/e-smith/events/ip-change/templates2expand/var/qmail/control/badhelo
-
+rm -r root/etc/e-smith/events/*/templates2expand
 
 %build
 perl createlinks
