@@ -2,13 +2,14 @@ Summary: SME Server qpsmtpd module
 %define name smeserver-qpsmtpd
 Name: %{name}
 %define version 1.0.2
-%define release 01
+%define release 02
 Version: %{version}
 Release: %{release}
 License: GPL
 Vendor: SME Server developers
 Group: Networking/Daemons
 Source: %{name}-%{version}.tar.gz
+Patch0: smeserver-qpsmtpd-1.0.1-resolvablefromhost.patch
 Packager: Gordon Rowell <gordonr@gormand.com.au>
 BuildRoot: /var/tmp/%{name}-%{version}-%{release}-buildroot
 Requires: qpsmtpd >= 0.31
@@ -31,6 +32,10 @@ AutoReqProv: no
 SME Server qpsmtpd smtpd module
 
 %changelog
+* Mon Feb  6 2006 <charlie_brady@mitel.com> 1.0.2-02
+- Enable resolvable_fromhost check by default, and add
+  whitelistsenders config for local domains. [SME: 638]
+
 * Sun Feb  5 2006 <charlie_brady@mitel.com> 1.0.2-01
 - Roll new tarball. [SME: 651]
 
@@ -345,6 +350,7 @@ SME Server qpsmtpd smtpd module
 
 %prep
 %setup
+%patch0 -p1
 
 %build
 perl createlinks
