@@ -1,0 +1,20 @@
+diff -Nur -x '*.orig' -x '*.rej' smeserver-qpsmtpd-1.0.2/root/etc/e-smith/templates/var/service/qpsmtpd/config/plugins/90queue-qmail-queue mezzanine_patched_smeserver-qpsmtpd-1.0.2/root/etc/e-smith/templates/var/service/qpsmtpd/config/plugins/90queue-qmail-queue
+--- smeserver-qpsmtpd-1.0.2/root/etc/e-smith/templates/var/service/qpsmtpd/config/plugins/90queue-qmail-queue	2005-04-21 15:29:22.000000000 +1000
++++ mezzanine_patched_smeserver-qpsmtpd-1.0.2/root/etc/e-smith/templates/var/service/qpsmtpd/config/plugins/90queue-qmail-queue	2006-02-10 14:54:27.698752424 +1100
+@@ -1,4 +1,5 @@
+ {
+-# queue the mail with qmail-queue 
++    return "# DelegateMailServer set" if $DelegateMailServer;
++
++    return "queue/qmail-queue";
+ }
+-queue/qmail-queue
+diff -Nur -x '*.orig' -x '*.rej' smeserver-qpsmtpd-1.0.2/root/etc/e-smith/templates/var/service/qpsmtpd/config/plugins/90queue-smtp-forward mezzanine_patched_smeserver-qpsmtpd-1.0.2/root/etc/e-smith/templates/var/service/qpsmtpd/config/plugins/90queue-smtp-forward
+--- smeserver-qpsmtpd-1.0.2/root/etc/e-smith/templates/var/service/qpsmtpd/config/plugins/90queue-smtp-forward	1970-01-01 10:00:00.000000000 +1000
++++ mezzanine_patched_smeserver-qpsmtpd-1.0.2/root/etc/e-smith/templates/var/service/qpsmtpd/config/plugins/90queue-smtp-forward	2006-02-10 14:55:13.613763728 +1100
+@@ -0,0 +1,5 @@
++{
++    return "# DelegateMailServer not set" unless $DelegateMailServer;
++
++    return "queue/smtp-forward $DelegateMailServer";
++}

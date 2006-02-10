@@ -2,7 +2,7 @@ Summary: SME Server qpsmtpd module
 %define name smeserver-qpsmtpd
 Name: %{name}
 %define version 1.0.2
-%define release 02
+%define release 03
 Version: %{version}
 Release: %{release}
 License: GPL
@@ -10,6 +10,7 @@ Vendor: SME Server developers
 Group: Networking/Daemons
 Source: %{name}-%{version}.tar.gz
 Patch0: smeserver-qpsmtpd-1.0.1-resolvablefromhost.patch
+Patch1: smeserver-qpsmtpd-1.0.1-DelegateMailServer.patch
 Packager: Gordon Rowell <gordonr@gormand.com.au>
 BuildRoot: /var/tmp/%{name}-%{version}-%{release}-buildroot
 Requires: qpsmtpd >= 0.31
@@ -32,6 +33,10 @@ AutoReqProv: no
 SME Server qpsmtpd smtpd module
 
 %changelog
+* Fri Feb 10 2006 <gordonr@gormand.com.au> 1.0.2-03
+- Call queue/smtp-forward to connect to DelegateMailServer
+  instead of queueing locally when DelegateMailServer is set [SME: 710]
+
 * Mon Feb  6 2006 <charlie_brady@mitel.com> 1.0.2-02
 - Enable resolvable_fromhost check by default, and add
   whitelistsenders config for local domains. [SME: 638]
@@ -351,6 +356,7 @@ SME Server qpsmtpd smtpd module
 %prep
 %setup
 %patch0 -p1
+%patch1 -p1
 
 %build
 perl createlinks
