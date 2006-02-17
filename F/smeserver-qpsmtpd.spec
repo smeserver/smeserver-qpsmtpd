@@ -2,15 +2,16 @@ Summary: SME Server qpsmtpd module
 %define name smeserver-qpsmtpd
 Name: %{name}
 %define version 1.0.2
-%define release 03
+%define release 04
 Version: %{version}
 Release: %{release}
 License: GPL
 Vendor: SME Server developers
 Group: Networking/Daemons
 Source: %{name}-%{version}.tar.gz
-Patch0: smeserver-qpsmtpd-1.0.1-resolvablefromhost.patch
-Patch1: smeserver-qpsmtpd-1.0.1-DelegateMailServer.patch
+Patch0: smeserver-qpsmtpd-1.0.2-resolvablefromhost.patch
+Patch1: smeserver-qpsmtpd-1.0.2-DelegateMailServer.patch
+Patch2: smeserver-qpsmtpd-1.0.2-dnsb_allow.patch
 Packager: Gordon Rowell <gordonr@gormand.com.au>
 BuildRoot: /var/tmp/%{name}-%{version}-%{release}-buildroot
 Requires: qpsmtpd >= 0.31
@@ -33,6 +34,9 @@ AutoReqProv: no
 SME Server qpsmtpd smtpd module
 
 %changelog
+* Fri Feb 17 2006 Charlie Brady <charlie_brady@mitel.com> 1.0.2-04
+- Excempt local networks from dnsbl lookup. [SME: 830]
+
 * Fri Feb 10 2006 <gordonr@gormand.com.au> 1.0.2-03
 - Call queue/smtp-forward to connect to DelegateMailServer
   instead of queueing locally when DelegateMailServer is set [SME: 710]
@@ -357,6 +361,7 @@ SME Server qpsmtpd smtpd module
 %setup
 %patch0 -p1
 %patch1 -p1
+%patch2 -p1
 
 %build
 perl createlinks
