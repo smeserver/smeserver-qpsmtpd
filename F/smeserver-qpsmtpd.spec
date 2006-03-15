@@ -1,17 +1,14 @@
 Summary: SME Server qpsmtpd module
 %define name smeserver-qpsmtpd
 Name: %{name}
-%define version 1.0.2
-%define release 04
+%define version 1.2.0
+%define release 01
 Version: %{version}
 Release: %{release}
 License: GPL
 Vendor: SME Server developers
 Group: Networking/Daemons
 Source: %{name}-%{version}.tar.gz
-Patch0: smeserver-qpsmtpd-1.0.2-resolvablefromhost.patch
-Patch1: smeserver-qpsmtpd-1.0.2-DelegateMailServer.patch
-Patch2: smeserver-qpsmtpd-1.0.2-dnsb_allow.patch
 Packager: Gordon Rowell <gordonr@gormand.com.au>
 BuildRoot: /var/tmp/%{name}-%{version}-%{release}-buildroot
 Requires: qpsmtpd >= 0.31
@@ -34,6 +31,9 @@ AutoReqProv: no
 SME Server qpsmtpd smtpd module
 
 %changelog
+* Wed Mar 15 2006 Charlie Brady <charlie_brady@mitel.com> 1.2.0-01
+- Roll stable stream version. [SME: 1016]
+
 * Fri Feb 17 2006 Charlie Brady <charlie_brady@mitel.com> 1.0.2-04
 - Excempt local networks from dnsbl lookup. [SME: 830]
 
@@ -359,9 +359,6 @@ SME Server qpsmtpd smtpd module
 
 %prep
 %setup
-%patch0 -p1
-%patch1 -p1
-%patch2 -p1
 
 %build
 perl createlinks
