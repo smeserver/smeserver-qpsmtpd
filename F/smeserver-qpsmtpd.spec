@@ -2,13 +2,14 @@ Summary: SME Server qpsmtpd module
 %define name smeserver-qpsmtpd
 Name: %{name}
 %define version 1.2.0
-%define release 01
+%define release 02
 Version: %{version}
 Release: %{release}
 License: GPL
 Vendor: SME Server developers
 Group: Networking/Daemons
 Source: %{name}-%{version}.tar.gz
+Patch0: smeserver-qpsmtpd-1.2.0-DelegateMailServer.patch2
 Packager: Gordon Rowell <gordonr@gormand.com.au>
 BuildRoot: /var/tmp/%{name}-%{version}-%{release}-buildroot
 Requires: qpsmtpd >= 0.31
@@ -31,6 +32,11 @@ AutoReqProv: no
 SME Server qpsmtpd smtpd module
 
 %changelog
+* Thu Mar 23 2006 Charlie Brady <charlie_brady@mitel.com> 1.2.0-02
+- Disable use of smtp-forward plugin (probably temporarily) in
+  DelegateMailServer mode, to avoid mail looping problem. Always
+  use qmail-queue plugin (for now). [SME: 1121]
+
 * Wed Mar 15 2006 Charlie Brady <charlie_brady@mitel.com> 1.2.0-01
 - Roll stable stream version. [SME: 1016]
 
@@ -359,6 +365,7 @@ SME Server qpsmtpd smtpd module
 
 %prep
 %setup
+%patch0 -p1
 
 %build
 perl createlinks
