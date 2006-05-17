@@ -2,7 +2,7 @@ Summary: SME Server qpsmtpd module
 %define name smeserver-qpsmtpd
 Name: %{name}
 %define version 1.2.0
-%define release 03
+%define release 04
 Version: %{version}
 Release: %{release}
 License: GPL
@@ -11,6 +11,7 @@ Group: Networking/Daemons
 Source: %{name}-%{version}.tar.gz
 Patch0: smeserver-qpsmtpd-1.2.0-DelegateMailServer.patch2
 Patch1: smeserver-qpsmtpd-1.2.0-loglevel.patch3
+patch2: smeserver-qpsmtpd-1.2.0-DelegatedDomains.patch
 Packager: Gordon Rowell <gordonr@gormand.com.au>
 BuildRoot: /var/tmp/%{name}-%{version}-%{release}-buildroot
 Requires: qpsmtpd >= 0.31
@@ -33,6 +34,10 @@ AutoReqProv: no
 SME Server qpsmtpd smtpd module
 
 %changelog
+* Wed May 17 2006 Gordon Rowell <gordonr@gormand.com.au> 1.2.0-04
+- Allow all mail for domains which are being forwarded to internal
+  mail servers [SME: 1253]
+
 * Thu Apr 6 2006 Gavin Weight <gweight@gmail.com> 1.2.0-03
 - Revert back to loglevel 8 from 6. [SME: 503]
 
@@ -45,7 +50,7 @@ SME Server qpsmtpd smtpd module
 - Roll stable stream version. [SME: 1016]
 
 * Fri Feb 17 2006 Charlie Brady <charlie_brady@mitel.com> 1.0.2-04
-- Excempt local networks from dnsbl lookup. [SME: 830]
+- Exempt local networks from dnsbl lookup. [SME: 830]
 
 * Fri Feb 10 2006 <gordonr@gormand.com.au> 1.0.2-03
 - Call queue/smtp-forward to connect to DelegateMailServer
@@ -371,6 +376,7 @@ SME Server qpsmtpd smtpd module
 %setup
 %patch0 -p1
 %patch1 -p1
+%patch2 -p1
 
 %build
 perl createlinks
