@@ -1,0 +1,48 @@
+diff -Nur -x '*.orig' -x '*.rej' smeserver-qpsmtpd-1.2.0/root/usr/share/qpsmtpd/plugins/virus/pattern_filter mezzanine_patched_smeserver-qpsmtpd-1.2.0/root/usr/share/qpsmtpd/plugins/virus/pattern_filter
+--- smeserver-qpsmtpd-1.2.0/root/usr/share/qpsmtpd/plugins/virus/pattern_filter	2005-10-07 11:21:58.000000000 +1000
++++ mezzanine_patched_smeserver-qpsmtpd-1.2.0/root/usr/share/qpsmtpd/plugins/virus/pattern_filter	2006-06-05 12:10:37.569541114 +1000
+@@ -152,14 +152,17 @@
+   return DECLINED unless $config->{check};
+ 
+   # Load signatures
+-  my %sig = ();
++  my @signatures = ();
+   my $config_arg = $config->{rcpt} ? { rcpt => $config->{rcpt} } : {};
+   for my $suffix (split /\s*,\s*/, $config->{check}) {
+     my @sig = $self->qp->config("signatures_$suffix", $config_arg);
+     $self->log(3, "warning - no signatures_$suffix loaded") unless @sig;
+-    $sig{$suffix} = \@sig if @sig;
++    push @signatures, @sig if @sig;
+   }
+-  return DECLINED unless keys %sig;
++  return DECLINED unless @signatures;
++
++  my $patterns = join("|", @signatures);
++  my $pat = qr{ ^($patterns) }xmso;
+ 
+   $transaction->body_resetpos;
+ 
+@@ -167,19 +170,12 @@
+ 
+   while ($_ = $transaction->body_getline)
+   {
+-    for my $suffix (sort keys %sig)
++    if ( $_ =~ m{$pat} )
+     {
+-      for my $s (@{$sig{$suffix}})
+-      {
+-        next unless $s;
+-        if ($_ =~ m/^\Q$s/)
+-	{
+-          # Match - deny!
+-          $self->log(6, "the following line matched $suffix sig '$s':\n$_");
+-	  return (DENY, "We don't accept email with executable content [$s]."); 
++      my $match = $1;
+ 
+-	}
+-      }
++      $self->log(6, "the following line matched '$match':\n$_");
++      return (DENY, "We don't accept email with executable content [$match]."); 
+     }
+   }
+ 

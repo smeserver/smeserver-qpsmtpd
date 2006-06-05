@@ -2,7 +2,7 @@ Summary: SME Server qpsmtpd module
 %define name smeserver-qpsmtpd
 Name: %{name}
 %define version 1.2.0
-%define release 04
+%define release 05
 Version: %{version}
 Release: %{release}
 License: GPL
@@ -11,7 +11,8 @@ Group: Networking/Daemons
 Source: %{name}-%{version}.tar.gz
 Patch0: smeserver-qpsmtpd-1.2.0-DelegateMailServer.patch2
 Patch1: smeserver-qpsmtpd-1.2.0-loglevel.patch3
-patch2: smeserver-qpsmtpd-1.2.0-DelegatedDomains.patch
+Patch2: smeserver-qpsmtpd-1.2.0-DelegatedDomains.patch
+Patch3: smeserver-qpsmtpd-1.2.0-pattern_filter.patch
 Packager: Gordon Rowell <gordonr@gormand.com.au>
 BuildRoot: /var/tmp/%{name}-%{version}-%{release}-buildroot
 Requires: qpsmtpd >= 0.31
@@ -34,6 +35,10 @@ AutoReqProv: no
 SME Server qpsmtpd smtpd module
 
 %changelog
+* Mon Jun 5 2006 Gordon Rowell <gordonr@gormand.com.au> 1.2.0-05
+- Improve peformance of pattern_filter plugin [SME: 1532]
+- TODO: Remove obsolete code and comments from that plugin
+
 * Wed May 17 2006 Gordon Rowell <gordonr@gormand.com.au> 1.2.0-04
 - Allow all mail for domains which are being forwarded to internal
   mail servers [SME: 1253]
@@ -377,6 +382,7 @@ SME Server qpsmtpd smtpd module
 %patch0 -p1
 %patch1 -p1
 %patch2 -p1
+%patch3 -p1
 
 %build
 perl createlinks
