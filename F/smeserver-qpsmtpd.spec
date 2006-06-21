@@ -2,7 +2,7 @@ Summary: SME Server qpsmtpd module
 %define name smeserver-qpsmtpd
 Name: %{name}
 %define version 1.2.0
-%define release 06
+%define release 07
 Version: %{version}
 Release: %{release}
 License: GPL
@@ -14,6 +14,7 @@ Patch1: smeserver-qpsmtpd-1.2.0-loglevel.patch3
 Patch2: smeserver-qpsmtpd-1.2.0-DelegatedDomains.patch
 Patch3: smeserver-qpsmtpd-1.2.0-pattern_filter.patch
 Patch4: smeserver-qpsmtpd-1.2.0-group_goodrcptto.patch
+Patch5: smeserver-qpsmtpd-1.2.0-KlezFilter.patch 
 Packager: Gordon Rowell <gordonr@gormand.com.au>
 BuildRoot: /var/tmp/%{name}-%{version}-%{release}-buildroot
 Requires: qpsmtpd >= 0.31
@@ -36,8 +37,12 @@ AutoReqProv: no
 SME Server qpsmtpd smtpd module
 
 %changelog
+* Wed Jun 21 2006 Gordon Rowell <gordonr@gormand.com.au> 1.2.0-07
+- Remove configuration for klez_filter scanner as it duplicates
+  work of the pattern_filter [SME: 1620]
+
 * Tue Jun 20 2006 Filippo Carletti <carletti@mobilia.it> 1.2.0-06
-- Exapnd goodrcptto on group create/modifiy/delete events [SME: 1616]
+- Expand goodrcptto on group create/modifiy/delete events [SME: 1616]
 
 * Mon Jun 5 2006 Gordon Rowell <gordonr@gormand.com.au> 1.2.0-05
 - Improve peformance of pattern_filter plugin [SME: 1532]
@@ -388,6 +393,7 @@ SME Server qpsmtpd smtpd module
 %patch2 -p1
 %patch3 -p1
 %patch4 -p1
+%patch5 -p1
 
 %build
 perl createlinks
