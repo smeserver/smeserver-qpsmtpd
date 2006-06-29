@@ -2,7 +2,7 @@ Summary: SME Server qpsmtpd module
 %define name smeserver-qpsmtpd
 Name: %{name}
 %define version 1.2.0
-%define release 09
+%define release 10
 Version: %{version}
 Release: %{release}
 License: GPL
@@ -17,6 +17,7 @@ Patch4: smeserver-qpsmtpd-1.2.0-group_goodrcptto.patch
 Patch5: smeserver-qpsmtpd-1.2.0-KlezFilter.patch 
 Patch6: smeserver-qpsmtpd-1.2.0-group_badrcptto.patch
 Patch7: smeserver-qpsmtpd-1.2.0-smtpgreeting.patch
+Patch8: smeserver-qpsmtpd-1.2.0-smtpgreeting.patch2
 Packager: Gordon Rowell <gordonr@gormand.com.au>
 BuildRoot: /var/tmp/%{name}-%{version}-%{release}-buildroot
 Requires: qpsmtpd >= 0.31
@@ -39,6 +40,9 @@ AutoReqProv: no
 SME Server qpsmtpd smtpd module
 
 %changelog
+* Thu Jun 29 2006 Gordon Rowell <gordonr@gormand.com.au> 1.2.0-10
+- Change default smtpgreeting to $SystemName.$DomainName [SME: 1325]
+
 * Thu Jun 29 2006 Gordon Rowell <gordonr@gormand.com.au> 1.2.0-09
 - Template /var/service/qpsmtpd/config/smtpgreeting, defaulting to 
   $DomainName. To set a custom greeting, set $smtpd{Greeting} [SME: 1325]
@@ -408,6 +412,7 @@ SME Server qpsmtpd smtpd module
 SMTPGREETING=root/etc/e-smith/templates/var/service/qpsmtpd/config/smtpgreeting
 mkdir -p $SMTPGREETING
 touch $SMTPGREETING/template-begin
+%patch8 -p1
 
 %build
 perl createlinks
