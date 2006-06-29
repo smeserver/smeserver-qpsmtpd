@@ -2,7 +2,7 @@ Summary: SME Server qpsmtpd module
 %define name smeserver-qpsmtpd
 Name: %{name}
 %define version 1.2.0
-%define release 08
+%define release 09
 Version: %{version}
 Release: %{release}
 License: GPL
@@ -16,6 +16,7 @@ Patch3: smeserver-qpsmtpd-1.2.0-pattern_filter.patch
 Patch4: smeserver-qpsmtpd-1.2.0-group_goodrcptto.patch
 Patch5: smeserver-qpsmtpd-1.2.0-KlezFilter.patch 
 Patch6: smeserver-qpsmtpd-1.2.0-group_badrcptto.patch
+Patch7: smeserver-qpsmtpd-1.2.0-smtpgreeting.patch
 Packager: Gordon Rowell <gordonr@gormand.com.au>
 BuildRoot: /var/tmp/%{name}-%{version}-%{release}-buildroot
 Requires: qpsmtpd >= 0.31
@@ -38,6 +39,10 @@ AutoReqProv: no
 SME Server qpsmtpd smtpd module
 
 %changelog
+* Thu Jun 29 2006 Gordon Rowell <gordonr@gormand.com.au> 1.2.0-09
+- Template /var/service/qpsmtpd/config/smtpgreeting, defaulting to 
+  $DomainName. To set a custom greeting, set $smtpd{Greeting} [SME: 1325]
+
 * Mon Jun 26 2006 Filippo Carletti <carletti@mobilia.it> 1.2.0-08
 - Expand badrcptto on group create/modifiy/delete events [SME: 1632]
 
@@ -399,6 +404,10 @@ SME Server qpsmtpd smtpd module
 %patch4 -p1
 %patch5 -p1
 %patch6 -p1
+%patch7 -p1
+SMTPGREETING=root/etc/e-smith/templates/var/service/qpsmtpd/config/smtpgreeting
+mkdir -p $SMTPGREETING
+touch $SMTPGREETING/template-begin
 
 %build
 perl createlinks
