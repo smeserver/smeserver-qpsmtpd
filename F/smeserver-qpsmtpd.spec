@@ -2,13 +2,14 @@ Summary: SME Server qpsmtpd module
 %define name smeserver-qpsmtpd
 Name: %{name}
 %define version 1.2.1
-%define release 01
+%define release 02
 Version: %{version}
 Release: %{release}
 License: GPL
 Vendor: SME Server developers
 Group: Networking/Daemons
 Source: %{name}-%{version}.tar.gz
+Patch0: smeserver-qpsmtpd-1.2.1-LiteralIP.patch
 Packager: Gordon Rowell <gordonr@gormand.com.au>
 BuildRoot: /var/tmp/%{name}-%{version}-%{release}-buildroot
 Requires: qpsmtpd >= 0.31
@@ -31,6 +32,9 @@ AutoReqProv: no
 SME Server qpsmtpd smtpd module
 
 %changelog
+* Sat Jul 1 2006 Gordon Rowell <gordonr@gormand.com.au> 1.2.1-02
+- Allow mail to [$ExternalIP] to support postmaster@[$ExternalIP] [SME: 1675]
+
 * Sat Jul 1 2006 Gordon Rowell <gordonr@gormand.com.au> 1.2.1-01
 - Roll tarball with patches to 1.2.0-10
 
@@ -395,6 +399,7 @@ SME Server qpsmtpd smtpd module
 
 %prep
 %setup
+%patch0 -p1
 
 %build
 perl createlinks
