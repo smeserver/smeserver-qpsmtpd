@@ -1,6 +1,0 @@
-diff -Nur -x '*.orig' -x '*.rej' smeserver-qpsmtpd-1.2.0/root/etc/e-smith/db/configuration/defaults/qpsmtpd/LogLevel mezzanine_patched_smeserver-qpsmtpd-1.2.0/root/etc/e-smith/db/configuration/defaults/qpsmtpd/LogLevel
---- smeserver-qpsmtpd-1.2.0/root/etc/e-smith/db/configuration/defaults/qpsmtpd/LogLevel	2006-02-06 01:38:30.000000000 +1100
-+++ mezzanine_patched_smeserver-qpsmtpd-1.2.0/root/etc/e-smith/db/configuration/defaults/qpsmtpd/LogLevel	2006-04-07 07:48:31.948442017 +1000
-@@ -1 +1 @@
--6
-+8

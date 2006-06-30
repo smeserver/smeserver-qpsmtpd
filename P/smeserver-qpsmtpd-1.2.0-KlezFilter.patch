@@ -1,9 +1,0 @@
-diff -Nur -x '*.orig' -x '*.rej' smeserver-qpsmtpd-1.2.0/root/etc/e-smith/templates/var/service/qpsmtpd/config/plugins/60klez_filter mezzanine_patched_smeserver-qpsmtpd-1.2.0/root/etc/e-smith/templates/var/service/qpsmtpd/config/plugins/60klez_filter
---- smeserver-qpsmtpd-1.2.0/root/etc/e-smith/templates/var/service/qpsmtpd/config/plugins/60klez_filter	2005-08-20 07:31:01.000000000 +1000
-+++ mezzanine_patched_smeserver-qpsmtpd-1.2.0/root/etc/e-smith/templates/var/service/qpsmtpd/config/plugins/60klez_filter	1970-01-01 10:00:00.000000000 +1000
-@@ -1,5 +0,0 @@
--{
--    return "# klez_filter disabled" unless ($smtpd{PatternsScan} eq "enabled");
--
--    return "virus/klez_filter";
--}

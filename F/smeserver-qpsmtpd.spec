@@ -1,23 +1,14 @@
 Summary: SME Server qpsmtpd module
 %define name smeserver-qpsmtpd
 Name: %{name}
-%define version 1.2.0
-%define release 10
+%define version 1.2.1
+%define release 01
 Version: %{version}
 Release: %{release}
 License: GPL
 Vendor: SME Server developers
 Group: Networking/Daemons
 Source: %{name}-%{version}.tar.gz
-Patch0: smeserver-qpsmtpd-1.2.0-DelegateMailServer.patch2
-Patch1: smeserver-qpsmtpd-1.2.0-loglevel.patch3
-Patch2: smeserver-qpsmtpd-1.2.0-DelegatedDomains.patch
-Patch3: smeserver-qpsmtpd-1.2.0-pattern_filter.patch
-Patch4: smeserver-qpsmtpd-1.2.0-group_goodrcptto.patch
-Patch5: smeserver-qpsmtpd-1.2.0-KlezFilter.patch 
-Patch6: smeserver-qpsmtpd-1.2.0-group_badrcptto.patch
-Patch7: smeserver-qpsmtpd-1.2.0-smtpgreeting.patch
-Patch8: smeserver-qpsmtpd-1.2.0-smtpgreeting.patch2
 Packager: Gordon Rowell <gordonr@gormand.com.au>
 BuildRoot: /var/tmp/%{name}-%{version}-%{release}-buildroot
 Requires: qpsmtpd >= 0.31
@@ -40,6 +31,9 @@ AutoReqProv: no
 SME Server qpsmtpd smtpd module
 
 %changelog
+* Sat Jul 1 2006 Gordon Rowell <gordonr@gormand.com.au> 1.2.1-01
+- Roll tarball with patches to 1.2.0-10
+
 * Thu Jun 29 2006 Gordon Rowell <gordonr@gormand.com.au> 1.2.0-10
 - Change default smtpgreeting to $SystemName.$DomainName [SME: 1325]
 
@@ -401,18 +395,6 @@ SME Server qpsmtpd smtpd module
 
 %prep
 %setup
-%patch0 -p1
-%patch1 -p1
-%patch2 -p1
-%patch3 -p1
-%patch4 -p1
-%patch5 -p1
-%patch6 -p1
-%patch7 -p1
-SMTPGREETING=root/etc/e-smith/templates/var/service/qpsmtpd/config/smtpgreeting
-mkdir -p $SMTPGREETING
-touch $SMTPGREETING/template-begin
-%patch8 -p1
 
 %build
 perl createlinks
