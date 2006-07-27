@@ -2,7 +2,7 @@ Summary: SME Server qpsmtpd module
 %define name smeserver-qpsmtpd
 Name: %{name}
 %define version 1.2.1
-%define release 02
+%define release 03
 Version: %{version}
 Release: %{release}
 License: GPL
@@ -10,6 +10,7 @@ Vendor: SME Server developers
 Group: Networking/Daemons
 Source: %{name}-%{version}.tar.gz
 Patch0: smeserver-qpsmtpd-1.2.1-LiteralIP.patch
+Patch1: smeserver-qpsmtpd-1.2.1-badrcptto-hosts.patch
 Packager: Gordon Rowell <gordonr@gormand.com.au>
 BuildRoot: /var/tmp/%{name}-%{version}-%{release}-buildroot
 Requires: qpsmtpd >= 0.31
@@ -32,6 +33,9 @@ AutoReqProv: no
 SME Server qpsmtpd smtpd module
 
 %changelog
+* Thu Jul 27 2006 Gordon Rowell <gordonr@gormand.com.au> 1.2.1-03
+- Remove hosts from badrcptto - we only handle domains [SME: 1777]
+
 * Sat Jul 1 2006 Gordon Rowell <gordonr@gormand.com.au> 1.2.1-02
 - Allow mail to [$ExternalIP] to support postmaster@[$ExternalIP] [SME: 1675]
 
@@ -400,6 +404,7 @@ SME Server qpsmtpd smtpd module
 %prep
 %setup
 %patch0 -p1
+%patch1 -p1
 
 %build
 perl createlinks
