@@ -1,0 +1,100 @@
+diff -Nur -x '*.orig' -x '*.rej' smeserver-qpsmtpd-1.2.1/root/usr/share/qpsmtpd/plugins/check_smtp_forward mezzanine_patched_smeserver-qpsmtpd-1.2.1/root/usr/share/qpsmtpd/plugins/check_smtp_forward
+--- smeserver-qpsmtpd-1.2.1/root/usr/share/qpsmtpd/plugins/check_smtp_forward	1970-01-01 10:00:00.000000000 +1000
++++ mezzanine_patched_smeserver-qpsmtpd-1.2.1/root/usr/share/qpsmtpd/plugins/check_smtp_forward	2006-08-18 15:18:22.418632168 +1000
+@@ -0,0 +1,96 @@
++=head1 NAME
++
++check_smtp_forward
++
++=head1 DESCRIPTION
++
++This plugin checks whether SMTP forwarding would be allowed for this
++recipient by connecting to the internal mail server.
++
++If the internal mail server rejects the mail, we DENY it. 
++If the internal mail server would accept the mail, we DECLINE.
++If the internal mail server cannot be contacted, we DENYSOFT.
++
++=head1 CONFIG
++
++Reads smtproutes to determine where to send mail for various domains.
++Ignores any default smtproutes entries as they are for upstream mail
++servers (e.g. ISP).
++
++=head1 AUTHOR
++
++Copyright 2006 Gordon Rowell <gordonr@gormand.com.au>
++
++This software is free software and may be distributed under the same
++terms as qpsmtpd itself.
++
++Based in part on the smtp-forward plugin from the qpsmtpd distribution.
++
++=cut
++
++use Net::SMTP;
++
++sub register {
++  my ($self, $qp, @args) = @_;
++
++  for my $smtp_route ($self->qp->config("smtproutes"))
++  {
++    $smtp_route =~ s/[ \[ \] ]//g;
++    my ($host, $server) = $smtp_route =~ m/(\S+):(\S+)/;
++
++    next unless ($host);
++
++    $self->{_smtp_host}{$host} = $server;
++
++    $self->log(LOGINFO, "$host: $server");
++  }
++}
++
++sub hook_rcpt {
++  my ($self, $transaction, $recipient) = @_;
++  my $host = lc $recipient->host;
++
++  my $server = $self->{_smtp_host}{$host} or return (DECLINED);
++  my $port;
++
++  ($server, $port) = split(/:/, $server);
++  $port ||= 25;
++
++  $self->log(LOGINFO, "Checking $recipient on $server:$port");
++
++  my $smtp = Net::SMTP->new(
++                            $server,
++                            Port => $port,
++                            Timeout => 60,
++                            Hello => $self->qp->config("me"),
++                           ) || return (DENYSOFT, 
++                                        "Unable to connect to $server: $!");
++
++  $smtp->mail( $transaction->sender->address || "" );
++  my $rc = $smtp->code;
++  my $message = $smtp->message;
++  chomp($message);
++
++  if ($rc =~ m/^4\d{2}$/ ) {
++	return(DENYSOFT, "Unable to queue message ($message)");
++  } elsif ($rc =~ m/^5\d{2}$/ ) {
++	return(DENY, "Unable to queue message ($message)");
++  }
++
++  $smtp->to($recipient->address);
++  $rc = $smtp->code;
++  $message = $smtp->message;
++  chomp($message);
++
++  if ($rc =~ m/^4\d{2}$/ ) {
++        return(DENYSOFT, "Unable to queue message ($message)");
++  } elsif ($rc =~ m/^5\d{2}$/ ) {
++        return(DENY, "Unable to queue message ($message)");
++  }
++
++  $smtp->quit();
++  $rc = $smtp->code;
++
++  $self->log(LOGINFO, "$server would accept message to $recipient");
++  return DECLINED;	# Internal mail server is happy
++}

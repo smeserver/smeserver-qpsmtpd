@@ -2,7 +2,7 @@ Summary: SME Server qpsmtpd module
 %define name smeserver-qpsmtpd
 Name: %{name}
 %define version 1.2.1
-%define release 04
+%define release 05
 Version: %{version}
 Release: %{release}
 License: GPL
@@ -11,7 +11,6 @@ Group: Networking/Daemons
 Source: %{name}-%{version}.tar.gz
 Patch0: smeserver-qpsmtpd-1.2.1-LiteralIP.patch
 Patch1: smeserver-qpsmtpd-1.2.1-badrcptto-hosts.patch
-Patch2:  smeserver-qpsmtpd-1.2.1-smtpforward.patch
 Packager: Gordon Rowell <gordonr@gormand.com.au>
 BuildRoot: /var/tmp/%{name}-%{version}-%{release}-buildroot
 Requires: qpsmtpd >= 0.31.1-1sme08
@@ -34,6 +33,11 @@ AutoReqProv: no
 SME Server qpsmtpd smtpd module
 
 %changelog
+* Fri Aug 18 2006 Gordon Rowell <gordonr@gormand.com.au> 1.2.1-05
+- Revert last change. Enhancing the smtp-forward plugin to handle
+  multiple internal mail servers for different domains is too
+  complex. Let's let qmail do that work. [SME: 710]
+
 * Fri Aug 18 2006 Gordon Rowell <gordonr@gormand.com.au> 1.2.1-04
 - Re-enable smtp-forward plugin requiring version which declines if
   the connection is from a relayclient, to allow fallthrough to standard
@@ -412,7 +416,6 @@ SME Server qpsmtpd smtpd module
 %setup
 %patch0 -p1
 %patch1 -p1
-%patch2 -p1
 
 %build
 perl createlinks
