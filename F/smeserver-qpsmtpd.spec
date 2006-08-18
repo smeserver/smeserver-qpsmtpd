@@ -2,7 +2,7 @@ Summary: SME Server qpsmtpd module
 %define name smeserver-qpsmtpd
 Name: %{name}
 %define version 1.2.1
-%define release 06
+%define release 07
 Version: %{version}
 Release: %{release}
 License: GPL
@@ -12,9 +12,10 @@ Source: %{name}-%{version}.tar.gz
 Patch0: smeserver-qpsmtpd-1.2.1-LiteralIP.patch
 Patch1: smeserver-qpsmtpd-1.2.1-badrcptto-hosts.patch
 Patch2: smeserver-qpsmtpd-1.2.1-check_smtp_forward.patch
+Patch3: smeserver-qpsmtpd-1.2.1-enable_check_smtp_forward.patch
 Packager: Gordon Rowell <gordonr@gormand.com.au>
 BuildRoot: /var/tmp/%{name}-%{version}-%{release}-buildroot
-Requires: qpsmtpd >= 0.31.1-1sme08
+Requires: qpsmtpd >= 0.31.1-1sme07
 Requires: daemontools
 Requires: qpsmtpd-plugins >= 0.0.1-sme04
 Requires: ipsvd
@@ -34,6 +35,10 @@ AutoReqProv: no
 SME Server qpsmtpd smtpd module
 
 %changelog
+* Fri Aug 18 2006 Gordon Rowell <gordonr@gormand.com.au> 1.2.1-07
+- Enable check_smtp_forward if any domains are being forwarded
+  to internal mail servers [SME: 1850]
+
 * Fri Aug 18 2006 Gordon Rowell <gordonr@gormand.com.au> 1.2.1-06
 - Add check_smtp_forward plugin which contacts the internal mail
   server(s) to determine whether the mail would be accepted. If
@@ -424,6 +429,7 @@ SME Server qpsmtpd smtpd module
 %patch0 -p1
 %patch1 -p1
 %patch2 -p1
+%patch3 -p1
 
 %build
 perl createlinks

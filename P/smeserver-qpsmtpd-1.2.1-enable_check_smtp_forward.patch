@@ -1,0 +1,17 @@
+diff -Nur -x '*.orig' -x '*.rej' smeserver-qpsmtpd-1.2.1/root/etc/e-smith/templates/var/service/qpsmtpd/config/plugins/37check_smtp_forward mezzanine_patched_smeserver-qpsmtpd-1.2.1/root/etc/e-smith/templates/var/service/qpsmtpd/config/plugins/37check_smtp_forward
+--- smeserver-qpsmtpd-1.2.1/root/etc/e-smith/templates/var/service/qpsmtpd/config/plugins/37check_smtp_forward	1970-01-01 10:00:00.000000000 +1000
++++ mezzanine_patched_smeserver-qpsmtpd-1.2.1/root/etc/e-smith/templates/var/service/qpsmtpd/config/plugins/37check_smtp_forward	2006-08-18 16:42:10.349994767 +1000
+@@ -0,0 +1,13 @@
++{
++    return "check_smtp_forward" if $DelegateMailServer;
++
++    use esmith::DomainsDB;
++    my $ddb = esmith::DomainsDB->open_ro();
++
++    for my $domain ( $ddb->domains )
++    {
++        return "check_smtp_forward" if $domain->prop('MailServer');
++    }
++
++    return "# check_smtp_forward not required";
++}
