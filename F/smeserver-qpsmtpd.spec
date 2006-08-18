@@ -2,7 +2,7 @@ Summary: SME Server qpsmtpd module
 %define name smeserver-qpsmtpd
 Name: %{name}
 %define version 1.2.1
-%define release 03
+%define release 04
 Version: %{version}
 Release: %{release}
 License: GPL
@@ -11,9 +11,10 @@ Group: Networking/Daemons
 Source: %{name}-%{version}.tar.gz
 Patch0: smeserver-qpsmtpd-1.2.1-LiteralIP.patch
 Patch1: smeserver-qpsmtpd-1.2.1-badrcptto-hosts.patch
+Patch2:  smeserver-qpsmtpd-1.2.1-smtpforward.patch
 Packager: Gordon Rowell <gordonr@gormand.com.au>
 BuildRoot: /var/tmp/%{name}-%{version}-%{release}-buildroot
-Requires: qpsmtpd >= 0.31
+Requires: qpsmtpd >= 0.31.1-1sme08
 Requires: daemontools
 Requires: qpsmtpd-plugins >= 0.0.1-sme04
 Requires: ipsvd
@@ -33,6 +34,12 @@ AutoReqProv: no
 SME Server qpsmtpd smtpd module
 
 %changelog
+* Fri Aug 18 2006 Gordon Rowell <gordonr@gormand.com.au> 1.2.1-04
+- Re-enable smtp-forward plugin requiring version which declines if
+  the connection is from a relayclient, to allow fallthrough to standard
+  qmail-queue plugin.
+- Add default/failsafe queue/qmail-queue plugin [SME: 710]
+
 * Thu Jul 27 2006 Gordon Rowell <gordonr@gormand.com.au> 1.2.1-03
 - Remove hosts from badrcptto - we only handle domains [SME: 1777]
 
@@ -405,6 +412,7 @@ SME Server qpsmtpd smtpd module
 %setup
 %patch0 -p1
 %patch1 -p1
+%patch2 -p1
 
 %build
 perl createlinks
