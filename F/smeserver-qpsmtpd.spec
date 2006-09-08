@@ -2,7 +2,7 @@ Summary: SME Server qpsmtpd module
 %define name smeserver-qpsmtpd
 Name: %{name}
 %define version 1.2.1
-%define release 08
+%define release 09
 Version: %{version}
 Release: %{release}
 License: GPL
@@ -14,6 +14,7 @@ Patch1: smeserver-qpsmtpd-1.2.1-badrcptto-hosts.patch
 Patch2: smeserver-qpsmtpd-1.2.1-check_smtp_forward.patch
 Patch3: smeserver-qpsmtpd-1.2.1-enable_check_smtp_forward.patch
 Patch4: smeserver-qpsmtpd-1.2.1-bcc_mode.patch
+Patch5: smeserver-qpsmtpd-1.2.1-peers_plugin.patch
 Packager: Gordon Rowell <gordonr@gormand.com.au>
 BuildRoot: /var/tmp/%{name}-%{version}-%{release}-buildroot
 Requires: qpsmtpd >= 0.31.1-1sme07
@@ -36,6 +37,9 @@ AutoReqProv: no
 SME Server qpsmtpd smtpd module
 
 %changelog
+* Fri Sep 08 2006 Charlie Brady <charlie_brady@mitel.com> 1.2.1-09
+- Add 'peers' plugin code. [SME: 1893]
+
 * Thu Aug 24 2006 Filippo Carletti <carletti@mobilia.it> 1.2.1-08
 - Add option for stealth mail logging. To enable:
   - config setprop qpsmtpd BccMode bcc [SME: 1876]
@@ -436,6 +440,7 @@ SME Server qpsmtpd smtpd module
 %patch2 -p1
 %patch3 -p1
 %patch4 -p1
+%patch5 -p1
 
 %build
 perl createlinks
