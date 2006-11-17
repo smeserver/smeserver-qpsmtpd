@@ -1,0 +1,23 @@
+diff -Nur -x '*.orig' -x '*.rej' smeserver-qpsmtpd-1.2.1/createlinks mezzanine_patched_smeserver-qpsmtpd-1.2.1/createlinks
+--- smeserver-qpsmtpd-1.2.1/createlinks	2006-06-30 17:08:07.000000000 -0600
++++ mezzanine_patched_smeserver-qpsmtpd-1.2.1/createlinks	2006-11-17 13:22:45.000000000 -0700
+@@ -23,6 +23,8 @@
+     templates2events("$service/peers/0", $event);
+     templates2events("$service/peers/local", $event);
+ #    event_link("mailfront-conf-tcpsvd-peers", $event, "55");
++
++    templates2events("$service/config/peers/0", $event);
+ }
+ 
+ templates2events("$service/runenv", qw(
+diff -Nur -x '*.orig' -x '*.rej' smeserver-qpsmtpd-1.2.1/root/etc/e-smith/templates.metadata/var/service/qpsmtpd/config/peers/0 mezzanine_patched_smeserver-qpsmtpd-1.2.1/root/etc/e-smith/templates.metadata/var/service/qpsmtpd/config/peers/0
+--- smeserver-qpsmtpd-1.2.1/root/etc/e-smith/templates.metadata/var/service/qpsmtpd/config/peers/0	1969-12-31 17:00:00.000000000 -0700
++++ mezzanine_patched_smeserver-qpsmtpd-1.2.1/root/etc/e-smith/templates.metadata/var/service/qpsmtpd/config/peers/0	2006-11-17 13:21:45.000000000 -0700
+@@ -0,0 +1 @@
++TEMPLATE_PATH="/var/service/qpsmtpd/config/plugins"
+diff -Nur -x '*.orig' -x '*.rej' smeserver-qpsmtpd-1.2.1/root/etc/e-smith/templates.metadata/var/service/qpsmtpd/peers/0 mezzanine_patched_smeserver-qpsmtpd-1.2.1/root/etc/e-smith/templates.metadata/var/service/qpsmtpd/peers/0
+--- smeserver-qpsmtpd-1.2.1/root/etc/e-smith/templates.metadata/var/service/qpsmtpd/peers/0	2006-11-17 13:22:58.000000000 -0700
++++ mezzanine_patched_smeserver-qpsmtpd-1.2.1/root/etc/e-smith/templates.metadata/var/service/qpsmtpd/peers/0	2006-11-17 13:21:53.000000000 -0700
+@@ -1,2 +1 @@
+-TEMPLATE_PATH="/var/service/qpsmtpd/config/plugins"
+ PERMS=use esmith::ConfigDB; (esmith::ConfigDB->open_ro->get('qpsmtpd')->prop('access') eq "private") ? "000" : "0644"

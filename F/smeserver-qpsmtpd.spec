@@ -2,7 +2,7 @@ Summary: SME Server qpsmtpd module
 %define name smeserver-qpsmtpd
 Name: %{name}
 %define version 1.2.1
-%define release 10
+%define release 12
 Version: %{version}
 Release: %{release}
 License: GPL
@@ -16,6 +16,8 @@ Patch3: smeserver-qpsmtpd-1.2.1-enable_check_smtp_forward.patch
 Patch4: smeserver-qpsmtpd-1.2.1-bcc_mode.patch
 Patch5: smeserver-qpsmtpd-1.2.1-peers_plugin.patch
 Patch6: smeserver-qpsmtpd-1.2.1-peers_plugin.patch2
+Patch7: smeserver-qpsmtpd-1.2.1-usepeers.patch 
+Patch8: smeserver-qpsmtpd-1.2.1-usepeers.patch2
 Packager: Gordon Rowell <gordonr@gormand.com.au>
 BuildRoot: /var/tmp/%{name}-%{version}-%{release}-buildroot
 Requires: qpsmtpd >= 0.31.1-1sme07
@@ -38,6 +40,18 @@ AutoReqProv: no
 SME Server qpsmtpd smtpd module
 
 %changelog
+* Fri Nov 17 2006 Gordon Rowell <gordonr@gormand.com.au> 1.2.1-12
+- Correct last patch (wrong templates.metadata file) [SME: 1893]
+- Expand config/peers/0 in the relevant events
+
+* Fri Nov 17 2006 Gordon Rowell <gordonr@gormand.com.au> 1.2.1-11
+- Enable Charlie's peers plugin [SME: 1893]
+  Use templates.metadata to provide backwards compatibility with 
+  add-on template fragments (at least for the first pass)
+    config/peers/0 is generated from existing config/plugins template
+    config/plugins is now a static file which just loads the peers plugin
+- TODO: Generate local plugins file(s) with different config
+
 * Sun Oct 22 2006 Charlie Brady <charlie_brady@mitel.com> 1.2.1-10
 - Fix RE used to strip octets from IP address in peers plugin. [SME: 1893]
 
@@ -446,6 +460,8 @@ SME Server qpsmtpd smtpd module
 %patch4 -p1
 %patch5 -p1
 %patch6 -p1
+%patch7 -p1
+%patch8 -p1
 
 %build
 perl createlinks
