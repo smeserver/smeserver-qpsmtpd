@@ -2,7 +2,7 @@ Summary: SME Server qpsmtpd module
 %define name smeserver-qpsmtpd
 Name: %{name}
 %define version 1.2.1
-%define release 15
+%define release 16
 Version: %{version}
 Release: %{release}
 License: GPL
@@ -21,6 +21,7 @@ Patch8: smeserver-qpsmtpd-1.2.1-usepeers.patch2
 Patch9: smeserver-qpsmtpd-1.2.1-rcpthosts_regenerated.patch
 Patch10: smeserver-qpsmtpd-1.2.1-mergetnef2mime.patch
 Patch11: smeserver-qpsmtpd-1.2.1-usepeers.patch3
+Patch12: smeserver-qpsmtpd-1.2.1-usepeers.patch4
 Packager: Gordon Rowell <gordonr@gormand.com.au>
 BuildRoot: /var/tmp/%{name}-%{version}-%{release}-buildroot
 Requires: qpsmtpd >= 0.31.1-1sme07
@@ -50,6 +51,10 @@ AutoReqProv: no
 SME Server qpsmtpd smtpd module
 
 %changelog
+* Wed Nov 22 2006 Gordon Rowell <gordonr@gormand.com.au> 1.2.1-16
+- Expand config/peers/local in the relevant events [SME:1893]
+- TODO: Generate peers links for local networks
+
 * Wed Nov 22 2006 Gordon Rowell <gordonr@gormand.com.au> 1.2.1-15
 - Remove peers/0 templates.metadata file
 - Create config/peers templates directories
@@ -488,6 +493,7 @@ SME Server qpsmtpd smtpd module
 %patch9 -p1
 %patch10 -p1
 %patch11 -p1
+%patch12 -p1
 
 %build
 perl createlinks
