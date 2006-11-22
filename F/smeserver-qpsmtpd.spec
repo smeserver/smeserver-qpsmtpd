@@ -2,7 +2,7 @@ Summary: SME Server qpsmtpd module
 %define name smeserver-qpsmtpd
 Name: %{name}
 %define version 1.2.1
-%define release 13
+%define release 14
 Version: %{version}
 Release: %{release}
 License: GPL
@@ -19,6 +19,7 @@ Patch6: smeserver-qpsmtpd-1.2.1-peers_plugin.patch2
 Patch7: smeserver-qpsmtpd-1.2.1-usepeers.patch 
 Patch8: smeserver-qpsmtpd-1.2.1-usepeers.patch2
 Patch9: smeserver-qpsmtpd-1.2.1-rcpthosts_regenerated.patch
+Patch10: smeserver-qpsmtpd-1.2.1-mergetnef2mime.patch
 Packager: Gordon Rowell <gordonr@gormand.com.au>
 BuildRoot: /var/tmp/%{name}-%{version}-%{release}-buildroot
 Requires: qpsmtpd >= 0.31.1-1sme07
@@ -33,6 +34,8 @@ Obsoletes: e-smith-ssl-mailfront
 Provides: e-smith-smtpd
 Obsoletes: e-smith-qpsmtpd
 Provides: e-smith-qpsmtpd
+Obsoletes: smeserver-qpsmtpd-tnef2mime
+Provides: smeserver-qpsmtpd-tnef2mime
 BuildArchitectures: noarch
 BuildRequires: e-smith-devtools
 AutoReqProv: no
@@ -41,6 +44,9 @@ AutoReqProv: no
 SME Server qpsmtpd smtpd module
 
 %changelog
+* Wed Nov 22 2006 Gordon Rowell <gordonr@gormand.com.au> 1.2.1-13
+- Merge in smeserver-qpsmtpd-tnef2mime [SME: 2087]
+
 * Mon Nov 20 2006 Gavin Weight <gweight@gmail.com> 1.2.1-13
 - Fix rcpthosts to regenerate on ip-change. [SME: 1926]
 
@@ -467,6 +473,7 @@ SME Server qpsmtpd smtpd module
 %patch7 -p1
 %patch8 -p1
 %patch9 -p1
+%patch10 -p1
 
 %build
 perl createlinks
