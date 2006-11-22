@@ -36,6 +36,11 @@ Obsoletes: e-smith-qpsmtpd
 Provides: e-smith-qpsmtpd
 Obsoletes: smeserver-qpsmtpd-tnef2mime
 Provides: smeserver-qpsmtpd-tnef2mime
+Requires: e-smith-base >= 4.15.2
+Requires: perl-Convert-TNEF
+Requires: perl-IO-stringy
+Requires: perl-File-MMagic
+Requires: perl-MIME-tools
 BuildArchitectures: noarch
 BuildRequires: e-smith-devtools
 AutoReqProv: no
@@ -44,7 +49,7 @@ AutoReqProv: no
 SME Server qpsmtpd smtpd module
 
 %changelog
-* Wed Nov 22 2006 Gordon Rowell <gordonr@gormand.com.au> 1.2.1-13
+* Wed Nov 22 2006 Gordon Rowell <gordonr@gormand.com.au> 1.2.1-14
 - Merge in smeserver-qpsmtpd-tnef2mime [SME: 2087]
 
 * Mon Nov 20 2006 Gavin Weight <gweight@gmail.com> 1.2.1-13
