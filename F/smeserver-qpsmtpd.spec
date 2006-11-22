@@ -2,7 +2,7 @@ Summary: SME Server qpsmtpd module
 %define name smeserver-qpsmtpd
 Name: %{name}
 %define version 1.2.1
-%define release 16
+%define release 17
 Version: %{version}
 Release: %{release}
 License: GPL
@@ -51,8 +51,11 @@ AutoReqProv: no
 SME Server qpsmtpd smtpd module
 
 %changelog
+* Wed Nov 22 2006 Gordon Rowell <gordonr@gormand.com.au> 1.2.1-17
+- Create config/peers directory [SME: 1893]
+
 * Wed Nov 22 2006 Gordon Rowell <gordonr@gormand.com.au> 1.2.1-16
-- Expand config/peers/local in the relevant events [SME:1893]
+- Expand config/peers/local in the relevant events [SME: 1893]
 - TODO: Generate peers links for local networks
 
 * Wed Nov 22 2006 Gordon Rowell <gordonr@gormand.com.au> 1.2.1-15
@@ -511,7 +514,7 @@ do
     mkdir -p 				root/var/log/$service
 done
 
-for dir in env config peers ssl
+for dir in env config peers ssl config/peers
 do
     mkdir -p root/var/service/qpsmtpd/$dir
 done
