@@ -2,7 +2,7 @@ Summary: SME Server qpsmtpd module
 %define name smeserver-qpsmtpd
 Name: %{name}
 %define version 1.2.1
-%define release 14
+%define release 15
 Version: %{version}
 Release: %{release}
 License: GPL
@@ -20,6 +20,7 @@ Patch7: smeserver-qpsmtpd-1.2.1-usepeers.patch
 Patch8: smeserver-qpsmtpd-1.2.1-usepeers.patch2
 Patch9: smeserver-qpsmtpd-1.2.1-rcpthosts_regenerated.patch
 Patch10: smeserver-qpsmtpd-1.2.1-mergetnef2mime.patch
+Patch11: smeserver-qpsmtpd-1.2.1-usepeers.patch3
 Packager: Gordon Rowell <gordonr@gormand.com.au>
 BuildRoot: /var/tmp/%{name}-%{version}-%{release}-buildroot
 Requires: qpsmtpd >= 0.31.1-1sme07
@@ -49,6 +50,13 @@ AutoReqProv: no
 SME Server qpsmtpd smtpd module
 
 %changelog
+* Wed Nov 22 2006 Gordon Rowell <gordonr@gormand.com.au> 1.2.1-15
+- Remove peers/0 templates.metadata file
+- Create config/peers templates directories
+- Symlink config/peers/{0,local} to ../plugins
+- To override local qpsmtpd config, create custom template for
+  /var/service/qpsmtpd/config/peers/local [SME: 1893]
+
 * Wed Nov 22 2006 Gordon Rowell <gordonr@gormand.com.au> 1.2.1-14
 - Merge in smeserver-qpsmtpd-tnef2mime [SME: 2087]
 
@@ -479,6 +487,7 @@ SME Server qpsmtpd smtpd module
 %patch8 -p1
 %patch9 -p1
 %patch10 -p1
+%patch11 -p1
 
 %build
 perl createlinks
@@ -504,6 +513,11 @@ done
 mkdir -p root/etc/e-smith/templates/var/service/qpsmtpd/peers/{0,local}
 touch root/etc/e-smith/templates/var/service/qpsmtpd/peers/{0,local}/template-begin
 touch root/etc/e-smith/templates/var/service/qpsmtpd/config/rhsbl_zones/template-begin
+
+PEERS_CONFIG=root/etc/e-smith/templates/var/service/qpsmtpd/config/peers
+mkdir -p $PEERS_CONFIG
+ln -s ../plugins $PEERS_CONFIG/0
+ln -s ../plugins $PEERS_CONFIG/local
 
 %install
 rm -rf $RPM_BUILD_ROOT
