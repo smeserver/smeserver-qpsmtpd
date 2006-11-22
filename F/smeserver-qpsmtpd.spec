@@ -2,7 +2,7 @@ Summary: SME Server qpsmtpd module
 %define name smeserver-qpsmtpd
 Name: %{name}
 %define version 1.2.1
-%define release 17
+%define release 18
 Version: %{version}
 Release: %{release}
 License: GPL
@@ -51,6 +51,9 @@ AutoReqProv: no
 SME Server qpsmtpd smtpd module
 
 %changelog
+* Wed Nov 22 2006 Gordon Rowell <gordonr@gormand.com.au> 1.2.1-18
+- Ensure config directory resolves for sqpsmtpd service [SME: 1893]
+
 * Wed Nov 22 2006 Gordon Rowell <gordonr@gormand.com.au> 1.2.1-17
 - Create config/peers directory [SME: 1893]
 
@@ -518,6 +521,8 @@ for dir in env config peers ssl config/peers
 do
     mkdir -p root/var/service/qpsmtpd/$dir
 done
+
+ln -s ../qpsmtpd/config root/var/service/sqpsmtpd/config
 
 mkdir -p root/etc/e-smith/templates/var/service/qpsmtpd/peers/{0,local}
 touch root/etc/e-smith/templates/var/service/qpsmtpd/peers/{0,local}/template-begin
