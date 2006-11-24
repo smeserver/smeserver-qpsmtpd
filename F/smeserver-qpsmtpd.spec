@@ -2,7 +2,7 @@ Summary: SME Server qpsmtpd module
 %define name smeserver-qpsmtpd
 Name: %{name}
 %define version 1.2.1
-%define release 18
+%define release 19
 Version: %{version}
 Release: %{release}
 License: GPL
@@ -22,13 +22,14 @@ Patch9: smeserver-qpsmtpd-1.2.1-rcpthosts_regenerated.patch
 Patch10: smeserver-qpsmtpd-1.2.1-mergetnef2mime.patch
 Patch11: smeserver-qpsmtpd-1.2.1-usepeers.patch3
 Patch12: smeserver-qpsmtpd-1.2.1-usepeers.patch4
+Patch13: smeserver-qpsmtpd-1.2.1-control1.patch
 Packager: Gordon Rowell <gordonr@gormand.com.au>
 BuildRoot: /var/tmp/%{name}-%{version}-%{release}-buildroot
 Requires: qpsmtpd >= 0.31.1-1sme07
 Requires: daemontools
 Requires: qpsmtpd-plugins >= 0.0.1-sme04
 Requires: ipsvd
-Requires: e-smith-lib >= 1.15.1-33
+Requires: e-smith-lib >= 1.16.0-08
 Obsoletes: e-smith-obtuse-smtpd
 Obsoletes: e-smith-qmail-smtpd
 Obsoletes: e-smith-mailfront
@@ -51,6 +52,10 @@ AutoReqProv: no
 SME Server qpsmtpd smtpd module
 
 %changelog
+* Fri Nov 24 2006 Gordon Rowell <gordonr@gormand.com.au> 1.2.1-19
+- Update e-smith-lib requires to pick up configure_peers() change [SME: 1893]
+- Add control/1 script and call from run script to configure peers [SME: 1893]
+
 * Wed Nov 22 2006 Gordon Rowell <gordonr@gormand.com.au> 1.2.1-18
 - Ensure config directory resolves for sqpsmtpd service [SME: 1893]
 
@@ -500,6 +505,7 @@ SME Server qpsmtpd smtpd module
 %patch10 -p1
 %patch11 -p1
 %patch12 -p1
+%patch13 -p1
 
 %build
 perl createlinks
@@ -541,6 +547,7 @@ rm -f %{name}-%{version}-%{release}-filelist
     --dir /var/service/qpsmtpd "attr(1755,root,root)" \
     --file /var/service/qpsmtpd/down "attr(0644,root,root)" \
     --file /var/service/qpsmtpd/run "attr(0755,root,root)" \
+    --file /var/service/qpsmtpd/control/1 "attr(0755,root,root)" \
     --dir /var/service/qpsmtpd/supervise "attr(0700,root,root)" \
     --dir /var/service/qpsmtpd/env "attr(0755,root,root)" \
     --file /var/service/qpsmtpd/env/PATH "attr(0644,root,root)" \
