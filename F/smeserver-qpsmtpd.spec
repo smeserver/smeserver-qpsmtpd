@@ -2,7 +2,7 @@ Summary: SME Server qpsmtpd module
 %define name smeserver-qpsmtpd
 Name: %{name}
 %define version 1.2.1
-%define release 19
+%define release 20
 Version: %{version}
 Release: %{release}
 License: GPL
@@ -23,6 +23,7 @@ Patch10: smeserver-qpsmtpd-1.2.1-mergetnef2mime.patch
 Patch11: smeserver-qpsmtpd-1.2.1-usepeers.patch3
 Patch12: smeserver-qpsmtpd-1.2.1-usepeers.patch4
 Patch13: smeserver-qpsmtpd-1.2.1-control1.patch
+Patch14: smeserver-qpsmtpd-1.2.1-control1.patch2
 Packager: Gordon Rowell <gordonr@gormand.com.au>
 BuildRoot: /var/tmp/%{name}-%{version}-%{release}-buildroot
 Requires: qpsmtpd >= 0.31.1-1sme07
@@ -52,6 +53,9 @@ AutoReqProv: no
 SME Server qpsmtpd smtpd module
 
 %changelog
+* Fri Nov 24 2006 Gordon Rowell <gordonr@gormand.com.au> 1.2.1-20
+- Regenerate peers directories in network-{create,delete} [SME: 1893]
+
 * Fri Nov 24 2006 Gordon Rowell <gordonr@gormand.com.au> 1.2.1-19
 - Update e-smith-lib requires to pick up configure_peers() change [SME: 1893]
 - Add control/1 script and call from run script to configure peers [SME: 1893]
@@ -506,6 +510,7 @@ SME Server qpsmtpd smtpd module
 %patch11 -p1
 %patch12 -p1
 %patch13 -p1
+%patch14 -p1
 
 %build
 perl createlinks
