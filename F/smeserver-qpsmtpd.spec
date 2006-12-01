@@ -577,7 +577,7 @@ DISABLE_LOCAL="
 
 for file in $DISABLE_LOCAL
 do
-    echo "# $file disabled - custom template" > $PEERS_CONFIG/local/$file
+    echo "# $file disabled for local connections" > $PEERS_CONFIG/local/$file
 done
 
 (
