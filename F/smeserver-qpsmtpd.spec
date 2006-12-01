@@ -2,7 +2,7 @@ Summary: SME Server qpsmtpd module
 %define name smeserver-qpsmtpd
 Name: %{name}
 %define version 1.2.1
-%define release 21
+%define release 22
 Version: %{version}
 Release: %{release}
 License: GPL
@@ -53,6 +53,21 @@ AutoReqProv: no
 SME Server qpsmtpd smtpd module
 
 %changelog
+* Fri Dec 1 2006 Gordon Rowell <gordonr@gormand.com.au> 1.2.1-22
+- Replace config/peers/0 and config/peers/local template directory
+  symlinks with a tree of symlinks. Disable the following plugins
+  for local connections: [SME: 1893]
+  10check_earlytalker
+  12count_unrecognized_commands
+  16require_resolvable_fromhost
+  20rhsbl
+  22dnsbl
+  30check_badmailfrom
+  33check_badrcptto_patterns
+  34check_badrcptto
+  38check_goodrcptto
+  70spamassassin
+
 * Fri Nov 24 2006 Gordon Rowell <gordonr@gormand.com.au> 1.2.1-21
 - Fix last change to use SIGUSR1, not SIGHUP, and only for qpsmtpd.
   The peers directories are shared between qpsmtpd and sqpsmtpd [SME: 1893]
@@ -544,9 +559,37 @@ touch root/etc/e-smith/templates/var/service/qpsmtpd/peers/{0,local}/template-be
 touch root/etc/e-smith/templates/var/service/qpsmtpd/config/rhsbl_zones/template-begin
 
 PEERS_CONFIG=root/etc/e-smith/templates/var/service/qpsmtpd/config/peers
-mkdir -p $PEERS_CONFIG
-ln -s ../plugins $PEERS_CONFIG/0
-ln -s ../plugins $PEERS_CONFIG/local
+mkdir -p $PEERS_CONFIG/0
+mkdir -p $PEERS_CONFIG/local
+
+DISABLE_LOCAL="
+10check_earlytalker
+12count_unrecognized_commands
+16require_resolvable_fromhost
+20rhsbl
+22dnsbl
+30check_badmailfrom
+33check_badrcptto_patterns
+34check_badrcptto
+38check_goodrcptto
+70spamassassin
+"
+
+for file in $DISABLE_LOCAL
+do
+    echo "# $file disabled - custom template" > $PEERS_CONFIG/local/$file
+done
+
+(
+    cd root/etc/e-smith/templates/var/service/qpsmtpd/config/plugins
+    for file in *
+    do
+        [ -e ../peers/0/$file ] || 
+            ln -s ../../plugins/$file ../peers/0/$file
+        [ -e ../peers/local/$file ] || 
+            ln -s ../../plugins/$file ../peers/local/$file
+    done
+)
 
 %install
 rm -rf $RPM_BUILD_ROOT
@@ -584,6 +627,13 @@ rm -f %{name}-%{version}-%{release}-filelist
 /sbin/e-smith/create-system-user qpsmtpd 453 \
 	'qpsmtpd system user' /var/service/qpsmtpd /bin/false
 /usr/sbin/groupadd -r clamav 2>/dev/null || :
+
+TEMPLATES_DIR=/etc/e-smith/templates/var/service/qpsmtpd/config/peers
+
+[ -L $TEMPLATES_DIR/0 ]     && rm -f $TEMPLATES_DIR/0
+[ -L $TEMPLATES_DIR/local ] && rm -f $TEMPLATES_DIR/local
+true
+
 %post
 
 %clean
