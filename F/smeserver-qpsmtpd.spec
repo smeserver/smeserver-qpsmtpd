@@ -54,7 +54,7 @@ SME Server qpsmtpd smtpd module
 
 %changelog
 * Fri Dec 1 2006 Gordon Rowell <gordonr@gormand.com.au> 1.2.1-23
-- Re-enable thes by default for local connections as they already
+- Re-enable these by default for local connections as they already
   check for relayclient() for relevant sections: [SME: 1893]
   30check_badmailfrom
   33check_badrcptto_patterns
