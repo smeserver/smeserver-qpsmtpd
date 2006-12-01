@@ -2,7 +2,7 @@ Summary: SME Server qpsmtpd module
 %define name smeserver-qpsmtpd
 Name: %{name}
 %define version 1.2.1
-%define release 22
+%define release 23
 Version: %{version}
 Release: %{release}
 License: GPL
@@ -53,6 +53,14 @@ AutoReqProv: no
 SME Server qpsmtpd smtpd module
 
 %changelog
+* Fri Dec 1 2006 Gordon Rowell <gordonr@gormand.com.au> 1.2.1-23
+- Re-enable thes by default for local connections as they already
+  check for relayclient() for relevant sections: [SME: 1893]
+  30check_badmailfrom
+  33check_badrcptto_patterns
+  34check_badrcptto
+  38check_goodrcptto
+
 * Fri Dec 1 2006 Gordon Rowell <gordonr@gormand.com.au> 1.2.1-22
 - Replace config/peers/0 and config/peers/local template directory
   symlinks with a tree of symlinks. Disable the following plugins
@@ -568,10 +576,6 @@ DISABLE_LOCAL="
 16require_resolvable_fromhost
 20rhsbl
 22dnsbl
-30check_badmailfrom
-33check_badrcptto_patterns
-34check_badrcptto
-38check_goodrcptto
 70spamassassin
 "
 
