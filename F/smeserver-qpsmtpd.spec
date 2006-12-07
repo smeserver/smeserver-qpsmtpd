@@ -4,7 +4,8 @@ Name: %{name}
 %define version 1.2.1
 %define release 23
 Version: %{version}
-Release: %{release}
+Release: %smerelease %{release}
+Packager: %{_packager}
 License: GPL
 Vendor: SME Server developers
 Group: Networking/Daemons
@@ -24,7 +25,6 @@ Patch11: smeserver-qpsmtpd-1.2.1-usepeers.patch3
 Patch12: smeserver-qpsmtpd-1.2.1-usepeers.patch4
 Patch13: smeserver-qpsmtpd-1.2.1-control1.patch
 Patch14: smeserver-qpsmtpd-1.2.1-control1.patch3
-Packager: Gordon Rowell <gordonr@gormand.com.au>
 BuildRoot: /var/tmp/%{name}-%{version}-%{release}-buildroot
 Requires: qpsmtpd >= 0.31.1-1sme07
 Requires: daemontools
@@ -53,6 +53,10 @@ AutoReqProv: no
 SME Server qpsmtpd smtpd module
 
 %changelog
+* Thu Dec 07 2006 Shad L. Lords <slords@mail.com>
+- Update to new release naming.  No functional changes.
+- Make Packager generic
+
 * Fri Dec 1 2006 Gordon Rowell <gordonr@gormand.com.au> 1.2.1-23
 - Re-enable these by default for local connections as they already
   check for relayclient() for relevant sections: [SME: 1893]
