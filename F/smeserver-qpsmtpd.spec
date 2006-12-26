@@ -2,7 +2,7 @@ Summary: SME Server qpsmtpd module
 %define name smeserver-qpsmtpd
 Name: %{name}
 %define version 1.2.1
-%define release 23
+%define release 24
 Version: %{version}
 Release: %smerelease %{release}
 Packager: %{_packager}
@@ -25,6 +25,7 @@ Patch11: smeserver-qpsmtpd-1.2.1-usepeers.patch3
 Patch12: smeserver-qpsmtpd-1.2.1-usepeers.patch4
 Patch13: smeserver-qpsmtpd-1.2.1-control1.patch
 Patch14: smeserver-qpsmtpd-1.2.1-control1.patch3
+Patch15: smeserver-qpsmtpd-1.2.1-fixpeers.patch
 BuildRoot: /var/tmp/%{name}-%{version}-%{release}-buildroot
 Requires: qpsmtpd >= 0.31.1-1sme07
 Requires: daemontools
@@ -53,6 +54,9 @@ AutoReqProv: no
 SME Server qpsmtpd smtpd module
 
 %changelog
+* Thu Dec 26 2006 Shad L. Lords <slords@mail.com> 1.2.1-24
+- Update peers to exit gracefully if no config passed [SME: 2167]
+
 * Thu Dec 07 2006 Shad L. Lords <slords@mail.com>
 - Update to new release naming.  No functional changes.
 - Make Packager generic
@@ -542,6 +546,7 @@ SME Server qpsmtpd smtpd module
 %patch12 -p1
 %patch13 -p1
 %patch14 -p1
+%patch15 -p1
 
 %build
 perl createlinks
