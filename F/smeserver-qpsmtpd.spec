@@ -2,7 +2,7 @@ Summary: SME Server qpsmtpd module
 %define name smeserver-qpsmtpd
 Name: %{name}
 %define version 1.2.1
-%define release 24
+%define release 25
 Version: %{version}
 Release: %smerelease %{release}
 Packager: %{_packager}
@@ -25,7 +25,7 @@ Patch11: smeserver-qpsmtpd-1.2.1-usepeers.patch3
 Patch12: smeserver-qpsmtpd-1.2.1-usepeers.patch4
 Patch13: smeserver-qpsmtpd-1.2.1-control1.patch
 Patch14: smeserver-qpsmtpd-1.2.1-control1.patch3
-Patch15: smeserver-qpsmtpd-1.2.1-fixpeers.patch
+Patch15: smeserver-qpsmtpd-1.2.1-peersinit.patch
 BuildRoot: /var/tmp/%{name}-%{version}-%{release}-buildroot
 Requires: qpsmtpd >= 0.31.1-1sme07
 Requires: daemontools
@@ -54,7 +54,11 @@ AutoReqProv: no
 SME Server qpsmtpd smtpd module
 
 %changelog
-* Thu Dec 26 2006 Shad L. Lords <slords@mail.com> 1.2.1-24
+* Thu Dec 28 2006 Shad L. Lords <slords@mail.com> 1.2.1-25
+- Reverse last change and fix correctly by passing peers/0 to
+  the inital peers plugin [SME: 2167]
+
+* Tue Dec 26 2006 Shad L. Lords <slords@mail.com> 1.2.1-24
 - Update peers to exit gracefully if no config passed [SME: 2167]
 
 * Thu Dec 07 2006 Shad L. Lords <slords@mail.com>
