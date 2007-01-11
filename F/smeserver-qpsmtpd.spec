@@ -2,7 +2,7 @@ Summary: SME Server qpsmtpd module
 %define name smeserver-qpsmtpd
 Name: %{name}
 %define version 1.2.1
-%define release 25
+%define release 26
 Version: %{version}
 Release: %smerelease %{release}
 Packager: %{_packager}
@@ -26,6 +26,7 @@ Patch12: smeserver-qpsmtpd-1.2.1-usepeers.patch4
 Patch13: smeserver-qpsmtpd-1.2.1-control1.patch
 Patch14: smeserver-qpsmtpd-1.2.1-control1.patch3
 Patch15: smeserver-qpsmtpd-1.2.1-peersinit.patch
+Patch16: smeserver-qpsmtpd-1.2.1-rblsbl.patch
 BuildRoot: /var/tmp/%{name}-%{version}-%{release}-buildroot
 Requires: qpsmtpd >= 0.31.1-1sme07
 Requires: daemontools
@@ -54,6 +55,11 @@ AutoReqProv: no
 SME Server qpsmtpd smtpd module
 
 %changelog
+* Wed Jan 10 2007 Shad L. Lords <slords@mail.com> 1.2.1-26
+- Migrate ordb.org entries away. [SME: 2274]
+- Clean-up SBL and RBL lists to use be in the correct place and use
+  recognized lists.
+
 * Thu Dec 28 2006 Shad L. Lords <slords@mail.com> 1.2.1-25
 - Reverse last change and fix correctly by passing peers/0 to
   the inital peers plugin [SME: 2167]
@@ -551,6 +557,7 @@ SME Server qpsmtpd smtpd module
 %patch13 -p1
 %patch14 -p1
 %patch15 -p1
+%patch16 -p1
 
 %build
 perl createlinks
