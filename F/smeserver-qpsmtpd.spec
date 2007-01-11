@@ -2,7 +2,7 @@ Summary: SME Server qpsmtpd module
 %define name smeserver-qpsmtpd
 Name: %{name}
 %define version 1.2.1
-%define release 26
+%define release 27
 Version: %{version}
 Release: %smerelease %{release}
 Packager: %{_packager}
@@ -27,6 +27,7 @@ Patch13: smeserver-qpsmtpd-1.2.1-control1.patch
 Patch14: smeserver-qpsmtpd-1.2.1-control1.patch3
 Patch15: smeserver-qpsmtpd-1.2.1-peersinit.patch
 Patch16: smeserver-qpsmtpd-1.2.1-rblsbl.patch
+Patch17: smeserver-qpsmtpd-1.2.1-peersauth.patch
 BuildRoot: /var/tmp/%{name}-%{version}-%{release}-buildroot
 Requires: qpsmtpd >= 0.31.1-1sme07
 Requires: daemontools
@@ -55,6 +56,9 @@ AutoReqProv: no
 SME Server qpsmtpd smtpd module
 
 %changelog
+* Thu Jan 11 2007 Shad L. Lords <slords@mail.com> 1.2.1-27
+- Make smtp auth use local plugins [SME: 2091]
+
 * Wed Jan 10 2007 Shad L. Lords <slords@mail.com> 1.2.1-26
 - Migrate ordb.org entries away. [SME: 2274]
 - Clean-up SBL and RBL lists to use be in the correct place and use
@@ -558,6 +562,7 @@ SME Server qpsmtpd smtpd module
 %patch14 -p1
 %patch15 -p1
 %patch16 -p1
+%patch17 -p1
 
 %build
 perl createlinks
@@ -591,6 +596,7 @@ mkdir -p $PEERS_CONFIG/0
 mkdir -p $PEERS_CONFIG/local
 
 DISABLE_LOCAL="
+05auth_cvm_unix_local
 10check_earlytalker
 12count_unrecognized_commands
 16require_resolvable_fromhost
