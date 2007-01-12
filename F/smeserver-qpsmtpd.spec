@@ -2,7 +2,7 @@ Summary: SME Server qpsmtpd module
 %define name smeserver-qpsmtpd
 Name: %{name}
 %define version 1.2.1
-%define release 27
+%define release 28
 Version: %{version}
 Release: %smerelease %{release}
 Packager: %{_packager}
@@ -28,8 +28,10 @@ Patch14: smeserver-qpsmtpd-1.2.1-control1.patch3
 Patch15: smeserver-qpsmtpd-1.2.1-peersinit.patch
 Patch16: smeserver-qpsmtpd-1.2.1-rblsbl.patch
 Patch17: smeserver-qpsmtpd-1.2.1-peersauth.patch
+Patch18: smeserver-qpsmtpd-1.2.1-peersauth.patch2
 BuildRoot: /var/tmp/%{name}-%{version}-%{release}-buildroot
-Requires: qpsmtpd >= 0.31.1-1sme07
+Requires: qpsmtpd >= 0.32-4.el4.sme
+Conflicts: qpsmtpd >= 0.33
 Requires: daemontools
 Requires: qpsmtpd-plugins >= 0.0.1-sme04
 Requires: ipsvd
@@ -56,6 +58,9 @@ AutoReqProv: no
 SME Server qpsmtpd smtpd module
 
 %changelog
+* Thu Jan 11 2007 Shad L. Lords <slords@mail.com> 1.2.1-28
+- Fix peers plugin to hook new methods [SME: 2091]
+
 * Thu Jan 11 2007 Shad L. Lords <slords@mail.com> 1.2.1-27
 - Make smtp auth use local plugins [SME: 2091]
 
@@ -563,6 +568,7 @@ SME Server qpsmtpd smtpd module
 %patch15 -p1
 %patch16 -p1
 %patch17 -p1
+%patch18 -p1
 
 %build
 perl createlinks
