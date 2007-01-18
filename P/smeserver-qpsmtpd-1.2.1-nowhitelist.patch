@@ -1,0 +1,30 @@
+diff -Nur -x '*.orig' -x '*.rej' smeserver-qpsmtpd-1.2.1/createlinks mezzanine_patched_smeserver-qpsmtpd-1.2.1/createlinks
+--- smeserver-qpsmtpd-1.2.1/createlinks	2007-01-18 08:53:14.000000000 -0700
++++ mezzanine_patched_smeserver-qpsmtpd-1.2.1/createlinks	2007-01-18 08:51:26.000000000 -0700
+@@ -96,11 +96,6 @@
+ 				invalid_resolvable_fromhost
+ 				));
+ templates2events("$config/badhelo", 'ip-change');
+-templates2events("$config/whitelistsenders", qw(
+-				bootstrap-console-save
+-				domain-create
+-				domain-delete
+-				));
+ templates2events("$config/goodrcptto", qw(
+ 				bootstrap-console-save
+ 				email-update
+diff -Nur -x '*.orig' -x '*.rej' smeserver-qpsmtpd-1.2.1/root/etc/e-smith/templates/var/service/qpsmtpd/config/plugins/15whitelist_soft mezzanine_patched_smeserver-qpsmtpd-1.2.1/root/etc/e-smith/templates/var/service/qpsmtpd/config/plugins/15whitelist_soft
+--- smeserver-qpsmtpd-1.2.1/root/etc/e-smith/templates/var/service/qpsmtpd/config/plugins/15whitelist_soft	2006-03-14 13:09:01.000000000 -0700
++++ mezzanine_patched_smeserver-qpsmtpd-1.2.1/root/etc/e-smith/templates/var/service/qpsmtpd/config/plugins/15whitelist_soft	1969-12-31 17:00:00.000000000 -0700
+@@ -1,3 +0,0 @@
+-{
+-    return ($qpsmtpd{RequireResolvableFromHost} eq 'yes') ? "whitelist_soft" : "";
+-}
+diff -Nur -x '*.orig' -x '*.rej' smeserver-qpsmtpd-1.2.1/root/etc/e-smith/templates/var/service/qpsmtpd/config/whitelistsenders/50domains mezzanine_patched_smeserver-qpsmtpd-1.2.1/root/etc/e-smith/templates/var/service/qpsmtpd/config/whitelistsenders/50domains
+--- smeserver-qpsmtpd-1.2.1/root/etc/e-smith/templates/var/service/qpsmtpd/config/whitelistsenders/50domains	2006-03-14 13:09:01.000000000 -0700
++++ mezzanine_patched_smeserver-qpsmtpd-1.2.1/root/etc/e-smith/templates/var/service/qpsmtpd/config/whitelistsenders/50domains	1969-12-31 17:00:00.000000000 -0700
+@@ -1,4 +0,0 @@
+-{
+-    use esmith::DomainsDB;
+-    $OUT = join "\n", map { $_->key } esmith::DomainsDB->open_ro->domains;
+-}

@@ -2,7 +2,7 @@ Summary: SME Server qpsmtpd module
 %define name smeserver-qpsmtpd
 Name: %{name}
 %define version 1.2.1
-%define release 29
+%define release 30
 Version: %{version}
 Release: %smerelease %{release}
 Packager: %{_packager}
@@ -30,6 +30,7 @@ Patch16: smeserver-qpsmtpd-1.2.1-rblsbl.patch
 Patch17: smeserver-qpsmtpd-1.2.1-peersauth.patch
 Patch18: smeserver-qpsmtpd-1.2.1-peersauth.patch2
 Patch19: smeserver-qpsmtpd-1.2.1-badmailfrom.patch
+Patch20: smeserver-qpsmtpd-1.2.1-nowhitelist.patch
 BuildRoot: /var/tmp/%{name}-%{version}-%{release}-buildroot
 Requires: qpsmtpd >= 0.32-4.el4.sme
 Conflicts: qpsmtpd >= 0.33
@@ -59,6 +60,9 @@ AutoReqProv: no
 SME Server qpsmtpd smtpd module
 
 %changelog
+* Thu Jan 18 2007 Shad L. Lords <slords@mail.com> 1.2.1-30
+- Remove whitelist_soft plugin usage [SME: 2322]
+
 * Sat Jan 13 2007 Shad L. Lords <slords@mail.com> 1.2.1-29
 - Rename badmailfrom template to 10sample [SME: 2279]
 
@@ -574,6 +578,7 @@ SME Server qpsmtpd smtpd module
 %patch17 -p1
 %patch18 -p1
 %patch19 -p1
+%patch20 -p1
 
 %build
 perl createlinks
