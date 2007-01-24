@@ -35,6 +35,7 @@ Patch21: smeserver-qpsmtpd-1.2.1-dkim.patch
 BuildRoot: /var/tmp/%{name}-%{version}-%{release}-buildroot
 Requires: qpsmtpd >= 0.32-4.el4.sme
 Requires: perl(Mail::DKIM)
+Requires: perl(Mail::DKIM::DkSignature)
 Conflicts: qpsmtpd >= 0.33
 Requires: daemontools
 Requires: qpsmtpd-plugins >= 0.0.1-sme04
