@@ -2,7 +2,7 @@ Summary: SME Server qpsmtpd module
 %define name smeserver-qpsmtpd
 Name: %{name}
 %define version 1.2.1
-%define release 30
+%define release 31
 Version: %{version}
 Release: %smerelease %{release}
 Packager: %{_packager}
@@ -31,8 +31,10 @@ Patch17: smeserver-qpsmtpd-1.2.1-peersauth.patch
 Patch18: smeserver-qpsmtpd-1.2.1-peersauth.patch2
 Patch19: smeserver-qpsmtpd-1.2.1-badmailfrom.patch
 Patch20: smeserver-qpsmtpd-1.2.1-nowhitelist.patch
+Patch21: smeserver-qpsmtpd-1.2.1-dkim.patch
 BuildRoot: /var/tmp/%{name}-%{version}-%{release}-buildroot
 Requires: qpsmtpd >= 0.32-4.el4.sme
+Requires: perl(Mail::DKIM)
 Conflicts: qpsmtpd >= 0.33
 Requires: daemontools
 Requires: qpsmtpd-plugins >= 0.0.1-sme04
@@ -60,6 +62,9 @@ AutoReqProv: no
 SME Server qpsmtpd smtpd module
 
 %changelog
+* Tue Jan 23 2007 Shad L. Lords <slords@mail.com> 1.2.1-31
+- Add DomainKey and DKIM signing plugin
+
 * Thu Jan 18 2007 Shad L. Lords <slords@mail.com> 1.2.1-30
 - Remove whitelist_soft plugin usage [SME: 2322]
 
@@ -579,6 +584,7 @@ SME Server qpsmtpd smtpd module
 %patch18 -p1
 %patch19 -p1
 %patch20 -p1
+%patch21 -p1
 
 %build
 perl createlinks
