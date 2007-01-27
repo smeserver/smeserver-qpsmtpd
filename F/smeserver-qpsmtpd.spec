@@ -2,7 +2,7 @@ Summary: SME Server qpsmtpd module
 %define name smeserver-qpsmtpd
 Name: %{name}
 %define version 1.2.1
-%define release 31
+%define release 32
 Version: %{version}
 Release: %smerelease %{release}
 Packager: %{_packager}
@@ -32,6 +32,7 @@ Patch18: smeserver-qpsmtpd-1.2.1-peersauth.patch2
 Patch19: smeserver-qpsmtpd-1.2.1-badmailfrom.patch
 Patch20: smeserver-qpsmtpd-1.2.1-nowhitelist.patch
 Patch21: smeserver-qpsmtpd-1.2.1-dkim.patch
+Patch22: smeserver-qpsmtpd-1.2.1-keeptnef.patch
 BuildRoot: /var/tmp/%{name}-%{version}-%{release}-buildroot
 Requires: qpsmtpd >= 0.32-4.el4.sme
 Requires: perl(Mail::DKIM)
@@ -63,6 +64,9 @@ AutoReqProv: no
 SME Server qpsmtpd smtpd module
 
 %changelog
+* Sat Jan 27 2007 Shad L. Lords <slords@mail.com> 1.2.1-32
+- Keep TNEF attachment if contains special lookout stuff [SME: 2339]
+
 * Tue Jan 23 2007 Shad L. Lords <slords@mail.com> 1.2.1-31
 - Add DomainKey and DKIM signing plugin
 
@@ -586,6 +590,7 @@ SME Server qpsmtpd smtpd module
 %patch19 -p1
 %patch20 -p1
 %patch21 -p1
+%patch22 -p1
 
 %build
 perl createlinks
