@@ -2,7 +2,7 @@ Summary: SME Server qpsmtpd module
 %define name smeserver-qpsmtpd
 Name: %{name}
 %define version 1.2.1
-%define release 32
+%define release 33
 Version: %{version}
 Release: %smerelease %{release}
 Packager: %{_packager}
@@ -33,6 +33,7 @@ Patch19: smeserver-qpsmtpd-1.2.1-badmailfrom.patch
 Patch20: smeserver-qpsmtpd-1.2.1-nowhitelist.patch
 Patch21: smeserver-qpsmtpd-1.2.1-dkim.patch
 Patch22: smeserver-qpsmtpd-1.2.1-keeptnef.patch
+Patch23: smeserver-qpsmtpd-1.2.1-softlimit.patch
 BuildRoot: /var/tmp/%{name}-%{version}-%{release}-buildroot
 Requires: qpsmtpd >= 0.32-4.el4.sme
 Requires: perl(Mail::DKIM)
@@ -64,6 +65,9 @@ AutoReqProv: no
 SME Server qpsmtpd smtpd module
 
 %changelog
+* Wed Mar 07 2007 Shad L. Lords <slords@mail.com> 1.2.1-33
+- Add db entry for soft memory limits [SME: 2308]
+
 * Sat Jan 27 2007 Shad L. Lords <slords@mail.com> 1.2.1-32
 - Keep TNEF attachment if contains special lookout stuff [SME: 2339]
 
@@ -591,6 +595,7 @@ SME Server qpsmtpd smtpd module
 %patch20 -p1
 %patch21 -p1
 %patch22 -p1
+%patch23 -p1
 
 %build
 perl createlinks
