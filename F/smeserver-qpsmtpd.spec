@@ -2,7 +2,7 @@ Summary: SME Server qpsmtpd module
 %define name smeserver-qpsmtpd
 Name: %{name}
 %define version 1.2.1
-%define release 34
+%define release 35
 Version: %{version}
 Release: %smerelease %{release}
 Packager: %{_packager}
@@ -35,6 +35,7 @@ Patch21: smeserver-qpsmtpd-1.2.1-dkim.patch
 Patch22: smeserver-qpsmtpd-1.2.1-keeptnef.patch
 Patch23: smeserver-qpsmtpd-1.2.1-softlimit.patch
 Patch24: smeserver-qpsmtpd-1.2.1-rcpthost.patch
+Patch25: smeserver-qpsmtpd-1.2.1-logterse.patch
 BuildRoot: /var/tmp/%{name}-%{version}-%{release}-buildroot
 Requires: qpsmtpd >= 0.32-4.el4.sme
 Requires: perl(Mail::DKIM)
@@ -66,6 +67,9 @@ AutoReqProv: no
 SME Server qpsmtpd smtpd module
 
 %changelog
+* Tue Apr 10 2007 Shad L. Lords <slords@mail.com> 1.2.1-35
+- Add logterse plugin and reduce logging level [SME: 2875]
+
 * Fri Apr 06 2007 Shad L. Lords <slords@mail.com> 1.2.1-34
 - Remove templates2events link for rcpthosts [SME: 2716]
 
@@ -601,6 +605,7 @@ SME Server qpsmtpd smtpd module
 %patch22 -p1
 %patch23 -p1
 %patch24 -p1
+%patch25 -p1
 
 %build
 perl createlinks
