@@ -4,10 +4,8 @@ Name: %{name}
 %define version 1.2.1
 %define release 35
 Version: %{version}
-Release: %smerelease %{release}
-Packager: %{_packager}
+Release: %{release}%{?dist}
 License: GPL
-Vendor: SME Server developers
 Group: Networking/Daemons
 Source: %{name}-%{version}.tar.gz
 Patch0: smeserver-qpsmtpd-1.2.1-LiteralIP.patch
@@ -67,6 +65,9 @@ AutoReqProv: no
 SME Server qpsmtpd smtpd module
 
 %changelog
+* Sun Apr 29 2007 Shad L. Lords <slords@mail.com>
+- Clean up spec so package can be built by koji/plague
+
 * Tue Apr 10 2007 Shad L. Lords <slords@mail.com> 1.2.1-35
 - Add logterse plugin and reduce logging level [SME: 2875]
 
