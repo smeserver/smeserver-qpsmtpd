@@ -66,7 +66,10 @@ AutoReqProv: no
 SME Server qpsmtpd smtpd module
 
 %changelog
-* Fri Jun 08 2007 Stephen Noble <support@dungog.net>
+* Fri Jun 08 2007 Stephen Noble <support@dungog.net> 1.2.1-37
+- Release bump ??
+
+* Fri Jun 08 2007 Stephen Noble <support@dungog.net> 1.2.1-36
 - Cumulative statistics for qpsmtpd using logterse [SME 2971]
 
 * Sun Apr 29 2007 Shad L. Lords <slords@mail.com>
