@@ -2,7 +2,7 @@ Summary: SME Server qpsmtpd module
 %define name smeserver-qpsmtpd
 Name: %{name}
 %define version 1.2.1
-%define release 35
+%define release 36
 Version: %{version}
 Release: %{release}%{?dist}
 License: GPL
@@ -34,6 +34,7 @@ Patch22: smeserver-qpsmtpd-1.2.1-keeptnef.patch
 Patch23: smeserver-qpsmtpd-1.2.1-softlimit.patch
 Patch24: smeserver-qpsmtpd-1.2.1-rcpthost.patch
 Patch25: smeserver-qpsmtpd-1.2.1-logterse.patch
+Patch26: smeserver-qpsmtpd-1.2.1-logterse_stats.patch
 BuildRoot: /var/tmp/%{name}-%{version}-%{release}-buildroot
 Requires: qpsmtpd >= 0.32-4.el4.sme
 Requires: perl(Mail::DKIM)
@@ -65,6 +66,9 @@ AutoReqProv: no
 SME Server qpsmtpd smtpd module
 
 %changelog
+* Fri Jun 08 2007 Stephen Noble <support@dungog.net>
+- Cumulative statistics for qpsmtpd using logterse [SME 2971]
+
 * Sun Apr 29 2007 Shad L. Lords <slords@mail.com>
 - Clean up spec so package can be built by koji/plague
 
@@ -607,6 +611,7 @@ SME Server qpsmtpd smtpd module
 %patch23 -p1
 %patch24 -p1
 %patch25 -p1
+%patch26 -p1
 
 %build
 perl createlinks
@@ -695,6 +700,8 @@ rm -f %{name}-%{version}-%{release}-filelist
 	\
     --file /var/service/sqpsmtpd/sqpsmtpd "attr(0755,root,root)" \
     --dir /var/spool/qpsmtpd "attr(2750,qpsmtpd,clamav)" \
+        \
+    --file /usr/local/bin/qplogsumm.pl "attr(0755,root,root)" \
     > %{name}-%{version}-%{release}-filelist
 
 %pre
