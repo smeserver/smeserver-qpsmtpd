@@ -2,7 +2,7 @@ Summary: SME Server qpsmtpd module
 %define name smeserver-qpsmtpd
 Name: %{name}
 %define version 1.2.1
-%define release 38
+%define release 39
 Version: %{version}
 Release: %{release}%{?dist}
 License: GPL
@@ -36,6 +36,7 @@ Patch24: smeserver-qpsmtpd-1.2.1-rcpthost.patch
 Patch25: smeserver-qpsmtpd-1.2.1-logterse.patch
 Patch26: smeserver-qpsmtpd-1.2.1-logterse_stats.patch
 Patch27: smeserver-qpsmtpd-1.2.1-qplogsumm.patch
+Patch28: smeserver-qpsmtpd-1.2.1-logterse.patch2
 BuildRoot: /var/tmp/%{name}-%{version}-%{release}-buildroot
 Requires: qpsmtpd >= 0.32-4.el4.sme
 Requires: perl(Mail::DKIM)
@@ -67,6 +68,9 @@ AutoReqProv: no
 SME Server qpsmtpd smtpd module
 
 %changelog
+* Sat Jun 9 2007 Shad L. Lords <slords@mail.com> 1.2.1-39
+- Update to correct version of qplogsumm.pl [SME: 2971]
+
 * Fri Jun 08 2007 Shad L. Lords <slords@mail.com> 1.2.1-38
 - Add qplogsumm.pl to package for logging [SME: 2971]
 
@@ -620,6 +624,7 @@ SME Server qpsmtpd smtpd module
 %patch25 -p1
 %patch26 -p1
 %patch27 -p1
+%patch28 -p1
 
 %build
 perl createlinks
