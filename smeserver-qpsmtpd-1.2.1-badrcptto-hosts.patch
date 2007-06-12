@@ -1,0 +1,30 @@
+diff -Nur -x '*.orig' -x '*.rej' smeserver-qpsmtpd-1.2.1/root/etc/e-smith/templates/var/qmail/control/badrcptto/00setup mezzanine_patched_smeserver-qpsmtpd-1.2.1/root/etc/e-smith/templates/var/qmail/control/badrcptto/00setup
+--- smeserver-qpsmtpd-1.2.1/root/etc/e-smith/templates/var/qmail/control/badrcptto/00setup	2005-04-21 13:19:07.000000000 +1000
++++ mezzanine_patched_smeserver-qpsmtpd-1.2.1/root/etc/e-smith/templates/var/qmail/control/badrcptto/00setup	2006-07-27 17:43:28.652016435 +1000
+@@ -1,11 +1,9 @@
+ {
+     require esmith::AccountsDB;
+     require esmith::DomainsDB;
+-    require esmith::HostsDB;
+     
+     %Accounts = esmith::AccountsDB->as_hash;
+     %Domains  = esmith::DomainsDB->as_hash;
+-    %Hosts    = esmith::HostsDB->as_hash;
+ 
+     "";
+ }
+diff -Nur -x '*.orig' -x '*.rej' smeserver-qpsmtpd-1.2.1/root/etc/e-smith/templates/var/qmail/control/badrcptto/10blockVisibleInternal mezzanine_patched_smeserver-qpsmtpd-1.2.1/root/etc/e-smith/templates/var/qmail/control/badrcptto/10blockVisibleInternal
+--- smeserver-qpsmtpd-1.2.1/root/etc/e-smith/templates/var/qmail/control/badrcptto/10blockVisibleInternal	2005-04-21 13:19:07.000000000 +1000
++++ mezzanine_patched_smeserver-qpsmtpd-1.2.1/root/etc/e-smith/templates/var/qmail/control/badrcptto/10blockVisibleInternal	2006-07-27 17:42:54.178871408 +1000
+@@ -12,11 +12,5 @@
+ 	    next unless $Domains{$domain}{type} eq "domain";
+ 	    $OUT .= "$account\@$domain\n";
+ 	}
+-
+-	foreach my $host ( keys %Hosts )
+-	{
+-	    next unless $Hosts{$host}{type} eq "host";
+-	    $OUT .= "$account\@$host\n";
+-	}
+     }
+ }
