@@ -1,0 +1,55 @@
+diff -Nur -x '*.orig' -x '*.rej' smeserver-qpsmtpd-1.2.1/root/usr/share/qpsmtpd/plugins/tnef2mime mezzanine_patched_smeserver-qpsmtpd-1.2.1/root/usr/share/qpsmtpd/plugins/tnef2mime
+--- smeserver-qpsmtpd-1.2.1/root/usr/share/qpsmtpd/plugins/tnef2mime	2007-01-27 16:29:42.000000000 -0700
++++ mezzanine_patched_smeserver-qpsmtpd-1.2.1/root/usr/share/qpsmtpd/plugins/tnef2mime	2007-01-27 16:29:26.000000000 -0700
+@@ -40,6 +40,13 @@
+   $self->register_hook("data_post", "tnef2mime");
+ }
+ 
++sub hasMessageClassProperty {
++  my $self = shift;
++  my $data = $self->data("Attachment");
++  return 0 unless $data;
++  return index( $data, pack( "H*", "8008" ) ) >= 0;
++}
++
+ # for future use
+ sub kill_part ($)
+ 	{
+@@ -68,19 +75,35 @@
+ 		# if $tnef is undefined here, the application/octet-stream was not a ms-tnef and we are done.
+ 		return 1 if( ! defined $tnef );
+ 
++		my $keep_tnef=0;
+ 		for ($tnef->attachments)
+ 			{
+ 			next if !defined $_->datahandle;
++
++			if( hasMessageClassProperty($_) ) # Outlook MAPI object
++				{
++				$keep_tnef++;
++				$self->log(LOGWARN, sprintf "Outlook MAPI object #%i: %s", $keep_tnef, $_->longname);
++				next;
++				}
++
+ 			my $mimetype = $mm->checktype_filename( $_->datahandle->path );
+ 			$attachments[$count] = MIME::Entity->build( 
+ 				Path=>$_->datahandle->path, 
+ 				Filename=>$_->longname, 
+ 				Encoding=>"base64", 
+ 				Type=>$mimetype );
+-			$self->log(LOGDEBUG, 
+-				sprintf "converted attachment #%i: %s (%s, %ld bytes)", $count+1, $_->longname, $mimetype, $_->size );
++			$self->log(LOGWARN, 
++				sprintf "File attachment #%i: %s (%s, %ld bytes)", $count+1, $_->longname, $mimetype, $_->size );
+ 			$count++;
+ 			}
++
++		if( $keep_tnef )
++			{
++			$attachments[$count++] = $part;
++			$self->log(LOGWARN, "Original TNEF file attached." );
++			}
++
+ 		push( @tnefs, $tnef ); # remind for cleanup
+ 		$foundtnef=1;
+ 		return 0;

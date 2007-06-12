@@ -1,0 +1,5 @@
+diff -Nur -x '*.orig' -x '*.rej' smeserver-qpsmtpd-1.2.1/root/etc/e-smith/templates.metadata/var/service/qpsmtpd/config/peers/0 mezzanine_patched_smeserver-qpsmtpd-1.2.1/root/etc/e-smith/templates.metadata/var/service/qpsmtpd/config/peers/0
+--- smeserver-qpsmtpd-1.2.1/root/etc/e-smith/templates.metadata/var/service/qpsmtpd/config/peers/0	2006-11-21 23:01:49.000000000 -0700
++++ mezzanine_patched_smeserver-qpsmtpd-1.2.1/root/etc/e-smith/templates.metadata/var/service/qpsmtpd/config/peers/0	1969-12-31 17:00:00.000000000 -0700
+@@ -1 +0,0 @@
+-TEMPLATE_PATH="/var/service/qpsmtpd/config/plugins"
