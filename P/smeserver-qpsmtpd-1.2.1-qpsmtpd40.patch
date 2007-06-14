@@ -1,0 +1,104 @@
+diff -Nur -x '*.orig' -x '*.rej' smeserver-qpsmtpd-1.2.1/createlinks mezzanine_patched_smeserver-qpsmtpd-1.2.1/createlinks
+--- smeserver-qpsmtpd-1.2.1/createlinks	2007-06-14 17:09:21.000000000 -0600
++++ mezzanine_patched_smeserver-qpsmtpd-1.2.1/createlinks	2007-06-14 16:55:03.000000000 -0600
+@@ -89,7 +89,7 @@
+ 				require_resolvable_fromhost
+ 				rhsbl_zones
+ 				signatures_patterns
+-				plugin_dir
++				plugin_dirs
+ 				smtpgreeting
+ 				spool_dir
+ 				invalid_resolvable_fromhost
+diff -Nur -x '*.orig' -x '*.rej' smeserver-qpsmtpd-1.2.1/root/etc/e-smith/templates/var/service/qpsmtpd/config/plugin_dir/template-begin mezzanine_patched_smeserver-qpsmtpd-1.2.1/root/etc/e-smith/templates/var/service/qpsmtpd/config/plugin_dir/template-begin
+--- smeserver-qpsmtpd-1.2.1/root/etc/e-smith/templates/var/service/qpsmtpd/config/plugin_dir/template-begin	2005-10-06 19:21:58.000000000 -0600
++++ mezzanine_patched_smeserver-qpsmtpd-1.2.1/root/etc/e-smith/templates/var/service/qpsmtpd/config/plugin_dir/template-begin	1969-12-31 17:00:00.000000000 -0700
+@@ -1 +0,0 @@
+-/usr/share/qpsmtpd/plugins
+diff -Nur -x '*.orig' -x '*.rej' smeserver-qpsmtpd-1.2.1/root/etc/e-smith/templates/var/service/qpsmtpd/config/plugin_dirs/template-begin mezzanine_patched_smeserver-qpsmtpd-1.2.1/root/etc/e-smith/templates/var/service/qpsmtpd/config/plugin_dirs/template-begin
+--- smeserver-qpsmtpd-1.2.1/root/etc/e-smith/templates/var/service/qpsmtpd/config/plugin_dirs/template-begin	1969-12-31 17:00:00.000000000 -0700
++++ mezzanine_patched_smeserver-qpsmtpd-1.2.1/root/etc/e-smith/templates/var/service/qpsmtpd/config/plugin_dirs/template-begin	2005-10-06 19:21:58.000000000 -0600
+@@ -0,0 +1 @@
++/usr/share/qpsmtpd/plugins
+diff -Nur -x '*.orig' -x '*.rej' smeserver-qpsmtpd-1.2.1/root/usr/share/qpsmtpd/plugins/peers mezzanine_patched_smeserver-qpsmtpd-1.2.1/root/usr/share/qpsmtpd/plugins/peers
+--- smeserver-qpsmtpd-1.2.1/root/usr/share/qpsmtpd/plugins/peers	2007-06-14 17:09:21.000000000 -0600
++++ mezzanine_patched_smeserver-qpsmtpd-1.2.1/root/usr/share/qpsmtpd/plugins/peers	2007-06-14 17:08:54.000000000 -0600
+@@ -10,33 +10,56 @@
+    my $qp = shift;
+    my $plugins_list_file = shift || 'peers/0';
+    my @plugins = $qp->config($plugins_list_file);
+-   my $dir = $qp->plugin_dir;
++   my @plugin_dirs = $qp->plugin_dirs;
+ 
+    for my $plugin_line (@plugins) {
+      my ($plugin, @args) = split ' ', $plugin_line;
+ 
+-     my $plugin_name = $plugin;
+-     $plugin =~ s/:\d+$//;       # after this point, only used for filename
++     my $package;
+ 
+-     # Escape everything into valid perl identifiers
+-     $plugin_name =~ s/([^A-Za-z0-9_\/])/sprintf("_%2x",unpack("C",$1))/eg;
+-
+-     # second pass cares for slashes and words starting with a digit
+-     $plugin_name =~ s{
+- 		      (/+)       # directory
+- 		      (\d?)      # package's first character
+- 		     }[
+- 		       "::" . (length $2 ? sprintf("_%2x",unpack("C",$2)) : "")
+- 		      ]egx;
+-
+-     my $package = "Qpsmtpd::Plugin::$plugin_name";
+-
+-     # don't reload plugins if they are already loaded
+-     unless ( defined &{"${package}::plugin_name"} ) {
+-       Qpsmtpd::Plugin->compile($plugin_name,
+-         $package, "$dir/$plugin", $self->{_test_mode});
+-       $self->log(LOGDEBUG, "Compiling $plugin")
+-         unless $plugin =~ /logging/;
++     if ($plugin =~ m/::/) {
++       # "full" package plugin (My::Plugin)
++       $package = $plugin;
++       $package =~ s/[^_a-z0-9:]+//gi;
++       my $eval = qq[require $package;\n]
++                 .qq[sub ${plugin}::plugin_name { '$plugin' }];
++       $eval =~ m/(.*)/s;
++       $eval = $1;
++       eval $eval;
++       die "Failed loading $package - eval $@" if $@;
++       $self->log(LOGDEBUG, "Loading $package ($plugin_line)")
++         unless $plugin_line =~ /logging/;
++     }
++     else {
++       # regular plugins/$plugin plugin
++       my $plugin_name = $plugin;
++       $plugin =~ s/:\d+$//;       # after this point, only used for filename
++
++       # Escape everything into valid perl identifiers
++       $plugin_name =~ s/([^A-Za-z0-9_\/])/sprintf("_%2x",unpack("C",$1))/eg;
++
++       # second pass cares for slashes and words starting with a digit
++       $plugin_name =~ s{
++           (/+)       # directory
++           (\d?)      # package's first character
++          }[
++            "::" . (length $2 ? sprintf("_%2x",unpack("C",$2)) : "")
++           ]egx;
++
++       $package = "Qpsmtpd::Plugin::$plugin_name";
++
++       # don't reload plugins if they are already loaded
++       unless ( defined &{"${package}::plugin_name"} ) {
++         PLUGIN_DIR: for my $dir (@plugin_dirs) {
++           if (-e "$dir/$plugin") {
++             Qpsmtpd::Plugin->compile($plugin_name, $package,
++               "$dir/$plugin", $self->{_test_mode}, $plugin);
++             $self->log(LOGDEBUG, "Loading $plugin_line from $dir/$plugin")
++               unless $plugin_line =~ /logging/;
++             last PLUGIN_DIR;
++           }
++         }
++       }
+      }
+    }
+ 

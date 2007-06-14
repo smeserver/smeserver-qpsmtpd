@@ -2,7 +2,7 @@ Summary: SME Server qpsmtpd module
 %define name smeserver-qpsmtpd
 Name: %{name}
 %define version 1.2.1
-%define release 40
+%define release 41
 Version: %{version}
 Release: %{release}%{?dist}
 License: GPL
@@ -37,8 +37,9 @@ Patch25: smeserver-qpsmtpd-1.2.1-logterse.patch
 Patch26: smeserver-qpsmtpd-1.2.1-logterse_stats.patch
 Patch27: smeserver-qpsmtpd-1.2.1-qplogsumm.patch
 Patch28: smeserver-qpsmtpd-1.2.1-logterse.patch2
+Patch29: smeserver-qpsmtpd-1.2.1-qpsmtpd40.patch
 BuildRoot: /var/tmp/%{name}-%{version}-%{release}-buildroot
-Requires: qpsmtpd >= 0.32-4.el4.sme
+Requires: qpsmtpd >= 0.40
 Requires: perl(Mail::DKIM)
 Requires: perl(Mail::DKIM::DkSignature)
 Requires: daemontools
@@ -67,6 +68,9 @@ AutoReqProv: no
 SME Server qpsmtpd smtpd module
 
 %changelog
+* Thu Jun 14 2007 Shad L. Lords <slords@mail.com> 1.2.1-41
+- Update for new features in qpsmtpd v0.40
+
 * Thu Jun 14 2007 Shad L. Lords <slords@mail.com> 1.2.1-40
 - Remove conflicts qpsmtpd >= 0.33
 
@@ -627,6 +631,7 @@ SME Server qpsmtpd smtpd module
 %patch26 -p1
 %patch27 -p1
 %patch28 -p1
+%patch29 -p1
 
 %build
 perl createlinks
