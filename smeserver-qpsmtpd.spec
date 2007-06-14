@@ -2,7 +2,7 @@ Summary: SME Server qpsmtpd module
 %define name smeserver-qpsmtpd
 Name: %{name}
 %define version 1.2.1
-%define release 39
+%define release 40
 Version: %{version}
 Release: %{release}%{?dist}
 License: GPL
@@ -41,7 +41,6 @@ BuildRoot: /var/tmp/%{name}-%{version}-%{release}-buildroot
 Requires: qpsmtpd >= 0.32-4.el4.sme
 Requires: perl(Mail::DKIM)
 Requires: perl(Mail::DKIM::DkSignature)
-Conflicts: qpsmtpd >= 0.33
 Requires: daemontools
 Requires: qpsmtpd-plugins >= 0.0.1-sme04
 Requires: ipsvd
@@ -68,6 +67,9 @@ AutoReqProv: no
 SME Server qpsmtpd smtpd module
 
 %changelog
+* Thu Jun 14 2007 Shad L. Lords <slords@mail.com> 1.2.1-40
+- Remove conflicts qpsmtpd >= 0.33
+
 * Sat Jun 9 2007 Shad L. Lords <slords@mail.com> 1.2.1-39
 - Update to correct version of qplogsumm.pl [SME: 2971]
 
