@@ -38,7 +38,7 @@ Patch26: smeserver-qpsmtpd-1.2.1-logterse_stats.patch
 Patch27: smeserver-qpsmtpd-1.2.1-qplogsumm.patch
 Patch28: smeserver-qpsmtpd-1.2.1-logterse.patch2
 Patch29: smeserver-qpsmtpd-1.2.1-qpsmtpd40.patch
-Patch30: qpsmtpd-0.40-clamav_fix.patch2
+Patch30: smeserver-qpsmtpd-1.2.1-qpsmtpd40.patch2
 BuildRoot: /var/tmp/%{name}-%{version}-%{release}-buildroot
 Requires: qpsmtpd >= 0.40
 Requires: perl(Mail::DKIM)
