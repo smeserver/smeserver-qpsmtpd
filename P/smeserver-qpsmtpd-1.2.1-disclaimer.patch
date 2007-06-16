@@ -1,0 +1,113 @@
+diff -Nur -x '*.orig' -x '*.rej' smeserver-qpsmtpd-1.2.1/root/etc/e-smith/templates/var/service/qpsmtpd/config/plugins/65disclaimer mezzanine_patched_smeserver-qpsmtpd-1.2.1/root/etc/e-smith/templates/var/service/qpsmtpd/config/plugins/65disclaimer
+--- smeserver-qpsmtpd-1.2.1/root/etc/e-smith/templates/var/service/qpsmtpd/config/plugins/65disclaimer	1969-12-31 17:00:00.000000000 -0700
++++ mezzanine_patched_smeserver-qpsmtpd-1.2.1/root/etc/e-smith/templates/var/service/qpsmtpd/config/plugins/65disclaimer	2007-06-16 11:28:49.000000000 -0600
+@@ -0,0 +1,6 @@
++{
++    return "# disclaimer disabled" 
++	unless ($smtpd{disclaimer} || 'disabled') eq "enabled";
++    return "disclaimer";
++}
++
+diff -Nur -x '*.orig' -x '*.rej' smeserver-qpsmtpd-1.2.1/root/usr/share/qpsmtpd/plugins/disclaimer mezzanine_patched_smeserver-qpsmtpd-1.2.1/root/usr/share/qpsmtpd/plugins/disclaimer
+--- smeserver-qpsmtpd-1.2.1/root/usr/share/qpsmtpd/plugins/disclaimer	1969-12-31 17:00:00.000000000 -0700
++++ mezzanine_patched_smeserver-qpsmtpd-1.2.1/root/usr/share/qpsmtpd/plugins/disclaimer	2007-06-16 10:59:29.000000000 -0600
+@@ -0,0 +1,99 @@
++use MIME::Parser;
++use MIME::Entity;
++
++sub hook_data_post {
++  my ($self, $transaction) = @_;
++
++  if ($transaction->data_size > 10 * 1024 * 1024) {
++    $self->log(LOGWARN, "Message too large to sign");
++    return DECLINED;
++  } elsif ( $transaction->header->get('X-Qpsmtp-Disclaimer') ) {
++    $self->log(LOGNOTICE, "Message already has disclaimer attached");
++    return DECLINED;
++  }
++
++  $self->qp->version =~ m/([\.\d]+).*/;
++  my $versionnum = $1;
++  my @rcpt_hosts = ($self->qp->config("me"), $self->qp->config("rcpthosts"));
++
++  my $fromhost = $transaction->sender->host;
++  my $fromlocal = 0;
++
++  for my $allowed (@rcpt_hosts) {
++    $allowed =~ s/^\s*(\S+)/$1/;
++    ($fromlocal = 1, last) if (($fromhost eq lc $allowed) or (substr($allowed,0,1) eq "." and
++                                                 $fromhost =~ m/\Q$allowed\E$/i));
++  }
++
++  if (($versionnum >= 0.26) and ($fromlocal == 0)) {
++    my $more_rcpt_hosts = $self->qp->config('morercpthosts', 'map');
++    $fromlocal = 1 if exists $more_rcpt_hosts->{$fromhost};
++  }
++
++  unless ($fromlocal) {
++    $self->log(LOGDEBUG, "Not from local domain");
++    return DECLINED;
++  }
++
++  my $toexternal=0;
++  foreach my $rcpt ( $transaction->recipients ) {
++    my $local = 0;
++    my $host = $rcpt->host;
++
++    for my $allowed (@rcpt_hosts) {
++      $allowed =~ s/^\s*(\S+)/$1/;
++      ($local = 1, last) if (($host eq lc $allowed) or (substr($allowed,0,1) eq "." and
++                                                 $host =~ m/\Q$allowed\E$/i));
++    }
++
++    if (($versionnum >= 0.26) and ($local == 0)) {
++      my $more_rcpt_hosts = $self->qp->config('morercpthosts', 'map');
++      $local = 1 if exists $more_rcpt_hosts->{$host};
++    }
++
++    ($toexternal = 1, last) unless $local;
++  }
++
++  unless ($toexternal) {
++    $self->log(LOGDEBUG, "Not from local domain");
++    return DECLINED;
++  }
++
++  my $parser = new MIME::Parser;
++  $parser->output_under( $self->spool_dir() );
++  $parser->extract_uuencode(1);
++  my $ent = $parser->parse_open( $transaction->body_filename() );
++
++  my @lines;
++  if ( @lines = $self->qp->config("disclaimer_$fromhost") ) {
++    $self->log(LOGDEBUG, "Found disclaimer for domain: $fromhost");
++  } elsif ( @lines = $self->qp->config("disclaimer") ) {
++    $self->log(LOGDEBUG, "Found general disclaimer");
++  } else {
++    $self->log(LOGERROR, "No disclaimer found for domain: $fromhost");
++    return DECLINED;
++  }
++  $ent->make_multipart( 'mixed', Force => 1 ) if $ent->parts == 2 && $ent->mime_type eq 'multipart/alternative';
++  $ent->attach( Data => join("\n", @lines),  
++                Encoding => '-SUGGEST',
++                Filename => 'disclaimer.txt',
++                Type => 'text/plain');
++  if ($ent->parts <= 2) {
++    $transaction->header->empty();
++    $transaction->header($ent->head());
++  }
++  $transaction->header->replace( 'X-Qpsmtp-Disclaimer', $fromhost );
++  $self->log(LOGNOTICE, "Attached disclaimer for domain: $fromhost");
++
++  open BFN, ">" . $transaction->body_filename();
++  $ent->print(\*BFN);
++  close BFN;
++  $transaction->body_resetpos();
++
++  $ent->purge();
++  rmdir( $parser->output_dir );
++
++  return DECLINED; 
++}
++
++# vi: ft=perl ts=4
