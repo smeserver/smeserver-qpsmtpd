@@ -2,7 +2,7 @@ Summary: SME Server qpsmtpd module
 %define name smeserver-qpsmtpd
 Name: %{name}
 %define version 1.2.1
-%define release 41
+%define release 42
 Version: %{version}
 Release: %{release}%{?dist}
 License: GPL
@@ -39,6 +39,7 @@ Patch27: smeserver-qpsmtpd-1.2.1-qplogsumm.patch
 Patch28: smeserver-qpsmtpd-1.2.1-logterse.patch2
 Patch29: smeserver-qpsmtpd-1.2.1-qpsmtpd40.patch
 Patch30: smeserver-qpsmtpd-1.2.1-qpsmtpd40.patch2
+Patch31: smeserver-qpsmtpd-1.2.1-disclaimer.patch
 BuildRoot: /var/tmp/%{name}-%{version}-%{release}-buildroot
 Requires: qpsmtpd >= 0.40
 Requires: perl(Mail::DKIM)
@@ -69,6 +70,9 @@ AutoReqProv: no
 SME Server qpsmtpd smtpd module
 
 %changelog
+* Sat Jun 16 2007 Shad L. Lords <slords@mail.com> 1.2.1-42
+- Add disclaimer plugin disabled by default [SME: 2648]
+
 * Thu Jun 14 2007 Shad L. Lords <slords@mail.com> 1.2.1-41
 - Update for new features in qpsmtpd v0.40
 
@@ -634,6 +638,7 @@ SME Server qpsmtpd smtpd module
 %patch28 -p1
 %patch29 -p1
 %patch30 -p1
+%patch31 -p1
 
 %build
 perl createlinks
@@ -679,6 +684,15 @@ DISABLE_LOCAL="
 for file in $DISABLE_LOCAL
 do
     echo "# $file disabled for local connections" > $PEERS_CONFIG/local/$file
+done
+
+DISABLE_EXTERNAL="
+65disclaimer
+"
+
+for file in $DISABLE_EXTERNAL
+do
+    echo "# $file disabled for external connections" > $PEERS_CONFIG/0/$file
 done
 
 (
