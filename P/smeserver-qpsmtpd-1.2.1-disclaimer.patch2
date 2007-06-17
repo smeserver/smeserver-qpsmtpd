@@ -1,0 +1,148 @@
+diff -Nur -x '*.orig' -x '*.rej' smeserver-qpsmtpd-1.2.1/root/usr/share/qpsmtpd/plugins/disclaimer mezzanine_patched_smeserver-qpsmtpd-1.2.1/root/usr/share/qpsmtpd/plugins/disclaimer
+--- smeserver-qpsmtpd-1.2.1/root/usr/share/qpsmtpd/plugins/disclaimer	2007-06-17 09:21:13.000000000 -0600
++++ mezzanine_patched_smeserver-qpsmtpd-1.2.1/root/usr/share/qpsmtpd/plugins/disclaimer	2007-06-17 09:19:45.000000000 -0600
+@@ -1,83 +1,98 @@
+ use MIME::Parser;
+ use MIME::Entity;
+ 
++sub register {
++  my ($self, $qp, @args) = @_;
++
++  $self->log(LOGERROR, "Bad parameters for the disclaimer plugin")
++    if @_ % 2;
++
++  %{$self->{_args}} = @args;
++}
++
+ sub hook_data_post {
+   my ($self, $transaction) = @_;
+ 
+-  if ($transaction->data_size > 10 * 1024 * 1024) {
+-    $self->log(LOGWARN, "Message too large to sign");
+-    return DECLINED;
+-  } elsif ( $transaction->header->get('X-Qpsmtp-Disclaimer') ) {
++  if ( $transaction->header->get('X-Qpsmtp-Disclaimer') ) {
+     $self->log(LOGNOTICE, "Message already has disclaimer attached");
+     return DECLINED;
+   }
+ 
+   $self->qp->version =~ m/([\.\d]+).*/;
+   my $versionnum = $1;
+-  my @rcpt_hosts = ($self->qp->config("me"), $self->qp->config("rcpthosts"));
+ 
++  my @rcpt_hosts = ($self->qp->config("me"), $self->qp->config("rcpthosts"));
+   my $fromhost = $transaction->sender->host;
+-  my $fromlocal = 0;
+-
+-  for my $allowed (@rcpt_hosts) {
+-    $allowed =~ s/^\s*(\S+)/$1/;
+-    ($fromlocal = 1, last) if (($fromhost eq lc $allowed) or (substr($allowed,0,1) eq "." and
+-                                                 $fromhost =~ m/\Q$allowed\E$/i));
+-  }
+-
+-  if (($versionnum >= 0.26) and ($fromlocal == 0)) {
+-    my $more_rcpt_hosts = $self->qp->config('morercpthosts', 'map');
+-    $fromlocal = 1 if exists $more_rcpt_hosts->{$fromhost};
+-  }
+-
+-  unless ($fromlocal) {
+-    $self->log(LOGDEBUG, "Not from local domain");
+-    return DECLINED;
+-  }
+-
+-  my $toexternal=0;
+-  foreach my $rcpt ( $transaction->recipients ) {
+-    my $local = 0;
+-    my $host = $rcpt->host;
++  unless ( $self->{_args}->{tag_all} ) {
++    my $fromlocal = 0;
+ 
+     for my $allowed (@rcpt_hosts) {
+       $allowed =~ s/^\s*(\S+)/$1/;
+-      ($local = 1, last) if (($host eq lc $allowed) or (substr($allowed,0,1) eq "." and
+-                                                 $host =~ m/\Q$allowed\E$/i));
++      ($fromlocal = 1, last) if (($fromhost eq lc $allowed) or (substr($allowed,0,1) eq "." and
++                                                   $fromhost =~ m/\Q$allowed\E$/i));
+     }
+ 
+-    if (($versionnum >= 0.26) and ($local == 0)) {
++    if (($versionnum >= 0.26) and ($fromlocal == 0)) {
+       my $more_rcpt_hosts = $self->qp->config('morercpthosts', 'map');
+-      $local = 1 if exists $more_rcpt_hosts->{$host};
++      $fromlocal = 1 if exists $more_rcpt_hosts->{$fromhost};
+     }
+ 
+-    ($toexternal = 1, last) unless $local;
+-  }
+-
+-  unless ($toexternal) {
+-    $self->log(LOGDEBUG, "Not from local domain");
+-    return DECLINED;
++    unless ($fromlocal) {
++      $self->log(LOGDEBUG, "Not from local domain");
++      return DECLINED;
++    }
+   }
+ 
+-  my $parser = new MIME::Parser;
+-  $parser->output_under( $self->spool_dir() );
+-  $parser->extract_uuencode(1);
+-  my $ent = $parser->parse_open( $transaction->body_filename() );
+-
++  my $specific = 0;
+   my @lines;
+   if ( @lines = $self->qp->config("disclaimer_$fromhost") ) {
+     $self->log(LOGDEBUG, "Found disclaimer for domain: $fromhost");
++    $specific = 1;
+   } elsif ( @lines = $self->qp->config("disclaimer") ) {
+     $self->log(LOGDEBUG, "Found general disclaimer");
+   } else {
+     $self->log(LOGERROR, "No disclaimer found for domain: $fromhost");
+     return DECLINED;
+   }
+-  $ent->make_multipart( 'mixed', Force => 1 ) if $ent->parts == 2 && $ent->mime_type eq 'multipart/alternative';
++
++  unless ( $self->{_args}->{tag_all} ) {
++    my $toexternal=0;
++    foreach my $rcpt ( $transaction->recipients ) {
++      my $local = 0;
++      my $host = $rcpt->host;
++
++      ($toexternal = 1, last) if ( $specific && $host ne $fromhost);
++
++      for my $allowed (@rcpt_hosts) {
++        $allowed =~ s/^\s*(\S+)/$1/;
++        ($local = 1, last) if (($host eq lc $allowed) or (substr($allowed,0,1) eq "." and
++                                                   $host =~ m/\Q$allowed\E$/i));
++      }
++
++      if (($versionnum >= 0.26) and ($local == 0)) {
++        my $more_rcpt_hosts = $self->qp->config('morercpthosts', 'map');
++        $local = 1 if exists $more_rcpt_hosts->{$host};
++      }
++
++      ($toexternal = 1, last) unless $local;
++    }
++
++    unless ($toexternal) {
++      $self->log(LOGDEBUG, "Not to any external domain");
++      return DECLINED;
++    }
++  }
++
++  my $parser = new MIME::Parser;
++  $parser->output_under( $self->spool_dir() );
++  $parser->extract_uuencode(1);
++  my $ent = $parser->parse_open( $transaction->body_filename() );
++
++  $ent->make_multipart( 'mixed', Force => 1 ) if $ent->mime_type ne 'multipart/mixed';
+   $ent->attach( Data => join("\n", @lines),  
+-                Encoding => '-SUGGEST',
+-                Filename => 'disclaimer.txt',
+-                Type => 'text/plain');
++                Encoding => $self->{_args}->{mime_encoding} || '-SUGGEST',
++                Filename => $self->{_args}->{mime_filename} || 'disclaimer.txt',
++                Type => $self->{_args}->{mime_type} || 'text/plain');
+   if ($ent->parts <= 2) {
+     $transaction->header->empty();
+     $transaction->header($ent->head());
