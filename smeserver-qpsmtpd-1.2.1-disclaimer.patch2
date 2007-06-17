@@ -1,7 +1,7 @@
 diff -Nur -x '*.orig' -x '*.rej' smeserver-qpsmtpd-1.2.1/root/usr/share/qpsmtpd/plugins/disclaimer mezzanine_patched_smeserver-qpsmtpd-1.2.1/root/usr/share/qpsmtpd/plugins/disclaimer
---- smeserver-qpsmtpd-1.2.1/root/usr/share/qpsmtpd/plugins/disclaimer	2007-06-17 08:52:46.000000000 -0600
-+++ mezzanine_patched_smeserver-qpsmtpd-1.2.1/root/usr/share/qpsmtpd/plugins/disclaimer	2007-06-17 08:51:55.000000000 -0600
-@@ -1,83 +1,101 @@
+--- smeserver-qpsmtpd-1.2.1/root/usr/share/qpsmtpd/plugins/disclaimer	2007-06-17 09:21:13.000000000 -0600
++++ mezzanine_patched_smeserver-qpsmtpd-1.2.1/root/usr/share/qpsmtpd/plugins/disclaimer	2007-06-17 09:19:45.000000000 -0600
+@@ -1,83 +1,98 @@
  use MIME::Parser;
  use MIME::Entity;
  
@@ -26,17 +26,12 @@ diff -Nur -x '*.orig' -x '*.rej' smeserver-qpsmtpd-1.2.1/root/usr/share/qpsmtpd/
      return DECLINED;
    }
  
--  $self->qp->version =~ m/([\.\d]+).*/;
--  my $versionnum = $1;
-   my @rcpt_hosts = ($self->qp->config("me"), $self->qp->config("rcpthosts"));
-+  my $fromhost;
-+  if ( $self->{_args}->{tag_all} ) {
-+    $fromhost = $rcpt_hosts[0];
-+  } else {
-+    $self->qp->version =~ m/([\.\d]+).*/;
-+    my $versionnum = $1;
+   $self->qp->version =~ m/([\.\d]+).*/;
+   my $versionnum = $1;
+-  my @rcpt_hosts = ($self->qp->config("me"), $self->qp->config("rcpthosts"));
  
--  my $fromhost = $transaction->sender->host;
++  my @rcpt_hosts = ($self->qp->config("me"), $self->qp->config("rcpthosts"));
+   my $fromhost = $transaction->sender->host;
 -  my $fromlocal = 0;
 -
 -  for my $allowed (@rcpt_hosts) {
@@ -59,7 +54,7 @@ diff -Nur -x '*.orig' -x '*.rej' smeserver-qpsmtpd-1.2.1/root/usr/share/qpsmtpd/
 -  foreach my $rcpt ( $transaction->recipients ) {
 -    my $local = 0;
 -    my $host = $rcpt->host;
-+    $fromhost = $transaction->sender->host;
++  unless ( $self->{_args}->{tag_all} ) {
 +    my $fromlocal = 0;
  
      for my $allowed (@rcpt_hosts) {
@@ -130,7 +125,7 @@ diff -Nur -x '*.orig' -x '*.rej' smeserver-qpsmtpd-1.2.1/root/usr/share/qpsmtpd/
 +    }
 +
 +    unless ($toexternal) {
-+      $self->log(LOGDEBUG, "Not from local domain");
++      $self->log(LOGDEBUG, "Not to any external domain");
 +      return DECLINED;
 +    }
 +  }
