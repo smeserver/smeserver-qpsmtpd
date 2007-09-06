@@ -2,7 +2,7 @@ Summary: SME Server qpsmtpd module
 %define name smeserver-qpsmtpd
 Name: %{name}
 %define version 1.2.1
-%define release 44
+%define release 45
 Version: %{version}
 Release: %{release}%{?dist}
 License: GPL
@@ -42,6 +42,7 @@ Patch30: smeserver-qpsmtpd-1.2.1-qpsmtpd40.patch2
 Patch31: smeserver-qpsmtpd-1.2.1-disclaimer.patch
 Patch32: smeserver-qpsmtpd-1.2.1-disclaimer.patch2
 Patch33: smeserver-qpsmtpd-1.2.1-rblsbl.patch2
+Patch34: smeserver-qpsmtpd-1.2.1-hosts_allow.patch
 BuildRoot: /var/tmp/%{name}-%{version}-%{release}-buildroot
 Requires: qpsmtpd >= 0.40
 Requires: perl(Mail::DKIM)
@@ -72,6 +73,11 @@ AutoReqProv: no
 SME Server qpsmtpd smtpd module
 
 %changelog
+* Thu Sep  6 2007 Charlie Brady <charlie_brady@mitel.com> 1.2.1-45
+- Configure hosts_allow plugin, which use the pre_connection hook
+  and therefore needs to be done before the 'peers' plugin.
+  [SME: 3352]
+
 * Fri Aug 03 2007 Charlie Brady <charlie_brady@mitel.com> 1.2.1-44
 - Fix rbl migrate fragment (thanks, Mike McCarn). [SME: 3229]
 
@@ -649,6 +655,7 @@ SME Server qpsmtpd smtpd module
 %patch31 -p1
 %patch32 -p1
 %patch33 -p1
+%patch34 -p1
 
 %build
 perl createlinks
