@@ -75,7 +75,8 @@ SME Server qpsmtpd smtpd module
 
 %changelog
 * Thu Sep  6 2007 Charlie Brady <charlie_brady@mitel.com> 1.2.1-46
-- Disconnect immediately if dnsbl plugin is invoked. [SME: 3352]
+- Disconnect immediately if dnsbl plugin rejects recipient addresses
+  (and therefore would never accept the message). [SME: 3352]
 
 * Thu Sep  6 2007 Charlie Brady <charlie_brady@mitel.com> 1.2.1-45
 - Configure hosts_allow plugin, which use the pre_connection hook
