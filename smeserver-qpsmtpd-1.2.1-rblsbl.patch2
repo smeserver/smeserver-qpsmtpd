@@ -1,0 +1,11 @@
+diff -ru smeserver-qpsmtpd-1.2.1/root/etc/e-smith/db/configuration/migrate/20ordb.org mezzanine_patched_smeserver-qpsmtpd-1.2.1/root/etc/e-smith/db/configuration/migrate/20ordb.org
+--- smeserver-qpsmtpd-1.2.1/root/etc/e-smith/db/configuration/migrate/20ordb.org	2007-08-03 14:14:04.000000000 -0400
++++ mezzanine_patched_smeserver-qpsmtpd-1.2.1/root/etc/e-smith/db/configuration/migrate/20ordb.org	2007-08-03 14:14:50.000000000 -0400
+@@ -1,6 +1,7 @@
+ {
+     $qpsmtpd = $DB->get('qpsmtpd');
+     return unless $qpsmtpd;
++    return unless $qpsmtpd->prop('RBLList');
+ 
+     @rbl = grep { ! /ordb.org/ } split /[,:]/, $qpsmtpd->prop('RBLList');
+     $qpsmtpd->set_prop('RBLList', join ':', @rbl);
