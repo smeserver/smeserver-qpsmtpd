@@ -2,7 +2,7 @@ Summary: SME Server qpsmtpd module
 %define name smeserver-qpsmtpd
 Name: %{name}
 %define version 1.2.1
-%define release 43
+%define release 44
 Version: %{version}
 Release: %{release}%{?dist}
 License: GPL
@@ -41,6 +41,7 @@ Patch29: smeserver-qpsmtpd-1.2.1-qpsmtpd40.patch
 Patch30: smeserver-qpsmtpd-1.2.1-qpsmtpd40.patch2
 Patch31: smeserver-qpsmtpd-1.2.1-disclaimer.patch
 Patch32: smeserver-qpsmtpd-1.2.1-disclaimer.patch2
+Patch33: smeserver-qpsmtpd-1.2.1-rblsbl.patch2
 BuildRoot: /var/tmp/%{name}-%{version}-%{release}-buildroot
 Requires: qpsmtpd >= 0.40
 Requires: perl(Mail::DKIM)
@@ -71,6 +72,9 @@ AutoReqProv: no
 SME Server qpsmtpd smtpd module
 
 %changelog
+* Fri Aug 03 2007 Charlie Brady <charlie_brady@mitel.com> 1.2.1-44
+- Fix rbl migrate fragment (thanks, Mike McCarn). [SME: 3229]
+
 * Sun Jun 17 2007 Shad L. Lords <slords@mail.com> 1.2.1-43
 - Updates for disclaimer plugin [SME: 2648]
 
@@ -644,6 +648,7 @@ SME Server qpsmtpd smtpd module
 %patch30 -p1
 %patch31 -p1
 %patch32 -p1
+%patch33 -p1
 
 %build
 perl createlinks
