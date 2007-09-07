@@ -1,0 +1,28 @@
+diff -Nur -x '*.orig' -x '*.rej' smeserver-qpsmtpd-1.2.1/createlinks mezzanine_patched_smeserver-qpsmtpd-1.2.1/createlinks
+--- smeserver-qpsmtpd-1.2.1/createlinks	2007-09-06 20:25:04.000000000 -0400
++++ mezzanine_patched_smeserver-qpsmtpd-1.2.1/createlinks	2007-09-06 20:24:55.000000000 -0400
+@@ -93,6 +93,8 @@
+ 				smtpgreeting
+ 				spool_dir
+ 				invalid_resolvable_fromhost
++				timeout
++				timeoutsmtpd
+ 				));
+ templates2events("$config/badhelo", 'ip-change');
+ templates2events("$config/goodrcptto", qw(
+diff -Nur -x '*.orig' -x '*.rej' smeserver-qpsmtpd-1.2.1/root/etc/e-smith/templates/var/service/qpsmtpd/config/timeout mezzanine_patched_smeserver-qpsmtpd-1.2.1/root/etc/e-smith/templates/var/service/qpsmtpd/config/timeout
+--- smeserver-qpsmtpd-1.2.1/root/etc/e-smith/templates/var/service/qpsmtpd/config/timeout	1969-12-31 19:00:00.000000000 -0500
++++ mezzanine_patched_smeserver-qpsmtpd-1.2.1/root/etc/e-smith/templates/var/service/qpsmtpd/config/timeout	2007-09-06 20:23:42.000000000 -0400
+@@ -0,0 +1,4 @@
++{
++    my $timeout = $qpsmtpd{timeout} || 120;
++    $OUT = "$timeout";
++}
+diff -Nur -x '*.orig' -x '*.rej' smeserver-qpsmtpd-1.2.1/root/etc/e-smith/templates/var/service/qpsmtpd/config/timeoutsmtpd mezzanine_patched_smeserver-qpsmtpd-1.2.1/root/etc/e-smith/templates/var/service/qpsmtpd/config/timeoutsmtpd
+--- smeserver-qpsmtpd-1.2.1/root/etc/e-smith/templates/var/service/qpsmtpd/config/timeoutsmtpd	1969-12-31 19:00:00.000000000 -0500
++++ mezzanine_patched_smeserver-qpsmtpd-1.2.1/root/etc/e-smith/templates/var/service/qpsmtpd/config/timeoutsmtpd	2007-09-06 20:23:15.000000000 -0400
+@@ -0,0 +1,4 @@
++{
++    my $timeout = $qpsmtpd{timeoutsmtpd} || 120;
++    $OUT = "$timeout";
++}
