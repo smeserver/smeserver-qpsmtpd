@@ -1,0 +1,168 @@
+diff -Nur -x '*.orig' -x '*.rej' smeserver-qpsmtpd-1.2.1/root/etc/e-smith/templates/var/service/qpsmtpd/config/badhelo/10begin mezzanine_patched_smeserver-qpsmtpd-1.2.1/root/etc/e-smith/templates/var/service/qpsmtpd/config/badhelo/10begin
+--- smeserver-qpsmtpd-1.2.1/root/etc/e-smith/templates/var/service/qpsmtpd/config/badhelo/10begin	1969-12-31 17:00:00.000000000 -0700
++++ mezzanine_patched_smeserver-qpsmtpd-1.2.1/root/etc/e-smith/templates/var/service/qpsmtpd/config/badhelo/10begin	2005-04-25 02:09:41.000000000 -0600
+@@ -0,0 +1 @@
++# these domains never uses their domain when greeting us, so reject transactions
+diff -Nur -x '*.orig' -x '*.rej' smeserver-qpsmtpd-1.2.1/root/etc/e-smith/templates/var/service/qpsmtpd/config/badhelo/template-begin mezzanine_patched_smeserver-qpsmtpd-1.2.1/root/etc/e-smith/templates/var/service/qpsmtpd/config/badhelo/template-begin
+--- smeserver-qpsmtpd-1.2.1/root/etc/e-smith/templates/var/service/qpsmtpd/config/badhelo/template-begin	2005-04-25 02:09:41.000000000 -0600
++++ mezzanine_patched_smeserver-qpsmtpd-1.2.1/root/etc/e-smith/templates/var/service/qpsmtpd/config/badhelo/template-begin	1969-12-31 17:00:00.000000000 -0700
+@@ -1 +0,0 @@
+-# these domains never uses their domain when greeting us, so reject transactions
+diff -Nur -x '*.orig' -x '*.rej' smeserver-qpsmtpd-1.2.1/root/etc/e-smith/templates/var/service/qpsmtpd/config/badrcptto_patterns/10header mezzanine_patched_smeserver-qpsmtpd-1.2.1/root/etc/e-smith/templates/var/service/qpsmtpd/config/badrcptto_patterns/10header
+--- smeserver-qpsmtpd-1.2.1/root/etc/e-smith/templates/var/service/qpsmtpd/config/badrcptto_patterns/10header	1969-12-31 17:00:00.000000000 -0700
++++ mezzanine_patched_smeserver-qpsmtpd-1.2.1/root/etc/e-smith/templates/var/service/qpsmtpd/config/badrcptto_patterns/10header	2005-04-29 15:24:02.000000000 -0600
+@@ -0,0 +1 @@
++# Format is pattern\s+Response - don't forget to tie the pattern if required
+diff -Nur -x '*.orig' -x '*.rej' smeserver-qpsmtpd-1.2.1/root/etc/e-smith/templates/var/service/qpsmtpd/config/badrcptto_patterns/template-begin mezzanine_patched_smeserver-qpsmtpd-1.2.1/root/etc/e-smith/templates/var/service/qpsmtpd/config/badrcptto_patterns/template-begin
+--- smeserver-qpsmtpd-1.2.1/root/etc/e-smith/templates/var/service/qpsmtpd/config/badrcptto_patterns/template-begin	2005-04-29 15:24:02.000000000 -0600
++++ mezzanine_patched_smeserver-qpsmtpd-1.2.1/root/etc/e-smith/templates/var/service/qpsmtpd/config/badrcptto_patterns/template-begin	1969-12-31 17:00:00.000000000 -0700
+@@ -1 +0,0 @@
+-# Format is pattern\s+Response - don't forget to tie the pattern if required
+diff -Nur -x '*.orig' -x '*.rej' smeserver-qpsmtpd-1.2.1/root/etc/e-smith/templates/var/service/qpsmtpd/config/dnsbl_zones/10header mezzanine_patched_smeserver-qpsmtpd-1.2.1/root/etc/e-smith/templates/var/service/qpsmtpd/config/dnsbl_zones/10header
+--- smeserver-qpsmtpd-1.2.1/root/etc/e-smith/templates/var/service/qpsmtpd/config/dnsbl_zones/10header	1969-12-31 17:00:00.000000000 -0700
++++ mezzanine_patched_smeserver-qpsmtpd-1.2.1/root/etc/e-smith/templates/var/service/qpsmtpd/config/dnsbl_zones/10header	2005-04-25 02:26:10.000000000 -0600
+@@ -0,0 +1,6 @@
++{
++# rbl.mail-abuse.org
++# spamsources.fabel.dk
++# relays.ordb.org
++# sbl.spamhaus.org
++}
+diff -Nur -x '*.orig' -x '*.rej' smeserver-qpsmtpd-1.2.1/root/etc/e-smith/templates/var/service/qpsmtpd/config/dnsbl_zones/template-begin mezzanine_patched_smeserver-qpsmtpd-1.2.1/root/etc/e-smith/templates/var/service/qpsmtpd/config/dnsbl_zones/template-begin
+--- smeserver-qpsmtpd-1.2.1/root/etc/e-smith/templates/var/service/qpsmtpd/config/dnsbl_zones/template-begin	2005-04-25 02:26:10.000000000 -0600
++++ mezzanine_patched_smeserver-qpsmtpd-1.2.1/root/etc/e-smith/templates/var/service/qpsmtpd/config/dnsbl_zones/template-begin	1969-12-31 17:00:00.000000000 -0700
+@@ -1,6 +0,0 @@
+-{
+-# rbl.mail-abuse.org
+-# spamsources.fabel.dk
+-# relays.ordb.org
+-# sbl.spamhaus.org
+-}
+diff -Nur -x '*.orig' -x '*.rej' smeserver-qpsmtpd-1.2.1/root/etc/e-smith/templates/var/service/qpsmtpd/config/IP/10IP mezzanine_patched_smeserver-qpsmtpd-1.2.1/root/etc/e-smith/templates/var/service/qpsmtpd/config/IP/10IP
+--- smeserver-qpsmtpd-1.2.1/root/etc/e-smith/templates/var/service/qpsmtpd/config/IP/10IP	1969-12-31 17:00:00.000000000 -0700
++++ mezzanine_patched_smeserver-qpsmtpd-1.2.1/root/etc/e-smith/templates/var/service/qpsmtpd/config/IP/10IP	2005-04-20 21:29:31.000000000 -0600
+@@ -0,0 +1,6 @@
++0
++{
++# the first line of this file is being used as the IP 
++# address tcpserver will bind to.  Use 0 to bind to all
++# interfaces.
++}
+diff -Nur -x '*.orig' -x '*.rej' smeserver-qpsmtpd-1.2.1/root/etc/e-smith/templates/var/service/qpsmtpd/config/IP/template-begin mezzanine_patched_smeserver-qpsmtpd-1.2.1/root/etc/e-smith/templates/var/service/qpsmtpd/config/IP/template-begin
+--- smeserver-qpsmtpd-1.2.1/root/etc/e-smith/templates/var/service/qpsmtpd/config/IP/template-begin	2005-04-20 21:29:31.000000000 -0600
++++ mezzanine_patched_smeserver-qpsmtpd-1.2.1/root/etc/e-smith/templates/var/service/qpsmtpd/config/IP/template-begin	1969-12-31 17:00:00.000000000 -0700
+@@ -1,6 +0,0 @@
+-0
+-{
+-# the first line of this file is being used as the IP 
+-# address tcpserver will bind to.  Use 0 to bind to all
+-# interfaces.
+-}
+diff -Nur -x '*.orig' -x '*.rej' smeserver-qpsmtpd-1.2.1/root/etc/e-smith/templates/var/service/qpsmtpd/config/loglevel/10loglevel mezzanine_patched_smeserver-qpsmtpd-1.2.1/root/etc/e-smith/templates/var/service/qpsmtpd/config/loglevel/10loglevel
+--- smeserver-qpsmtpd-1.2.1/root/etc/e-smith/templates/var/service/qpsmtpd/config/loglevel/10loglevel	1969-12-31 17:00:00.000000000 -0700
++++ mezzanine_patched_smeserver-qpsmtpd-1.2.1/root/etc/e-smith/templates/var/service/qpsmtpd/config/loglevel/10loglevel	2005-10-06 19:21:58.000000000 -0600
+@@ -0,0 +1,14 @@
++{
++# Log levels
++# LOGDEBUG   = 8
++# LOGINFO    = 7
++# LOGNOTICE  = 6
++# LOGWARN    = 5
++# LOGERROR   = 4
++# LOGCRIT    = 3
++# LOGALERT   = 2
++# LOGEMERG   = 1
++# LOGRADAR   = 0
++
++    return $qpsmtpd{LogLevel};
++}
+diff -Nur -x '*.orig' -x '*.rej' smeserver-qpsmtpd-1.2.1/root/etc/e-smith/templates/var/service/qpsmtpd/config/loglevel/template-begin mezzanine_patched_smeserver-qpsmtpd-1.2.1/root/etc/e-smith/templates/var/service/qpsmtpd/config/loglevel/template-begin
+--- smeserver-qpsmtpd-1.2.1/root/etc/e-smith/templates/var/service/qpsmtpd/config/loglevel/template-begin	2005-10-06 19:21:58.000000000 -0600
++++ mezzanine_patched_smeserver-qpsmtpd-1.2.1/root/etc/e-smith/templates/var/service/qpsmtpd/config/loglevel/template-begin	1969-12-31 17:00:00.000000000 -0700
+@@ -1,14 +0,0 @@
+-{
+-# Log levels
+-# LOGDEBUG   = 8
+-# LOGINFO    = 7
+-# LOGNOTICE  = 6
+-# LOGWARN    = 5
+-# LOGERROR   = 4
+-# LOGCRIT    = 3
+-# LOGALERT   = 2
+-# LOGEMERG   = 1
+-# LOGRADAR   = 0
+-
+-    return $qpsmtpd{LogLevel};
+-}
+diff -Nur -x '*.orig' -x '*.rej' smeserver-qpsmtpd-1.2.1/root/etc/e-smith/templates/var/service/qpsmtpd/config/memory_threshold/10memory mezzanine_patched_smeserver-qpsmtpd-1.2.1/root/etc/e-smith/templates/var/service/qpsmtpd/config/memory_threshold/10memory
+--- smeserver-qpsmtpd-1.2.1/root/etc/e-smith/templates/var/service/qpsmtpd/config/memory_threshold/10memory	1969-12-31 17:00:00.000000000 -0700
++++ mezzanine_patched_smeserver-qpsmtpd-1.2.1/root/etc/e-smith/templates/var/service/qpsmtpd/config/memory_threshold/10memory	2005-10-06 19:21:58.000000000 -0600
+@@ -0,0 +1 @@
++1
+diff -Nur -x '*.orig' -x '*.rej' smeserver-qpsmtpd-1.2.1/root/etc/e-smith/templates/var/service/qpsmtpd/config/memory_threshold/template-begin mezzanine_patched_smeserver-qpsmtpd-1.2.1/root/etc/e-smith/templates/var/service/qpsmtpd/config/memory_threshold/template-begin
+--- smeserver-qpsmtpd-1.2.1/root/etc/e-smith/templates/var/service/qpsmtpd/config/memory_threshold/template-begin	2005-10-06 19:21:58.000000000 -0600
++++ mezzanine_patched_smeserver-qpsmtpd-1.2.1/root/etc/e-smith/templates/var/service/qpsmtpd/config/memory_threshold/template-begin	1969-12-31 17:00:00.000000000 -0700
+@@ -1 +0,0 @@
+-1
+diff -Nur -x '*.orig' -x '*.rej' smeserver-qpsmtpd-1.2.1/root/etc/e-smith/templates/var/service/qpsmtpd/config/norelayclients/10header mezzanine_patched_smeserver-qpsmtpd-1.2.1/root/etc/e-smith/templates/var/service/qpsmtpd/config/norelayclients/10header
+--- smeserver-qpsmtpd-1.2.1/root/etc/e-smith/templates/var/service/qpsmtpd/config/norelayclients/10header	1969-12-31 17:00:00.000000000 -0700
++++ mezzanine_patched_smeserver-qpsmtpd-1.2.1/root/etc/e-smith/templates/var/service/qpsmtpd/config/norelayclients/10header	2005-04-25 22:24:35.000000000 -0600
+@@ -0,0 +1,2 @@
++# Format is IP, or IP part with trailing dot
++# e.g. "127.0.0.1", or "192.168."
+diff -Nur -x '*.orig' -x '*.rej' smeserver-qpsmtpd-1.2.1/root/etc/e-smith/templates/var/service/qpsmtpd/config/norelayclients/template-begin mezzanine_patched_smeserver-qpsmtpd-1.2.1/root/etc/e-smith/templates/var/service/qpsmtpd/config/norelayclients/template-begin
+--- smeserver-qpsmtpd-1.2.1/root/etc/e-smith/templates/var/service/qpsmtpd/config/norelayclients/template-begin	2005-04-25 22:24:35.000000000 -0600
++++ mezzanine_patched_smeserver-qpsmtpd-1.2.1/root/etc/e-smith/templates/var/service/qpsmtpd/config/norelayclients/template-begin	1969-12-31 17:00:00.000000000 -0700
+@@ -1,2 +0,0 @@
+-# Format is IP, or IP part with trailing dot
+-# e.g. "127.0.0.1", or "192.168."
+diff -Nur -x '*.orig' -x '*.rej' smeserver-qpsmtpd-1.2.1/root/etc/e-smith/templates/var/service/qpsmtpd/config/plugin_dirs/10plugins mezzanine_patched_smeserver-qpsmtpd-1.2.1/root/etc/e-smith/templates/var/service/qpsmtpd/config/plugin_dirs/10plugins
+--- smeserver-qpsmtpd-1.2.1/root/etc/e-smith/templates/var/service/qpsmtpd/config/plugin_dirs/10plugins	1969-12-31 17:00:00.000000000 -0700
++++ mezzanine_patched_smeserver-qpsmtpd-1.2.1/root/etc/e-smith/templates/var/service/qpsmtpd/config/plugin_dirs/10plugins	2008-01-07 01:19:17.000000000 -0700
+@@ -0,0 +1 @@
++/usr/share/qpsmtpd/plugins
+diff -Nur -x '*.orig' -x '*.rej' smeserver-qpsmtpd-1.2.1/root/etc/e-smith/templates/var/service/qpsmtpd/config/plugin_dirs/template-begin mezzanine_patched_smeserver-qpsmtpd-1.2.1/root/etc/e-smith/templates/var/service/qpsmtpd/config/plugin_dirs/template-begin
+--- smeserver-qpsmtpd-1.2.1/root/etc/e-smith/templates/var/service/qpsmtpd/config/plugin_dirs/template-begin	2008-01-07 02:10:31.000000000 -0700
++++ mezzanine_patched_smeserver-qpsmtpd-1.2.1/root/etc/e-smith/templates/var/service/qpsmtpd/config/plugin_dirs/template-begin	1969-12-31 17:00:00.000000000 -0700
+@@ -1 +0,0 @@
+-/usr/share/qpsmtpd/plugins
+diff -Nur -x '*.orig' -x '*.rej' smeserver-qpsmtpd-1.2.1/root/etc/e-smith/templates/var/service/qpsmtpd/config/relayclients/10LocalNetworks mezzanine_patched_smeserver-qpsmtpd-1.2.1/root/etc/e-smith/templates/var/service/qpsmtpd/config/relayclients/10LocalNetworks
+--- smeserver-qpsmtpd-1.2.1/root/etc/e-smith/templates/var/service/qpsmtpd/config/relayclients/10LocalNetworks	1969-12-31 17:00:00.000000000 -0700
++++ mezzanine_patched_smeserver-qpsmtpd-1.2.1/root/etc/e-smith/templates/var/service/qpsmtpd/config/relayclients/10LocalNetworks	2005-04-25 02:20:43.000000000 -0600
+@@ -0,0 +1,2 @@
++# Format is IP, or IP part with trailing dot
++# e.g. "127.0.0.1", or "192.168."
+diff -Nur -x '*.orig' -x '*.rej' smeserver-qpsmtpd-1.2.1/root/etc/e-smith/templates/var/service/qpsmtpd/config/relayclients/template-begin mezzanine_patched_smeserver-qpsmtpd-1.2.1/root/etc/e-smith/templates/var/service/qpsmtpd/config/relayclients/template-begin
+--- smeserver-qpsmtpd-1.2.1/root/etc/e-smith/templates/var/service/qpsmtpd/config/relayclients/template-begin	2005-04-25 02:20:43.000000000 -0600
++++ mezzanine_patched_smeserver-qpsmtpd-1.2.1/root/etc/e-smith/templates/var/service/qpsmtpd/config/relayclients/template-begin	1969-12-31 17:00:00.000000000 -0700
+@@ -1,2 +0,0 @@
+-# Format is IP, or IP part with trailing dot
+-# e.g. "127.0.0.1", or "192.168."
+diff -Nur -x '*.orig' -x '*.rej' smeserver-qpsmtpd-1.2.1/root/etc/e-smith/templates/var/service/qpsmtpd/config/require_resolvable_fromhost/10RequireResolvableFromHost mezzanine_patched_smeserver-qpsmtpd-1.2.1/root/etc/e-smith/templates/var/service/qpsmtpd/config/require_resolvable_fromhost/10RequireResolvableFromHost
+--- smeserver-qpsmtpd-1.2.1/root/etc/e-smith/templates/var/service/qpsmtpd/config/require_resolvable_fromhost/10RequireResolvableFromHost	1969-12-31 17:00:00.000000000 -0700
++++ mezzanine_patched_smeserver-qpsmtpd-1.2.1/root/etc/e-smith/templates/var/service/qpsmtpd/config/require_resolvable_fromhost/10RequireResolvableFromHost	2005-10-06 19:21:58.000000000 -0600
+@@ -0,0 +1,5 @@
++{
++# use 0 to disable; anything else to enable.
++
++    return ($qpsmtpd{RequireResolvableFromHost} eq 'yes') ? 1 : 0;
++}
+diff -Nur -x '*.orig' -x '*.rej' smeserver-qpsmtpd-1.2.1/root/etc/e-smith/templates/var/service/qpsmtpd/config/require_resolvable_fromhost/template-begin mezzanine_patched_smeserver-qpsmtpd-1.2.1/root/etc/e-smith/templates/var/service/qpsmtpd/config/require_resolvable_fromhost/template-begin
+--- smeserver-qpsmtpd-1.2.1/root/etc/e-smith/templates/var/service/qpsmtpd/config/require_resolvable_fromhost/template-begin	2005-10-06 19:21:58.000000000 -0600
++++ mezzanine_patched_smeserver-qpsmtpd-1.2.1/root/etc/e-smith/templates/var/service/qpsmtpd/config/require_resolvable_fromhost/template-begin	1969-12-31 17:00:00.000000000 -0700
+@@ -1,5 +0,0 @@
+-{
+-# use 0 to disable; anything else to enable.
+-
+-    return ($qpsmtpd{RequireResolvableFromHost} eq 'yes') ? 1 : 0;
+-}
+diff -Nur -x '*.orig' -x '*.rej' smeserver-qpsmtpd-1.2.1/root/etc/e-smith/templates/var/service/qpsmtpd/config/spool_dir/10spool mezzanine_patched_smeserver-qpsmtpd-1.2.1/root/etc/e-smith/templates/var/service/qpsmtpd/config/spool_dir/10spool
+--- smeserver-qpsmtpd-1.2.1/root/etc/e-smith/templates/var/service/qpsmtpd/config/spool_dir/10spool	1969-12-31 17:00:00.000000000 -0700
++++ mezzanine_patched_smeserver-qpsmtpd-1.2.1/root/etc/e-smith/templates/var/service/qpsmtpd/config/spool_dir/10spool	2005-04-20 21:33:00.000000000 -0600
+@@ -0,0 +1 @@
++/var/spool/qpsmtpd
+diff -Nur -x '*.orig' -x '*.rej' smeserver-qpsmtpd-1.2.1/root/etc/e-smith/templates/var/service/qpsmtpd/config/spool_dir/template-begin mezzanine_patched_smeserver-qpsmtpd-1.2.1/root/etc/e-smith/templates/var/service/qpsmtpd/config/spool_dir/template-begin
+--- smeserver-qpsmtpd-1.2.1/root/etc/e-smith/templates/var/service/qpsmtpd/config/spool_dir/template-begin	2005-04-20 21:33:00.000000000 -0600
++++ mezzanine_patched_smeserver-qpsmtpd-1.2.1/root/etc/e-smith/templates/var/service/qpsmtpd/config/spool_dir/template-begin	1969-12-31 17:00:00.000000000 -0700
+@@ -1 +0,0 @@
+-/var/spool/qpsmtpd
