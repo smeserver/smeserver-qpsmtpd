@@ -2,7 +2,7 @@ Summary: SME Server qpsmtpd module
 %define name smeserver-qpsmtpd
 Name: %{name}
 %define version 1.2.1
-%define release 48
+%define release 49
 Version: %{version}
 Release: %{release}%{?dist}
 License: GPL
@@ -46,6 +46,7 @@ Patch34: smeserver-qpsmtpd-1.2.1-hosts_allow.patch
 Patch35: smeserver-qpsmtpd-1.2.1-dnsbl_disconnect.patch
 Patch36: smeserver-qpsmtpd-1.2.1-timeouts.patch
 Patch37: smeserver-qpsmtpd-1.2.1-badrcptto_empty_local.patch
+Patch38: smeserver-qpsmtpd-1.2.1-templatebegin.patch
 BuildRoot: /var/tmp/%{name}-%{version}-%{release}-buildroot
 Requires: qpsmtpd >= 0.40
 Requires: perl(Mail::DKIM)
@@ -76,6 +77,9 @@ AutoReqProv: no
 SME Server qpsmtpd smtpd module
 
 %changelog
+* Mon Jan 7 2008 Stephen Noble <support@dungog.net> 1.2.1-49
+- rename template-begin fragments [SME: 2333]
+
 * Mon Oct 29 2007 Charlie Brady <charlie_brady@mitel.com>
 - Add badrcptto_pattern rule to block "null" recipient addresses.
   [SME: 3476]
@@ -674,6 +678,7 @@ SME Server qpsmtpd smtpd module
 %patch35 -p1
 %patch36 -p1
 %patch37 -p1
+%patch38 -p1
 
 %build
 perl createlinks
