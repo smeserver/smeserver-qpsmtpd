@@ -1,0 +1,33 @@
+diff -Nur -x '*.orig' -x '*.rej' smeserver-qpsmtpd-1.2.1/root/etc/e-smith/db/configuration/defaults/qpsmtpd/qplogsumm mezzanine_patched_smeserver-qpsmtpd-1.2.1/root/etc/e-smith/db/configuration/defaults/qpsmtpd/qplogsumm
+--- smeserver-qpsmtpd-1.2.1/root/etc/e-smith/db/configuration/defaults/qpsmtpd/qplogsumm	1969-12-31 17:00:00.000000000 -0700
++++ mezzanine_patched_smeserver-qpsmtpd-1.2.1/root/etc/e-smith/db/configuration/defaults/qpsmtpd/qplogsumm	2008-01-08 01:41:03.000000000 -0700
+@@ -0,0 +1 @@
++disabled
+diff -Nur -x '*.orig' -x '*.rej' smeserver-qpsmtpd-1.2.1/root/var/service/qpsmtpd/log/run mezzanine_patched_smeserver-qpsmtpd-1.2.1/root/var/service/qpsmtpd/log/run
+--- smeserver-qpsmtpd-1.2.1/root/var/service/qpsmtpd/log/run	2008-01-08 01:42:21.000000000 -0700
++++ mezzanine_patched_smeserver-qpsmtpd-1.2.1/root/var/service/qpsmtpd/log/run	2008-01-08 01:37:04.000000000 -0700
+@@ -21,7 +21,21 @@
+ # Please visit our web site www.e-smith.com for details.
+ #----------------------------------------------------------------------
+ 
+-exec					\
+-    /usr/local/bin/setuidgid smelog	\
+-    /usr/local/bin/multilog t s5000000	\
++status=`/sbin/e-smith/config getprop qpsmtpd qplogsumm`
++
++if [ -z $status ]; then 
++ status="disabled" 
++fi
++
++if [ $status = "enabled" ]; then
++ exec                                   \
++    /usr/local/bin/setuidgid smelog     \
++    /usr/local/bin/multilog t s5000000  \
+     !/usr/local/bin/qplogsumm.pl /var/log/qpsmtpd
++else
++ exec                                   \
++    /usr/local/bin/setuidgid smelog     \
++    /usr/local/bin/multilog t s5000000  \
++    /var/log/qpsmtpd
++fi
++
