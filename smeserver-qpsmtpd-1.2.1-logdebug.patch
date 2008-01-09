@@ -1,0 +1,29 @@
+diff -Nur -x '*.orig' -x '*.rej' smeserver-qpsmtpd-1.2.1/root/usr/share/qpsmtpd/plugins/check_smtp_forward mezzanine_patched_smeserver-qpsmtpd-1.2.1/root/usr/share/qpsmtpd/plugins/check_smtp_forward
+--- smeserver-qpsmtpd-1.2.1/root/usr/share/qpsmtpd/plugins/check_smtp_forward	2008-01-09 12:04:23.000000000 +1100
++++ mezzanine_patched_smeserver-qpsmtpd-1.2.1/root/usr/share/qpsmtpd/plugins/check_smtp_forward	2008-01-09 12:03:28.000000000 +1100
+@@ -42,7 +42,7 @@
+ 
+     $self->{_smtp_host}{$host} = $server;
+ 
+-    $self->log(LOGINFO, "$host: $server");
++    $self->log(LOGDEBUG, "$host: $server");
+   }
+ }
+ 
+@@ -56,7 +56,7 @@
+   ($server, $port) = split(/:/, $server);
+   $port ||= 25;
+ 
+-  $self->log(LOGINFO, "Checking $recipient on $server:$port");
++  $self->log(LOGDEBUG, "Checking $recipient on $server:$port");
+ 
+   my $smtp = Net::SMTP->new(
+                             $server,
+@@ -91,6 +91,6 @@
+   $smtp->quit();
+   $rc = $smtp->code;
+ 
+-  $self->log(LOGINFO, "$server would accept message to $recipient");
++  $self->log(LOGDEBUG, "$server would accept message to $recipient");
+   return DECLINED;	# Internal mail server is happy
+ }
