@@ -2,7 +2,7 @@ Summary: SME Server qpsmtpd module
 %define name smeserver-qpsmtpd
 Name: %{name}
 %define version 1.2.1
-%define release 51
+%define release 52
 Version: %{version}
 Release: %{release}%{?dist}
 License: GPL
@@ -49,6 +49,7 @@ Patch37: smeserver-qpsmtpd-1.2.1-badrcptto_empty_local.patch
 Patch38: smeserver-qpsmtpd-1.2.1-templatebegin.patch
 Patch39: smeserver-qpsmtpd-1.2.1-qplogsummStatus.patch
 Patch40: smeserver-qpsmtpd-1.2.1-logdebug.patch
+Patch41: smeserver-qpsmtpd-1.2.1-dividezerofix.patch
 BuildRoot: /var/tmp/%{name}-%{version}-%{release}-buildroot
 Requires: qpsmtpd >= 0.40
 Requires: perl(Mail::DKIM)
@@ -79,6 +80,9 @@ AutoReqProv: no
 SME Server qpsmtpd smtpd module
 
 %changelog
+* Thu Jan 10 2008 Gavin Weight <gweight@gmail.com>1.2.1-52
+- Fix divide by zero error on log rotate. [SME: 3620]
+
 * Wed Jan 09 2008 Stephen Noble <support@dungog.net>1.2.1-51
 - check_smtp_forward changed from loginfo to logdebug [SME: 3471]
 
@@ -689,6 +693,7 @@ SME Server qpsmtpd smtpd module
 %patch38 -p1
 %patch39 -p1
 %patch40 -p1
+%patch41 -p1
 
 %build
 perl createlinks
