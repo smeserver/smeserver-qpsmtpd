@@ -1,0 +1,11 @@
+diff -Nur -x '*.orig' -x '*.rej' smeserver-qpsmtpd-1.2.1/root/usr/local/bin/qplogsumm.pl mezzanine_patched_smeserver-qpsmtpd-1.2.1/root/usr/local/bin/qplogsumm.pl
+--- smeserver-qpsmtpd-1.2.1/root/usr/local/bin/qplogsumm.pl	2008-01-10 20:20:43.000000000 +0000
++++ mezzanine_patched_smeserver-qpsmtpd-1.2.1/root/usr/local/bin/qplogsumm.pl	2008-01-10 20:19:13.000000000 +0000
+@@ -135,6 +135,7 @@
+ #
+ 
+ my $current_elapsed = tai64diff($last_timestamp, $first_timestamp);
++exit 0 if ($current_elapsed == 0);
+ 
+ printf "#
+ # Most recent logfile
