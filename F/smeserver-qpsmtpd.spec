@@ -80,14 +80,14 @@ AutoReqProv: no
 SME Server qpsmtpd smtpd module
 
 %changelog
-* Thu Jan 10 2008 Gavin Weight <gweight@gmail.com>1.2.1-52
+* Thu Jan 10 2008 Gavin Weight <gweight@gmail.com> 1.2.1-52
 - Fix divide by zero error on log rotate. [SME: 3620]
 
-* Wed Jan 09 2008 Stephen Noble <support@dungog.net>1.2.1-51
+* Wed Jan 09 2008 Stephen Noble <support@dungog.net> 1.2.1-51
 - check_smtp_forward changed from loginfo to logdebug [SME: 3471]
 
 * Mon Jan 7 2008 Stephen Noble <support@dungog.net> 1.2.1-50
-- disable qplogsumm by deafult [SME: 2333]
+- disable qplogsumm by deafult [SME: 3727]
 
 * Mon Jan 7 2008 Stephen Noble <support@dungog.net> 1.2.1-49
 - rename template-begin fragments [SME: 2333]
