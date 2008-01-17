@@ -92,7 +92,7 @@ SME Server qpsmtpd smtpd module
 * Mon Jan 7 2008 Stephen Noble <support@dungog.net> 1.2.1-49
 - rename template-begin fragments [SME: 2333]
 
-* Mon Oct 29 2007 Charlie Brady <charlie_brady@mitel.com>
+* Mon Oct 29 2007 Charlie Brady <charlie_brady@mitel.com> 1.2.1-48
 - Add badrcptto_pattern rule to block "null" recipient addresses.
   [SME: 3476]
 
