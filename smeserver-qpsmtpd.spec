@@ -2,7 +2,7 @@ Summary: SME Server qpsmtpd module
 %define name smeserver-qpsmtpd
 Name: %{name}
 %define version 1.2.1
-%define release 52
+%define release 53
 Version: %{version}
 Release: %{release}%{?dist}
 License: GPL
@@ -80,19 +80,22 @@ AutoReqProv: no
 SME Server qpsmtpd smtpd module
 
 %changelog
-* Thu Jan 10 2008 Gavin Weight <gweight@gmail.com>1.2.1-52
+* Tue Jan 29 2008 Filippo Carletti <filippo.carletti@gmail.com> 1.2.1-53
+- Enable auth plugin for local connections. [SME: 2631]
+
+* Thu Jan 10 2008 Gavin Weight <gweight@gmail.com> 1.2.1-52
 - Fix divide by zero error on log rotate. [SME: 3620]
 
-* Wed Jan 09 2008 Stephen Noble <support@dungog.net>1.2.1-51
+* Wed Jan 09 2008 Stephen Noble <support@dungog.net> 1.2.1-51
 - check_smtp_forward changed from loginfo to logdebug [SME: 3471]
 
 * Mon Jan 7 2008 Stephen Noble <support@dungog.net> 1.2.1-50
-- disable qplogsumm by deafult [SME: 2333]
+- disable qplogsumm by deafult [SME: 3727]
 
 * Mon Jan 7 2008 Stephen Noble <support@dungog.net> 1.2.1-49
 - rename template-begin fragments [SME: 2333]
 
-* Mon Oct 29 2007 Charlie Brady <charlie_brady@mitel.com>
+* Mon Oct 29 2007 Charlie Brady <charlie_brady@mitel.com> 1.2.1-48
 - Add badrcptto_pattern rule to block "null" recipient addresses.
   [SME: 3476]
 
@@ -727,7 +730,6 @@ mkdir -p $PEERS_CONFIG/0
 mkdir -p $PEERS_CONFIG/local
 
 DISABLE_LOCAL="
-05auth_cvm_unix_local
 10check_earlytalker
 12count_unrecognized_commands
 16require_resolvable_fromhost
