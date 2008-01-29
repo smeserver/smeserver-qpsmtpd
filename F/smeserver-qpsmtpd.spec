@@ -2,7 +2,7 @@ Summary: SME Server qpsmtpd module
 %define name smeserver-qpsmtpd
 Name: %{name}
 %define version 1.2.1
-%define release 52
+%define release 53
 Version: %{version}
 Release: %{release}%{?dist}
 License: GPL
@@ -80,6 +80,9 @@ AutoReqProv: no
 SME Server qpsmtpd smtpd module
 
 %changelog
+* Tue Jan 29 2008 Filippo Carletti <filippo.carletti@gmail.com> 1.2.1-53
+- Enable auth plugin for local connections. [SME: 2631]
+
 * Thu Jan 10 2008 Gavin Weight <gweight@gmail.com> 1.2.1-52
 - Fix divide by zero error on log rotate. [SME: 3620]
 
@@ -727,7 +730,6 @@ mkdir -p $PEERS_CONFIG/0
 mkdir -p $PEERS_CONFIG/local
 
 DISABLE_LOCAL="
-05auth_cvm_unix_local
 10check_earlytalker
 12count_unrecognized_commands
 16require_resolvable_fromhost
