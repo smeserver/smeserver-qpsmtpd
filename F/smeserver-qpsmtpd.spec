@@ -2,7 +2,7 @@ Summary: SME Server qpsmtpd module
 %define name smeserver-qpsmtpd
 Name: %{name}
 %define version 1.2.1
-%define release 53
+%define release 54
 Version: %{version}
 Release: %{release}%{?dist}
 License: GPL
@@ -50,6 +50,7 @@ Patch38: smeserver-qpsmtpd-1.2.1-templatebegin.patch
 Patch39: smeserver-qpsmtpd-1.2.1-qplogsummStatus.patch
 Patch40: smeserver-qpsmtpd-1.2.1-logdebug.patch
 Patch41: smeserver-qpsmtpd-1.2.1-dividezerofix.patch
+Patch42: smeserver-qpsmtpd-1.2.1-rblsbl.patch3
 BuildRoot: /var/tmp/%{name}-%{version}-%{release}-buildroot
 Requires: qpsmtpd >= 0.40
 Requires: perl(Mail::DKIM)
@@ -80,6 +81,9 @@ AutoReqProv: no
 SME Server qpsmtpd smtpd module
 
 %changelog
+* Thu Apr 17 2008 Gavin Weight <gweight@gmail.com> 1.2.1-54
+- Migrate ordb.net entries away. [SME: 4214]
+
 * Tue Jan 29 2008 Filippo Carletti <filippo.carletti@gmail.com> 1.2.1-53
 - Enable auth plugin for local connections. [SME: 2631]
 
@@ -697,6 +701,7 @@ SME Server qpsmtpd smtpd module
 %patch39 -p1
 %patch40 -p1
 %patch41 -p1
+%patch42 -p1
 
 %build
 perl createlinks
