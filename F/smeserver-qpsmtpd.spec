@@ -2,7 +2,7 @@ Summary: SME Server qpsmtpd module
 %define name smeserver-qpsmtpd
 Name: %{name}
 %define version 1.2.1
-%define release 54
+%define release 55
 Version: %{version}
 Release: %{release}%{?dist}
 License: GPL
@@ -51,6 +51,7 @@ Patch39: smeserver-qpsmtpd-1.2.1-qplogsummStatus.patch
 Patch40: smeserver-qpsmtpd-1.2.1-logdebug.patch
 Patch41: smeserver-qpsmtpd-1.2.1-dividezerofix.patch
 Patch42: smeserver-qpsmtpd-1.2.1-rblsbl.patch3
+Patch43: smeserver-qpsmtpd-1.2.1-FixDisclaimerEmptyLines.patch
 BuildRoot: /var/tmp/%{name}-%{version}-%{release}-buildroot
 Requires: qpsmtpd >= 0.40
 Requires: perl(Mail::DKIM)
@@ -81,6 +82,9 @@ AutoReqProv: no
 SME Server qpsmtpd smtpd module
 
 %changelog
+* Wed Jul 23 2008 Gavin Weight <gweight@gmail.com> 1.2.1-55
+- Fix empty lines and add feature to specify disclaimer directory. [SME: 3244]
+
 * Thu Apr 17 2008 Gavin Weight <gweight@gmail.com> 1.2.1-54
 - Migrate ordb.net entries away. [SME: 4214]
 
@@ -702,6 +706,7 @@ SME Server qpsmtpd smtpd module
 %patch40 -p1
 %patch41 -p1
 %patch42 -p1
+%patch43 -p1
 
 %build
 perl createlinks
