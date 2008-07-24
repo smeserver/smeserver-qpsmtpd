@@ -1,5 +1,6 @@
---- /usr/share/qpsmtpd/plugins/disclaimer.orig	2008-02-27 10:34:17.000000000 +0100
-+++ /usr/share/qpsmtpd/plugins/disclaimer	2008-06-19 16:19:43.000000000 +0200
+diff -Nur -x '*.orig' -x '*.rej' smeserver-qpsmtpd-1.2.1/root/usr/share/qpsmtpd/plugins/disclaimer mezzanine_patched_smeserver-qpsmtpd-1.2.1/root/usr/share/qpsmtpd/plugins/disclaimer
+--- smeserver-qpsmtpd-1.2.1/root/usr/share/qpsmtpd/plugins/disclaimer	2008-07-23 20:44:44.000000000 +0100
++++ mezzanine_patched_smeserver-qpsmtpd-1.2.1/root/usr/share/qpsmtpd/plugins/disclaimer	2008-07-23 20:44:08.000000000 +0100
 @@ -10,6 +10,16 @@
    %{$self->{_args}} = @args;
  }
@@ -7,11 +8,11 @@
 +sub read_disclaimer {
 +  my ($self, $disclaimer_file) = @_;
 +  my $disclaimer_dir = $self->{_args}->{disclaimer_dir} || "/service/qpsmtpd/config/";
-+  return () unless open DISCLAIMER, "<$disclaimer_dir/$disclaimer_file";
++    return () unless open DISCLAIMER, "<$disclaimer_dir/$disclaimer_file";
 +  my @lines = <DISCLAIMER>;
 +  chomp @lines;
 +  close DISCLAIMER;
-+  return @lines;
++    return @lines;
 +}
 +
  sub hook_data_post {
