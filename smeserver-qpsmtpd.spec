@@ -83,7 +83,8 @@ SME Server qpsmtpd smtpd module
 
 %changelog
 * Wed Jul 23 2008 Gavin Weight <gweight@gmail.com> 1.2.1-55
-- Fix empty lines and add feature to specify disclaimer directory. [SME: 3244]
+- Fix empty lines and add feature to specify disclaimer directory.
+  (thanks, Federico Simoncelli). [SME: 3244]
 
 * Thu Apr 17 2008 Gavin Weight <gweight@gmail.com> 1.2.1-54
 - Migrate ordb.net entries away. [SME: 4214]
