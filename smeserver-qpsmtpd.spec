@@ -2,7 +2,7 @@ Summary: SME Server qpsmtpd module
 %define name smeserver-qpsmtpd
 Name: %{name}
 %define version 1.2.1
-%define release 55
+%define release 56
 Version: %{version}
 Release: %{release}%{?dist}
 License: GPL
@@ -52,6 +52,8 @@ Patch40: smeserver-qpsmtpd-1.2.1-logdebug.patch
 Patch41: smeserver-qpsmtpd-1.2.1-dividezerofix.patch
 Patch42: smeserver-qpsmtpd-1.2.1-rblsbl.patch3
 Patch43: smeserver-qpsmtpd-1.2.1-FixDisclaimerEmptyLines.patch
+Patch44: smeserver-qpsmtpd-1.2.1-spamhaus.patch
+Patch45: smeserver-qpsmtpd-1.2.1-securitysage.patch
 BuildRoot: /var/tmp/%{name}-%{version}-%{release}-buildroot
 Requires: qpsmtpd >= 0.40
 Requires: perl(Mail::DKIM)
@@ -82,6 +84,10 @@ AutoReqProv: no
 SME Server qpsmtpd smtpd module
 
 %changelog
+* Sun Oct 5 2008 Shad L. Lords <slords@mail.com> 1.2.1-56
+- Migrate sbl-xbl.spamhaus.org to zen.spamhaus.org [SME: 2116]
+- Remove blackhole.securitysage.com [SME: 4623]
+
 * Wed Jul 23 2008 Gavin Weight <gweight@gmail.com> 1.2.1-55
 - Fix empty lines and add feature to specify disclaimer directory.
   (thanks, Federico Simoncelli). [SME: 3244]
@@ -708,6 +714,8 @@ SME Server qpsmtpd smtpd module
 %patch41 -p1
 %patch42 -p1
 %patch43 -p1
+%patch44 -p1
+%patch45 -p1
 
 %build
 perl createlinks
