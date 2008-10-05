@@ -2,7 +2,7 @@ Summary: SME Server qpsmtpd module
 %define name smeserver-qpsmtpd
 Name: %{name}
 %define version 1.2.1
-%define release 56
+%define release 57
 Version: %{version}
 Release: %{release}%{?dist}
 License: GPL
@@ -84,6 +84,9 @@ AutoReqProv: no
 SME Server qpsmtpd smtpd module
 
 %changelog
+* Sun Oct 5 2008 Shad L. Lords <slords@mail.com> 1.2.1-57
+- Fix migrate fragment for zen.spamhaus.org [SME: 2116]
+
 * Sun Oct 5 2008 Shad L. Lords <slords@mail.com> 1.2.1-56
 - Migrate sbl-xbl.spamhaus.org to zen.spamhaus.org [SME: 2116]
 - Remove blackhole.securitysage.com [SME: 4623]

@@ -11,7 +11,7 @@
 +    return unless $qpsmtpd;
 +    return unless $qpsmtpd->prop('RBLList');
 +
-+    @rbl = $qpsmtpd->prop('RBLList');
++    @rbl = split /[,:]/, $qpsmtpd->prop('RBLList');
 +    if ( grep { /^sbl-xbl.spamhaus.org$/ } @rbl ) {
 +        @rbl = grep { !/^sbl-xbl.spamhaus.org$/ } @rbl;
 +        push @rbl, 'zen.spamhaus.org';
