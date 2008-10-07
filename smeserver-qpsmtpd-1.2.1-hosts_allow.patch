@@ -1,9 +1,0 @@
-diff -Nur -x '*.orig' -x '*.rej' smeserver-qpsmtpd-1.2.1/root/var/service/qpsmtpd/config/plugins mezzanine_patched_smeserver-qpsmtpd-1.2.1/root/var/service/qpsmtpd/config/plugins
---- smeserver-qpsmtpd-1.2.1/root/var/service/qpsmtpd/config/plugins	2007-09-06 18:27:14.000000000 -0400
-+++ mezzanine_patched_smeserver-qpsmtpd-1.2.1/root/var/service/qpsmtpd/config/plugins	2007-09-06 18:24:28.000000000 -0400
-@@ -3,4 +3,5 @@
- #
- # Plugins are now loaded by the peers plugin from config/peers/*
- #------------------------------------------------------------
-+hosts_allow
- peers
