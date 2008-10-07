@@ -1,59 +1,15 @@
+# $Id: smeserver-qpsmtpd.spec,v 1.22 2008/10/07 15:06:55 slords Exp $
+
 Summary: SME Server qpsmtpd module
 %define name smeserver-qpsmtpd
 Name: %{name}
-%define version 1.2.1
-%define release 57
+%define version 2.2.0
+%define release 1
 Version: %{version}
 Release: %{release}%{?dist}
 License: GPL
 Group: Networking/Daemons
 Source: %{name}-%{version}.tar.gz
-Patch0: smeserver-qpsmtpd-1.2.1-LiteralIP.patch
-Patch1: smeserver-qpsmtpd-1.2.1-badrcptto-hosts.patch
-Patch2: smeserver-qpsmtpd-1.2.1-check_smtp_forward.patch
-Patch3: smeserver-qpsmtpd-1.2.1-enable_check_smtp_forward.patch
-Patch4: smeserver-qpsmtpd-1.2.1-bcc_mode.patch
-Patch5: smeserver-qpsmtpd-1.2.1-peers_plugin.patch
-Patch6: smeserver-qpsmtpd-1.2.1-peers_plugin.patch2
-Patch7: smeserver-qpsmtpd-1.2.1-usepeers.patch 
-Patch8: smeserver-qpsmtpd-1.2.1-usepeers.patch2
-Patch9: smeserver-qpsmtpd-1.2.1-rcpthosts_regenerated.patch
-Patch10: smeserver-qpsmtpd-1.2.1-mergetnef2mime.patch
-Patch11: smeserver-qpsmtpd-1.2.1-usepeers.patch3
-Patch12: smeserver-qpsmtpd-1.2.1-usepeers.patch4
-Patch13: smeserver-qpsmtpd-1.2.1-control1.patch
-Patch14: smeserver-qpsmtpd-1.2.1-control1.patch3
-Patch15: smeserver-qpsmtpd-1.2.1-peersinit.patch
-Patch16: smeserver-qpsmtpd-1.2.1-rblsbl.patch
-Patch17: smeserver-qpsmtpd-1.2.1-peersauth.patch
-Patch18: smeserver-qpsmtpd-1.2.1-peersauth.patch2
-Patch19: smeserver-qpsmtpd-1.2.1-badmailfrom.patch
-Patch20: smeserver-qpsmtpd-1.2.1-nowhitelist.patch
-Patch21: smeserver-qpsmtpd-1.2.1-dkim.patch
-Patch22: smeserver-qpsmtpd-1.2.1-keeptnef.patch
-Patch23: smeserver-qpsmtpd-1.2.1-softlimit.patch
-Patch24: smeserver-qpsmtpd-1.2.1-rcpthost.patch
-Patch25: smeserver-qpsmtpd-1.2.1-logterse.patch
-Patch26: smeserver-qpsmtpd-1.2.1-logterse_stats.patch
-Patch27: smeserver-qpsmtpd-1.2.1-qplogsumm.patch
-Patch28: smeserver-qpsmtpd-1.2.1-logterse.patch2
-Patch29: smeserver-qpsmtpd-1.2.1-qpsmtpd40.patch
-Patch30: smeserver-qpsmtpd-1.2.1-qpsmtpd40.patch2
-Patch31: smeserver-qpsmtpd-1.2.1-disclaimer.patch
-Patch32: smeserver-qpsmtpd-1.2.1-disclaimer.patch2
-Patch33: smeserver-qpsmtpd-1.2.1-rblsbl.patch2
-Patch34: smeserver-qpsmtpd-1.2.1-hosts_allow.patch
-Patch35: smeserver-qpsmtpd-1.2.1-dnsbl_disconnect.patch
-Patch36: smeserver-qpsmtpd-1.2.1-timeouts.patch
-Patch37: smeserver-qpsmtpd-1.2.1-badrcptto_empty_local.patch
-Patch38: smeserver-qpsmtpd-1.2.1-templatebegin.patch
-Patch39: smeserver-qpsmtpd-1.2.1-qplogsummStatus.patch
-Patch40: smeserver-qpsmtpd-1.2.1-logdebug.patch
-Patch41: smeserver-qpsmtpd-1.2.1-dividezerofix.patch
-Patch42: smeserver-qpsmtpd-1.2.1-rblsbl.patch3
-Patch43: smeserver-qpsmtpd-1.2.1-FixDisclaimerEmptyLines.patch
-Patch44: smeserver-qpsmtpd-1.2.1-spamhaus.patch
-Patch45: smeserver-qpsmtpd-1.2.1-securitysage.patch
 BuildRoot: /var/tmp/%{name}-%{version}-%{release}-buildroot
 Requires: qpsmtpd >= 0.40
 Requires: perl(Mail::DKIM)
@@ -84,6 +40,9 @@ AutoReqProv: no
 SME Server qpsmtpd smtpd module
 
 %changelog
+* Tue Oct 7 2008 Shad L. Lords <slords@mail.com> 2.2.0-1.sme
+- Roll new stream to separate sme7/sme8 trees [SME: 4633]
+
 * Sun Oct 5 2008 Shad L. Lords <slords@mail.com> 1.2.1-57
 - Fix migrate fragment for zen.spamhaus.org [SME: 2116]
 
@@ -673,52 +632,6 @@ SME Server qpsmtpd smtpd module
 
 %prep
 %setup
-%patch0 -p1
-%patch1 -p1
-%patch2 -p1
-%patch3 -p1
-%patch4 -p1
-%patch5 -p1
-%patch6 -p1
-%patch7 -p1
-%patch8 -p1
-%patch9 -p1
-%patch10 -p1
-%patch11 -p1
-%patch12 -p1
-%patch13 -p1
-%patch14 -p1
-%patch15 -p1
-%patch16 -p1
-%patch17 -p1
-%patch18 -p1
-%patch19 -p1
-%patch20 -p1
-%patch21 -p1
-%patch22 -p1
-%patch23 -p1
-%patch24 -p1
-%patch25 -p1
-%patch26 -p1
-%patch27 -p1
-%patch28 -p1
-%patch29 -p1
-%patch30 -p1
-%patch31 -p1
-%patch32 -p1
-%patch33 -p1
-%patch34 -p1
-%patch35 -p1
-%patch36 -p1
-%patch37 -p1
-%patch38 -p1
-%patch39 -p1
-%patch40 -p1
-%patch41 -p1
-%patch42 -p1
-%patch43 -p1
-%patch44 -p1
-%patch45 -p1
 
 %build
 perl createlinks

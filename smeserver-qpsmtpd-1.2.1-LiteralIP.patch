@@ -1,9 +1,0 @@
-diff -Nur -x '*.orig' -x '*.rej' smeserver-qpsmtpd-1.2.1/root/etc/e-smith/templates/var/qmail/control/rcpthosts/12LiteralIP mezzanine_patched_smeserver-qpsmtpd-1.2.1/root/etc/e-smith/templates/var/qmail/control/rcpthosts/12LiteralIP
---- smeserver-qpsmtpd-1.2.1/root/etc/e-smith/templates/var/qmail/control/rcpthosts/12LiteralIP	1970-01-01 10:00:00.000000000 +1000
-+++ mezzanine_patched_smeserver-qpsmtpd-1.2.1/root/etc/e-smith/templates/var/qmail/control/rcpthosts/12LiteralIP	2006-07-01 09:14:56.980727035 +1000
-@@ -0,0 +1,5 @@
-+{
-+    return "" unless (defined $ExternalIP);
-+
-+    return "[$ExternalIP]";
-+}
