@@ -1,0 +1,104 @@
+diff -up smeserver-qpsmtpd-2.0.0/root/usr/share/qpsmtpd/plugins/peers.qpsmtpd83 smeserver-qpsmtpd-2.0.0/root/usr/share/qpsmtpd/plugins/peers
+--- smeserver-qpsmtpd-2.0.0/root/usr/share/qpsmtpd/plugins/peers.qpsmtpd83	2009-10-29 14:03:00.000000000 -0600
++++ smeserver-qpsmtpd-2.0.0/root/usr/share/qpsmtpd/plugins/peers	2009-10-29 14:02:37.000000000 -0600
+@@ -54,7 +54,7 @@ sub init {
+            if (-e "$dir/$plugin") {
+              Qpsmtpd::Plugin->compile($plugin_name, $package,
+                "$dir/$plugin", $self->{_test_mode}, $plugin);
+-             $self->log(LOGDEBUG, "Loading $plugin_line from $dir/$plugin")
++             Qpsmtpd->varlog(LOGDEBUG, "init", "peers", "Loading $plugin_line from $dir/$plugin")
+                unless $plugin_line =~ /logging/;
+              last PLUGIN_DIR;
+            }
+@@ -69,10 +69,8 @@ sub init {
+ sub _peer_plugins {
+    my $qp = shift;
+    my $config = shift;
+-   $qp->{hooks} = {};
+ 
+    my @plugins = $qp->config($config);
+-   unshift @plugins, "peers $config";
+    my @loaded;
+ 
+    for my $plugin_line (@plugins) {
+diff -up smeserver-qpsmtpd-2.0.0/root/var/service/qpsmtpd/config/plugins.qpsmtpd83 smeserver-qpsmtpd-2.0.0/root/var/service/qpsmtpd/config/plugins
+--- smeserver-qpsmtpd-2.0.0/root/var/service/qpsmtpd/config/plugins.qpsmtpd83	2008-10-07 09:02:36.000000000 -0600
++++ smeserver-qpsmtpd-2.0.0/root/var/service/qpsmtpd/config/plugins	2009-10-29 13:50:03.000000000 -0600
+@@ -5,3 +5,4 @@
+ #------------------------------------------------------------
+ hosts_allow
+ peers
++tls ssl/cert.pem ssl/cert.pem ssl/cert.pem
+diff -up smeserver-qpsmtpd-2.0.0/root/var/service/qpsmtpd/config/tls_before_auth.qpsmtpd83 smeserver-qpsmtpd-2.0.0/root/var/service/qpsmtpd/config/tls_before_auth
+--- smeserver-qpsmtpd-2.0.0/root/var/service/qpsmtpd/config/tls_before_auth.qpsmtpd83	2009-10-29 13:51:39.000000000 -0600
++++ smeserver-qpsmtpd-2.0.0/root/var/service/qpsmtpd/config/tls_before_auth	2009-10-29 13:51:39.000000000 -0600
+@@ -0,0 +1 @@
++1
+diff -up smeserver-qpsmtpd-2.0.0/root/var/service/sqpsmtpd/run.qpsmtpd83 smeserver-qpsmtpd-2.0.0/root/var/service/sqpsmtpd/run
+--- smeserver-qpsmtpd-2.0.0/root/var/service/sqpsmtpd/run.qpsmtpd83	2006-02-05 07:38:30.000000000 -0700
++++ smeserver-qpsmtpd-2.0.0/root/var/service/sqpsmtpd/run	2009-10-29 13:48:34.000000000 -0600
+@@ -1,37 +1,47 @@
+ #!/bin/sh
+ #----------------------------------------------------------------------
+-# copyright (C) 1999-2003 Mitel Networks Corporation
+-# 
++# copyright (C) 1999-2005 Mitel Networks Corporation
++# Copyright (C) 2005-2006 Gordon Rowell <gordonr@gormand.com.au>
++#
+ # This program is free software; you can redistribute it and/or modify
+ # it under the terms of the GNU General Public License as published by
+ # the Free Software Foundation; either version 2 of the License, or
+ # (at your option) any later version.
+-#         
++#
+ # This program is distributed in the hope that it will be useful,
+ # but WITHOUT ANY WARRANTY; without even the implied warranty of
+ # MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ # GNU General Public License for more details.
+-#         
++#
+ # You should have received a copy of the GNU General Public License
+ # along with this program; if not, write to the Free Software
+ # Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307  USA
+-# 
+-# Technical support for this program is available from Mitel Networks 
+-# Please visit our web site www.mitel.com/sme/ for details.
+ #----------------------------------------------------------------------
+ 
+ [ -f ./runenv ] && . ./runenv
+ 
+ export QPSMTPD_CONFIG=/var/service/qpsmtpd/config
+ 
+-exec 2>&1
+-exec /usr/bin/tcpsvd \
+-    -v \
+-    -i ../qpsmtpd/peers \
+-    -c ${INSTANCES:-10} \
+-    -C ${INSTANCES_PER_IP:-5}:'421 per host concurrency limit reached\r\n' \
+-    -l ${TCPLOCALHOST:-0} \
+-    ${LISTENIP:-0} \
+-    ${PORT:-465} \
+-    ./sqpsmtpd
++../qpsmtpd/control/1
+ 
++exec /usr/local/bin/softlimit -d ${SOFTLIMIT:-25000000} -s ${SOFTLIMIT:-25000000} -l ${SOFTLIMIT:-25000000} \
++  /usr/bin/qpsmtpd-forkserver \
++	-u qpsmtpd \
++	-l 0.0.0.0 \
++	-p ${PORT:-465} \
++	-c ${INSTANCES:-40} \
++	-m ${INSTANCES_PER_IP:-5} \
++	2>&1
++
++#sub usage {
++#        print <<"EOT";
++#usage: qpsmtpd-forkserver [ options ]
++# -l, --listen-address addr : listen on a specific address; default 0.0.0.0
++# -p, --port P              : listen on a specific port; default 2525
++# -c, --limit-connections N : limit concurrent connections to N; default 15
++# -u, --user U              : run as a particular user (defualt 'smtpd')
++# -m, --max-from-ip M       : limit connections from a single IP; default 5
++#EOT
++#        exit 0;
++#}
++#

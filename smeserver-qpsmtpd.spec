@@ -1,17 +1,18 @@
-# $Id: smeserver-qpsmtpd.spec,v 1.22 2008/10/07 15:06:55 slords Exp $
+# $Id: smeserver-qpsmtpd.spec,v 1.23 2009/10/29 20:27:16 slords Exp $
 
 Summary: SME Server qpsmtpd module
 %define name smeserver-qpsmtpd
 Name: %{name}
 %define version 2.2.0
-%define release 1
+%define release 2
 Version: %{version}
 Release: %{release}%{?dist}
 License: GPL
 Group: Networking/Daemons
 Source: %{name}-%{version}.tar.gz
+Patch1: smeserver-qpsmtpd-2.2.0-qpsmtpd83.patch
 BuildRoot: /var/tmp/%{name}-%{version}-%{release}-buildroot
-Requires: qpsmtpd >= 0.40
+Requires: qpsmtpd >= 0.83
 Requires: perl(Mail::DKIM)
 Requires: perl(Mail::DKIM::DkSignature)
 Requires: daemontools
@@ -40,6 +41,10 @@ AutoReqProv: no
 SME Server qpsmtpd smtpd module
 
 %changelog
+* Thu Oct 29 2009 Shad L. Lords <slords@mail.com> 2.2.0-2.sme
+- Add compatibility with qpsmtpd 0.83 [SME: 5543]
+- Add tls to base config [SME: 1076]
+
 * Tue Oct 7 2008 Shad L. Lords <slords@mail.com> 2.2.0-1.sme
 - Roll new stream to separate sme7/sme8 trees [SME: 4633]
 
@@ -632,6 +637,7 @@ SME Server qpsmtpd smtpd module
 
 %prep
 %setup
+%patch1 -p1
 
 %build
 perl createlinks
@@ -655,6 +661,7 @@ do
 done
 
 ln -s ../qpsmtpd/config root/var/service/sqpsmtpd/config
+ln -s ../qpsmtpd/ssl root/var/service/sqpsmtpd/ssl
 
 mkdir -p root/etc/e-smith/templates/var/service/qpsmtpd/peers/{0,local}
 touch root/etc/e-smith/templates/var/service/qpsmtpd/peers/{0,local}/template-begin
