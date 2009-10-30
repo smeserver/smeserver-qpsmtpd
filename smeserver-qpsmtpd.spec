@@ -1,10 +1,10 @@
-# $Id: smeserver-qpsmtpd.spec,v 1.23 2009/10/29 20:27:16 slords Exp $
+# $Id: smeserver-qpsmtpd.spec,v 1.24 2009/10/30 00:31:46 slords Exp $
 
 Summary: SME Server qpsmtpd module
 %define name smeserver-qpsmtpd
 Name: %{name}
 %define version 2.0.0
-%define release 2
+%define release 3
 Version: %{version}
 Release: %{release}%{?dist}
 License: GPL
@@ -41,6 +41,9 @@ AutoReqProv: no
 SME Server qpsmtpd smtpd module
 
 %changelog
+* Thu Oct 29 2009 Shad L. Lords <slords@mail.com> 2.0.0-3.sme
+- Add hooks cleanout back in in so auth works.
+
 * Thu Oct 29 2009 Shad L. Lords <slords@mail.com> 2.0.0-2.sme
 - Add compatibility with qpsmtpd 0.83 [SME: 5543]
 - Add tls to base config [SME: 1076]
