@@ -1,5 +1,5 @@
-diff -up smeserver-qpsmtpd-2.0.0/root/usr/share/qpsmtpd/plugins/peers.t smeserver-qpsmtpd-2.0.0/root/usr/share/qpsmtpd/plugins/peers
---- smeserver-qpsmtpd-2.0.0/root/usr/share/qpsmtpd/plugins/peers.t	2008-10-07 09:02:36.000000000 -0600
+diff -up smeserver-qpsmtpd-2.0.0/root/usr/share/qpsmtpd/plugins/peers.qpsmtpd83 smeserver-qpsmtpd-2.0.0/root/usr/share/qpsmtpd/plugins/peers
+--- smeserver-qpsmtpd-2.0.0/root/usr/share/qpsmtpd/plugins/peers.qpsmtpd83	2008-10-07 09:02:36.000000000 -0600
 +++ smeserver-qpsmtpd-2.0.0/root/usr/share/qpsmtpd/plugins/peers	2009-10-29 18:34:26.000000000 -0600
 @@ -54,7 +54,7 @@ sub init {
             if (-e "$dir/$plugin") {
@@ -10,9 +10,11 @@ diff -up smeserver-qpsmtpd-2.0.0/root/usr/share/qpsmtpd/plugins/peers.t smeserve
                 unless $plugin_line =~ /logging/;
               last PLUGIN_DIR;
             }
-@@ -69,7 +69,9 @@ sub init {
+@@ -68,8 +68,11 @@ sub init {
+ 
  sub _peer_plugins {
     my $qp = shift;
++   my $hook = shift;
     my $config = shift;
 -   $qp->{hooks} = {};
 +
@@ -21,15 +23,20 @@ diff -up smeserver-qpsmtpd-2.0.0/root/usr/share/qpsmtpd/plugins/peers.t smeserve
  
     my @plugins = $qp->config($config);
     unshift @plugins, "peers $config";
-@@ -79,6 +81,7 @@ sub _peer_plugins {
-      my $this_plugin = $qp->_load_plugin($plugin_line, $qp->plugin_dirs);
+@@ -80,6 +83,12 @@ sub _peer_plugins {
       push @loaded, $this_plugin if $this_plugin;
     }
-+   unshift @{$qp->hooks->{connect}}, @{$hooks->{connect}} if exists $hooks->{connect} && $hook eq 'set_hooks';
  
++   if ($hook eq 'set_hooks') {
++     foreach my $c (@{$hooks->{connect}}) {
++       unshift @{$qp->hooks->{connect}}, $c unless grep { $c->{name} eq $_->{name} } @{$hooks->{connect}};
++     }
++   }
++
     return @loaded;
  }
-@@ -91,13 +94,13 @@ sub hook_set_hooks {
+ 
+@@ -91,13 +100,13 @@ sub hook_set_hooks {
     my $client_ip = $qp->connection->remote_ip;
     while ($client_ip) {
       if (-f "config/peers/$client_ip") {
@@ -45,7 +52,7 @@ diff -up smeserver-qpsmtpd-2.0.0/root/usr/share/qpsmtpd/plugins/peers.t smeserve
       return (DECLINED);
     }
     return (DENY);
-@@ -106,6 +109,6 @@ sub hook_set_hooks {
+@@ -106,6 +115,6 @@ sub hook_set_hooks {
  sub hook_valid_auth {
     my ( $self, $transaction) = @_;
     my $qp = $self->qp;
@@ -60,6 +67,11 @@ diff -up smeserver-qpsmtpd-2.0.0/root/var/service/qpsmtpd/config/plugins.qpsmtpd
  #------------------------------------------------------------
  hosts_allow
  peers
++tls ssl/cert.pem ssl/cert.pem ssl/cert.pem
+diff -up smeserver-qpsmtpd-2.0.0/root/etc/e-smith/templates/var/service/qpsmtpd/config/plugins/04tls.qpsmtpd83 smeserver-qpsmtpd-2.0.0/root/etc/e-smith/templates/var/service/qpsmtpd/config/plugins/04tls
+--- smeserver-qpsmtpd-2.0.0/root/etc/e-smith/templates/var/service/qpsmtpd/config/plugins/04tls.qpsmtpd83	2009-10-29 21:03:34.000000000 -0600
++++ smeserver-qpsmtpd-2.0.0/root/etc/e-smith/templates/var/service/qpsmtpd/config/plugins/04tls	2009-10-29 21:03:28.000000000 -0600
+@@ -0,0 +1 @@
 +tls ssl/cert.pem ssl/cert.pem ssl/cert.pem
 diff -up smeserver-qpsmtpd-2.0.0/root/var/service/qpsmtpd/config/tls_before_auth.qpsmtpd83 smeserver-qpsmtpd-2.0.0/root/var/service/qpsmtpd/config/tls_before_auth
 --- smeserver-qpsmtpd-2.0.0/root/var/service/qpsmtpd/config/tls_before_auth.qpsmtpd83	2009-10-29 13:51:39.000000000 -0600
