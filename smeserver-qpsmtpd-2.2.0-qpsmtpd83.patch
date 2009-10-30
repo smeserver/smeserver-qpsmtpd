@@ -1,6 +1,6 @@
-diff -up smeserver-qpsmtpd-2.0.0/root/usr/share/qpsmtpd/plugins/peers.qpsmtpd83 smeserver-qpsmtpd-2.0.0/root/usr/share/qpsmtpd/plugins/peers
---- smeserver-qpsmtpd-2.0.0/root/usr/share/qpsmtpd/plugins/peers.qpsmtpd83	2009-10-29 14:03:00.000000000 -0600
-+++ smeserver-qpsmtpd-2.0.0/root/usr/share/qpsmtpd/plugins/peers	2009-10-29 14:02:37.000000000 -0600
+diff -up smeserver-qpsmtpd-2.0.0/root/usr/share/qpsmtpd/plugins/peers.t smeserver-qpsmtpd-2.0.0/root/usr/share/qpsmtpd/plugins/peers
+--- smeserver-qpsmtpd-2.0.0/root/usr/share/qpsmtpd/plugins/peers.t	2008-10-07 09:02:36.000000000 -0600
++++ smeserver-qpsmtpd-2.0.0/root/usr/share/qpsmtpd/plugins/peers	2009-10-29 18:34:26.000000000 -0600
 @@ -54,7 +54,7 @@ sub init {
             if (-e "$dir/$plugin") {
               Qpsmtpd::Plugin->compile($plugin_name, $package,
@@ -28,6 +28,30 @@ diff -up smeserver-qpsmtpd-2.0.0/root/usr/share/qpsmtpd/plugins/peers.qpsmtpd83 
 +   unshift @{$qp->hooks->{connect}}, @{$hooks->{connect}} if exists $hooks->{connect} && $hook eq 'set_hooks';
  
     return @loaded;
+ }
+@@ -91,13 +94,13 @@ sub hook_set_hooks {
+    my $client_ip = $qp->connection->remote_ip;
+    while ($client_ip) {
+      if (-f "config/peers/$client_ip") {
+-       _peer_plugins($qp, "peers/$client_ip");
++       _peer_plugins($qp, "set_hooks", "peers/$client_ip");
+        return (DECLINED);
+      }
+      $client_ip =~ s/\.?\d+$//; # strip off another 8 bits
+    }
+    if (-f "config/peers/0") {
+-     _peer_plugins($qp, "peers/0");
++     _peer_plugins($qp, "set_hooks", "peers/0");
+      return (DECLINED);
+    }
+    return (DENY);
+@@ -106,6 +109,6 @@ sub hook_set_hooks {
+ sub hook_valid_auth {
+    my ( $self, $transaction) = @_;
+    my $qp = $self->qp;
+-   _peer_plugins($qp, "peers/local") if (-f "config/peers/local");
++   _peer_plugins($qp, "valid_auth", "peers/local") if (-f "config/peers/local");
+    return (DECLINED);
  }
 diff -up smeserver-qpsmtpd-2.0.0/root/var/service/qpsmtpd/config/plugins.qpsmtpd83 smeserver-qpsmtpd-2.0.0/root/var/service/qpsmtpd/config/plugins
 --- smeserver-qpsmtpd-2.0.0/root/var/service/qpsmtpd/config/plugins.qpsmtpd83	2008-10-07 09:02:36.000000000 -0600
