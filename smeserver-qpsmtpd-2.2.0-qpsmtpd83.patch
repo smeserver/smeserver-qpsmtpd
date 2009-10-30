@@ -10,17 +10,25 @@ diff -up smeserver-qpsmtpd-2.0.0/root/usr/share/qpsmtpd/plugins/peers.qpsmtpd83 
                 unless $plugin_line =~ /logging/;
               last PLUGIN_DIR;
             }
-@@ -69,10 +69,8 @@ sub init {
+@@ -69,7 +69,9 @@ sub init {
  sub _peer_plugins {
     my $qp = shift;
     my $config = shift;
 -   $qp->{hooks} = {};
++
++   my $hooks;
++   $hooks->{$_} = delete $qp->hooks->{$_} foreach keys %{$qp->hooks};
  
     my @plugins = $qp->config($config);
--   unshift @plugins, "peers $config";
-    my @loaded;
+    unshift @plugins, "peers $config";
+@@ -79,6 +81,7 @@ sub _peer_plugins {
+      my $this_plugin = $qp->_load_plugin($plugin_line, $qp->plugin_dirs);
+      push @loaded, $this_plugin if $this_plugin;
+    }
++   unshift @{$qp->hooks->{connect}}, @{$hooks->{connect}} if exists $hooks->{connect} && $hook eq 'set_hooks';
  
-    for my $plugin_line (@plugins) {
+    return @loaded;
+ }
 diff -up smeserver-qpsmtpd-2.0.0/root/var/service/qpsmtpd/config/plugins.qpsmtpd83 smeserver-qpsmtpd-2.0.0/root/var/service/qpsmtpd/config/plugins
 --- smeserver-qpsmtpd-2.0.0/root/var/service/qpsmtpd/config/plugins.qpsmtpd83	2008-10-07 09:02:36.000000000 -0600
 +++ smeserver-qpsmtpd-2.0.0/root/var/service/qpsmtpd/config/plugins	2009-10-29 13:50:03.000000000 -0600
