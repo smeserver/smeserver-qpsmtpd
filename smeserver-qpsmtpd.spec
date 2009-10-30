@@ -1,10 +1,10 @@
-# $Id: smeserver-qpsmtpd.spec,v 1.24 2009/10/30 00:31:46 slords Exp $
+# $Id: smeserver-qpsmtpd.spec,v 1.25 2009/10/30 00:32:03 slords Exp $
 
 Summary: SME Server qpsmtpd module
 %define name smeserver-qpsmtpd
 Name: %{name}
 %define version 2.2.0
-%define release 2
+%define release 3
 Version: %{version}
 Release: %{release}%{?dist}
 License: GPL
