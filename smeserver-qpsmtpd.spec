@@ -1,16 +1,17 @@
-# $Id: smeserver-qpsmtpd.spec,v 1.25 2009/10/30 00:32:03 slords Exp $
+# $Id: smeserver-qpsmtpd.spec,v 1.26 2009/11/06 08:03:53 snetram Exp $
 
 Summary: SME Server qpsmtpd module
 %define name smeserver-qpsmtpd
 Name: %{name}
 %define version 2.2.0
-%define release 3
+%define release 4
 Version: %{version}
 Release: %{release}%{?dist}
 License: GPL
 Group: Networking/Daemons
 Source: %{name}-%{version}.tar.gz
 Patch1: smeserver-qpsmtpd-2.2.0-qpsmtpd83.patch
+Patch2: smeserver-qpsmtpd-2.2.0-spamsubject.patch
 BuildRoot: /var/tmp/%{name}-%{version}-%{release}-buildroot
 Requires: qpsmtpd >= 0.83
 Requires: perl(Mail::DKIM)
@@ -41,6 +42,9 @@ AutoReqProv: no
 SME Server qpsmtpd smtpd module
 
 %changelog
+* Fri Nov 6 2009 Jonathan Martens <smeserver-contribs@snetram.nl> 2.2.0-4.sme
+- Add qpsmtpd template fragment for custom SPAM subject prefix [SME: 5562]
+
 * Thu Oct 29 2009 Shad L. Lords <slords@mail.com> 2.0.0-3.sme
 - Add hooks cleanout back in in so auth works.
 
@@ -641,6 +645,7 @@ SME Server qpsmtpd smtpd module
 %prep
 %setup
 %patch1 -p1
+%patch2 -p1
 
 %build
 perl createlinks
