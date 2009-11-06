@@ -1,0 +1,17 @@
+diff -up smeserver-qpsmtpd-2.0.0/root/etc/e-smith/templates/var/service/qpsmtpd/config/subject_prefix/10subject.spamsubject smeserver-qpsmtpd-2.0.0/root/etc/e-smith/templates/var/service/qpsmtpd/config/subject_prefix/10subject
+--- smeserver-qpsmtpd-2.0.0/root/etc/e-smith/templates/var/service/qpsmtpd/config/subject_prefix/10subject.spamsubject	2009-11-06 08:32:22.000000000 +0100
++++ smeserver-qpsmtpd-2.0.0/root/etc/e-smith/templates/var/service/qpsmtpd/config/subject_prefix/10subject	2009-11-06 08:41:19.000000000 +0100
+@@ -0,0 +1,13 @@
++{
++
++    use esmith::ConfigDB;
++
++    my $db = esmith::ConfigDB->open_ro ||
++        die 'Could not open configuration database';
++
++    my $subject = $db->get_prop('spamassassin', 'Subject') || '';
++
++    $OUT = $subject;
++
++}
++
