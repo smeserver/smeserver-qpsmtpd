@@ -1,10 +1,10 @@
-# $Id: smeserver-qpsmtpd.spec,v 1.27 2009/11/06 08:11:11 snetram Exp $
+# $Id: smeserver-qpsmtpd.spec,v 1.28 2009/11/07 12:38:09 snetram Exp $
 
 Summary: SME Server qpsmtpd module
 %define name smeserver-qpsmtpd
 Name: %{name}
 %define version 2.2.0
-%define release 4
+%define release 5
 Version: %{version}
 Release: %{release}%{?dist}
 License: GPL
@@ -12,6 +12,7 @@ Group: Networking/Daemons
 Source: %{name}-%{version}.tar.gz
 Patch1: smeserver-qpsmtpd-2.2.0-qpsmtpd83.patch
 Patch2: smeserver-qpsmtpd-2.2.0-spamsubject.patch
+Patch3: smeserver-qpsmtpd-2.2.0-expand-template.patch
 BuildRoot: /var/tmp/%{name}-%{version}-%{release}-buildroot
 Requires: qpsmtpd >= 0.83
 Requires: perl(Mail::DKIM)
@@ -42,6 +43,9 @@ AutoReqProv: no
 SME Server qpsmtpd smtpd module
 
 %changelog
+* Sat Nov 7 2009 Jonathan Martens <smeserver-contribs@snetram.nl> 2.2.0-5.sme
+- Tie template fragment into event system to have it expanded [SME: 5031]
+
 * Fri Nov 6 2009 Jonathan Martens <smeserver-contribs@snetram.nl> 2.2.0-4.sme
 - Add qpsmtpd template fragment for custom SPAM subject prefix [SME: 5031]
 
@@ -646,6 +650,7 @@ SME Server qpsmtpd smtpd module
 %setup
 %patch1 -p1
 %patch2 -p1
+%patch3 -p1
 
 %build
 perl createlinks

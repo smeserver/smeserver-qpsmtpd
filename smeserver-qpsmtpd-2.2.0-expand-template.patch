@@ -1,0 +1,11 @@
+diff -up smeserver-qpsmtpd-2.2.0/createlinks.expand-template smeserver-qpsmtpd-2.2.0/createlinks
+--- smeserver-qpsmtpd-2.2.0/createlinks.expand-template	2008-10-07 17:05:18.000000000 +0200
++++ smeserver-qpsmtpd-2.2.0/createlinks	2009-11-07 12:52:30.000000000 +0100
+@@ -92,6 +92,7 @@ templates2events("$config/$_", qw(
+ 				plugin_dirs
+ 				smtpgreeting
+ 				spool_dir
++                                subject_prefix
+ 				invalid_resolvable_fromhost
+ 				timeout
+ 				timeoutsmtpd
