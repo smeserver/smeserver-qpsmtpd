@@ -1,0 +1,22 @@
+diff -up smeserver-qpsmtpd-2.2.0/root/etc/e-smith/db/configuration/defaults/qpsmtpd/RequireResolvableFromHost /dev/null
+--- smeserver-qpsmtpd-2.2.0/root/etc/e-smith/db/configuration/defaults/qpsmtpd/RequireResolvableFromHost	2006-02-05 15:38:30.000000000 +0100
++++ /dev/null	2009-12-27 12:31:14.000000000 +0100
+@@ -1 +0,0 @@
+-no
+diff -up smeserver-qpsmtpd-2.2.0/root/etc/e-smith/db/configuration/migrate/20RequireResolvableFromHost.RequireResolvableFromHost-default-enabled smeserver-qpsmtpd-2.2.0/root/etc/e-smith/db/configuration/migrate/20RequireResolvableFromHost
+--- smeserver-qpsmtpd-2.2.0/root/etc/e-smith/db/configuration/migrate/20RequireResolvableFromHost.RequireResolvableFromHost-default-enabled	2009-12-27 12:25:47.000000000 +0100
++++ smeserver-qpsmtpd-2.2.0/root/etc/e-smith/db/configuration/migrate/20RequireResolvableFromHost	2009-12-27 12:30:30.000000000 +0100
+@@ -0,0 +1,3 @@
++{
++    return unless $DB->get_prop_and_delete('qpsmtpd', 'RequireResolvableFromHost');
++}
+diff -up smeserver-qpsmtpd-2.2.0/root/etc/e-smith/templates/var/service/qpsmtpd/config/require_resolvable_fromhost/10RequireResolvableFromHost.RequireResolvableFromHost-default-enabled smeserver-qpsmtpd-2.2.0/root/etc/e-smith/templates/var/service/qpsmtpd/config/require_resolvable_fromhost/10RequireResolvableFromHost
+--- smeserver-qpsmtpd-2.2.0/root/etc/e-smith/templates/var/service/qpsmtpd/config/require_resolvable_fromhost/10RequireResolvableFromHost.RequireResolvableFromHost-default-enabled	2008-10-07 17:05:18.000000000 +0200
++++ smeserver-qpsmtpd-2.2.0/root/etc/e-smith/templates/var/service/qpsmtpd/config/require_resolvable_fromhost/10RequireResolvableFromHost	2009-12-27 12:23:10.000000000 +0100
+@@ -1,5 +1 @@
+-{
+-# use 0 to disable; anything else to enable.
+-
+-    return ($qpsmtpd{RequireResolvableFromHost} eq 'yes') ? 1 : 0;
+-}
++1
