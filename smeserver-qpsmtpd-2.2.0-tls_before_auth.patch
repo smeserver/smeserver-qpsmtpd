@@ -1,0 +1,30 @@
+diff -ruN smeserver-qpsmtpd-2.2.0.old/createlinks smeserver-qpsmtpd-2.2.0/createlinks
+--- smeserver-qpsmtpd-2.2.0.old/createlinks	2010-06-02 19:28:59.000000000 +0100
++++ smeserver-qpsmtpd-2.2.0/createlinks	2010-06-02 22:54:58.000000000 +0100
+@@ -96,6 +96,7 @@
+ 				invalid_resolvable_fromhost
+ 				timeout
+ 				timeoutsmtpd
++				tls_before_auth
+ 				));
+ templates2events("$config/badhelo", 'ip-change');
+ templates2events("$config/goodrcptto", qw(
+diff -ruN smeserver-qpsmtpd-2.2.0.old/root/etc/e-smith/db/configuration/defaults/qpsmtpd/TlsBeforeAuth smeserver-qpsmtpd-2.2.0/root/etc/e-smith/db/configuration/defaults/qpsmtpd/TlsBeforeAuth
+--- smeserver-qpsmtpd-2.2.0.old/root/etc/e-smith/db/configuration/defaults/qpsmtpd/TlsBeforeAuth	1970-01-01 01:00:00.000000000 +0100
++++ smeserver-qpsmtpd-2.2.0/root/etc/e-smith/db/configuration/defaults/qpsmtpd/TlsBeforeAuth	2010-06-02 22:37:42.000000000 +0100
+@@ -0,0 +1 @@
++1
+\ No newline at end of file
+diff -ruN smeserver-qpsmtpd-2.2.0.old/root/etc/e-smith/templates/var/service/qpsmtpd/config/tls_before_auth/10Auth smeserver-qpsmtpd-2.2.0/root/etc/e-smith/templates/var/service/qpsmtpd/config/tls_before_auth/10Auth
+--- smeserver-qpsmtpd-2.2.0.old/root/etc/e-smith/templates/var/service/qpsmtpd/config/tls_before_auth/10Auth	1970-01-01 01:00:00.000000000 +0100
++++ smeserver-qpsmtpd-2.2.0/root/etc/e-smith/templates/var/service/qpsmtpd/config/tls_before_auth/10Auth	2010-06-02 22:28:57.000000000 +0100
+@@ -0,0 +1,4 @@
++# The next line should be set to 0 if you want to offer AUTH without TLS
++{
++return $qpsmtpd{ TlsBeforeAuth };
++}
+diff -ruN smeserver-qpsmtpd-2.2.0.old/root/var/service/qpsmtpd/config/tls_before_auth smeserver-qpsmtpd-2.2.0/root/var/service/qpsmtpd/config/tls_before_auth
+--- smeserver-qpsmtpd-2.2.0.old/root/var/service/qpsmtpd/config/tls_before_auth	2010-06-02 19:28:59.000000000 +0100
++++ smeserver-qpsmtpd-2.2.0/root/var/service/qpsmtpd/config/tls_before_auth	1970-01-01 01:00:00.000000000 +0100
+@@ -1 +0,0 @@
+-1
