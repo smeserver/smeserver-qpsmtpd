@@ -1,10 +1,10 @@
-# $Id: smeserver-qpsmtpd.spec,v 1.31 2010/09/26 17:03:45 slords Exp $
+# $Id: smeserver-qpsmtpd.spec,v 1.32 2010/09/26 17:27:14 slords Exp $
 
 Summary: SME Server qpsmtpd module
 %define name smeserver-qpsmtpd
 Name: %{name}
 %define version 2.2.0
-%define release 8
+%define release 9
 Version: %{version}
 Release: %{release}%{?dist}
 License: GPL
@@ -16,6 +16,7 @@ Patch3: smeserver-qpsmtpd-2.2.0-expand-template.patch
 Patch4: smeserver-qpsmtpd-2.2.0-RequireResolvableFromHost-default-enabled.patch
 Patch5: smeserver-qpsmtpd-2.2.0-tls_before_auth.patch
 Patch6: smeserver-qpsmtpd-2.2.0-require_auth.patch
+Patch7: smeserver-qpsmtpd-2.2.0-ciphers.patch
 BuildRoot: /var/tmp/%{name}-%{version}-%{release}-buildroot
 Requires: qpsmtpd >= 0.83
 Requires: perl(Mail::DKIM)
@@ -46,6 +47,9 @@ AutoReqProv: no
 SME Server qpsmtpd smtpd module
 
 %changelog
+* Sun Sep 25 2010 Shad L. Lords <slords@mail.com> 2.2.0-9.sme
+- Make tls ciphers configurable [SME: 6141]
+
 * Sun Sep 25 2010 Shad L. Lords <slords@mail.com> 2.2.0-8.sme
 - Require auth for all relays (local too) [SME: 5575]
 
@@ -667,6 +671,7 @@ SME Server qpsmtpd smtpd module
 %patch4 -p1
 %patch5 -p1
 %patch6 -p1
+%patch7 -p1
 
 %build
 perl createlinks
