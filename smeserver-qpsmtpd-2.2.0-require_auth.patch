@@ -1,0 +1,32 @@
+diff -up smeserver-qpsmtpd-2.2.0/root/etc/e-smith/db/configuration/defaults/qpsmtpd/RelayRequiresAuth.require_auth smeserver-qpsmtpd-2.2.0/root/etc/e-smith/db/configuration/defaults/qpsmtpd/RelayRequiresAuth
+diff -up smeserver-qpsmtpd-2.2.0/root/etc/e-smith/templates/var/service/qpsmtpd/config/relayclients/80relayFromLocalNetwork.require_auth smeserver-qpsmtpd-2.2.0/root/etc/e-smith/templates/var/service/qpsmtpd/config/relayclients/80relayFromLocalNetwork
+--- smeserver-qpsmtpd-2.2.0/root/etc/e-smith/templates/var/service/qpsmtpd/config/relayclients/80relayFromLocalNetwork.require_auth	2005-08-19 15:31:01.000000000 -0600
++++ smeserver-qpsmtpd-2.2.0/root/etc/e-smith/templates/var/service/qpsmtpd/config/relayclients/80relayFromLocalNetwork	2010-09-26 10:58:27.000000000 -0600
+@@ -8,9 +8,13 @@
+     my $n = esmith::NetworksDB->open;
+     foreach my $network ($n->get_all_by_prop(type => 'network'))
+     {
+-        push(@prefixes,
+-            esmith::util::computeAllLocalNetworkPrefixes(
+-                $network->key, $network->prop('Mask')));
++        if ( (($qpsmtpd{'RelayRequiresAuth'} || 'enabled') eq 'disabled') or 
++             (($network->prop('RelayRequiresAuth') || 'enabled') eq 'disabled'))
++        {
++            push(@prefixes,
++                esmith::util::computeAllLocalNetworkPrefixes(
++                    $network->key, $network->prop('Mask')));
++        }
+     }
+ 
+     foreach my $prefix ( @prefixes )
+diff -up smeserver-qpsmtpd-2.2.0/root/etc/e-smith/templates/var/service/qpsmtpd/peers/local/RELAYCLIENT.require_auth smeserver-qpsmtpd-2.2.0/root/etc/e-smith/templates/var/service/qpsmtpd/peers/local/RELAYCLIENT
+--- smeserver-qpsmtpd-2.2.0/root/etc/e-smith/templates/var/service/qpsmtpd/peers/local/RELAYCLIENT.require_auth	2005-04-20 21:19:07.000000000 -0600
++++ smeserver-qpsmtpd-2.2.0/root/etc/e-smith/templates/var/service/qpsmtpd/peers/local/RELAYCLIENT	2010-09-26 10:57:10.000000000 -0600
+@@ -1 +1 @@
+-+RELAYCLIENT=
+++RELAYCLIENT{ $OUT = ($qpsmtpd{'RelayRequiresAuth'} || 'enabled') eq 'disabled' ? '=' : '' }
+diff -up smeserver-qpsmtpd-2.2.0/root/etc/e-smith/db/configuration/defaults/qpsmtpd/RelayRequiresAuth.require_auth smeserver-qpsmtpd-2.2.0/root/etc/e-smith/db/configuration/defaults/qpsmtpd/RelayRequiresAuth
+--- smeserver-qpsmtpd-2.2.0/root/etc/e-smith/db/configuration/defaults/qpsmtpd/RelayRequiresAuth.require_auth   2010-09-26 10:45:33.000000000 -0600
++++ smeserver-qpsmtpd-2.2.0/root/etc/e-smith/db/configuration/defaults/qpsmtpd/RelayRequiresAuth        2010-09-26 10:45:22.000000000 -0600
+@@ -0,0 +1 @@
++enabled
