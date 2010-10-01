@@ -1,0 +1,12 @@
+--- smeserver-qpsmtpd-2.2.0/root/etc/e-smith/templates/var/service/qpsmtpd/config/relayclients/80relayFromLocalNetwork.fix_relay_auth_for_local_net	2010-10-01 15:03:00.000000000 +0200
++++ smeserver-qpsmtpd-2.2.0/root/etc/e-smith/templates/var/service/qpsmtpd/config/relayclients/80relayFromLocalNetwork	2010-10-01 15:07:33.000000000 +0200
+@@ -1,8 +1,7 @@
+ {
+     use esmith::util;
+ 
+-    my @prefixes = esmith::util::computeAllLocalNetworkPrefixes($LocalIP,
+-                                                                $LocalNetmask);
++    my @prefixes = ();
+ 
+     require esmith::NetworksDB;
+     my $n = esmith::NetworksDB->open;
