@@ -1,0 +1,9 @@
+diff -up smeserver-qpsmtpd-2.2.0/root/etc/e-smith/templates/var/service/qpsmtpd/config/relayclients/10localhost.allow_fetchmail smeserver-qpsmtpd-2.2.0/root/etc/e-smith/templates/var/service/qpsmtpd/config/relayclients/10localhost
+--- smeserver-qpsmtpd-2.2.0/root/etc/e-smith/templates/var/service/qpsmtpd/config/relayclients/10localhost.allow_fetchmail	2005-04-25 02:16:11.000000000 -0600
++++ smeserver-qpsmtpd-2.2.0/root/etc/e-smith/templates/var/service/qpsmtpd/config/relayclients/10localhost	2010-10-04 10:37:59.000000000 -0600
+@@ -1,4 +1,5 @@
+ {
+     $OUT  = "127.0.0.1\n";
++    $OUT  = "127.0.0.\n";
+     $OUT .= "$LocalIP";
+ }
