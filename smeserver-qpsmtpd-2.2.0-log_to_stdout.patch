@@ -1,0 +1,44 @@
+diff -Nur -x '*.orig' -x '*.rej' smeserver-qpsmtpd-2.2.0/root/var/service/qpsmtpd/run mezzanine_patched_smeserver-qpsmtpd-2.2.0/root/var/service/qpsmtpd/run
+--- smeserver-qpsmtpd-2.2.0/root/var/service/qpsmtpd/run	2008-10-07 17:05:17.000000000 +0200
++++ mezzanine_patched_smeserver-qpsmtpd-2.2.0/root/var/service/qpsmtpd/run	2010-04-30 18:12:37.000000000 +0200
+@@ -18,6 +18,8 @@
+ # Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307  USA
+ #----------------------------------------------------------------------
+ 
++exec 2>&1
++
+ [ -f ./runenv ] && . ./runenv
+ 
+ export QPSMTPD_CONFIG=/var/service/qpsmtpd/config
+@@ -30,8 +32,7 @@
+ 	-l 0.0.0.0 \
+ 	-p ${PORT:-25} \
+ 	-c ${INSTANCES:-40} \
+-	-m ${INSTANCES_PER_IP:-5} \
+-	2>&1
++	-m ${INSTANCES_PER_IP:-5}
+ 
+ #sub usage {
+ #        print <<"EOT";
+diff -Nur -x '*.orig' -x '*.rej' smeserver-qpsmtpd-2.2.0/root/var/service/sqpsmtpd/run mezzanine_patched_smeserver-qpsmtpd-2.2.0/root/var/service/sqpsmtpd/run
+--- smeserver-qpsmtpd-2.2.0/root/var/service/sqpsmtpd/run	2010-04-30 18:12:48.000000000 +0200
++++ mezzanine_patched_smeserver-qpsmtpd-2.2.0/root/var/service/sqpsmtpd/run	2010-04-30 18:12:44.000000000 +0200
+@@ -18,6 +18,8 @@
+ # Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307  USA
+ #----------------------------------------------------------------------
+ 
++exec 2>&1
++
+ [ -f ./runenv ] && . ./runenv
+ 
+ export QPSMTPD_CONFIG=/var/service/qpsmtpd/config
+@@ -30,8 +32,7 @@
+ 	-l 0.0.0.0 \
+ 	-p ${PORT:-465} \
+ 	-c ${INSTANCES:-40} \
+-	-m ${INSTANCES_PER_IP:-5} \
+-	2>&1
++	-m ${INSTANCES_PER_IP:-5}
+ 
+ #sub usage {
+ #        print <<"EOT";
