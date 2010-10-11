@@ -1,10 +1,10 @@
-# $Id: smeserver-qpsmtpd.spec,v 1.34 2010/10/04 16:39:27 slords Exp $
+# $Id: smeserver-qpsmtpd.spec,v 1.35 2010/10/11 16:53:24 vip-ire Exp $
 
 Summary: SME Server qpsmtpd module
 %define name smeserver-qpsmtpd
 Name: %{name}
 %define version 2.2.0
-%define release 11
+%define release 12
 Version: %{version}
 Release: %{release}%{?dist}
 License: GPL
@@ -19,6 +19,7 @@ Patch6: smeserver-qpsmtpd-2.2.0-require_auth.patch
 Patch7: smeserver-qpsmtpd-2.2.0-ciphers.patch
 Patch8: smeserver-qpsmtpd-2.2.0-fix_relay_auth_for_local_net.patch
 Patch9: smeserver-qpsmtpd-2.2.0-allow_fetchmail.patch
+Patch10: smeserver-qpsmtpd-2.2.0-log_to_stdout.patch
 BuildRoot: /var/tmp/%{name}-%{version}-%{release}-buildroot
 Requires: qpsmtpd >= 0.83
 Requires: perl(Mail::DKIM)
@@ -49,6 +50,9 @@ AutoReqProv: no
 SME Server qpsmtpd smtpd module
 
 %changelog
+* Fri Oct 8 2010 Daniel Berteaud <daniel@firewall-services.com> 2.2.0-12
+- Log all the run script to stdout [SME: 5831]
+
 * Mon Oct 4 2010 Shad L. Lords <slords@mail.com> 2.2.0-11.sme
 - Allow relay from all local 127.0.0.x addresses [SME: 5575]
 
@@ -682,6 +686,7 @@ SME Server qpsmtpd smtpd module
 %patch7 -p1
 %patch8 -p1
 %patch9 -p1
+%patch10 -p1
 
 %build
 perl createlinks
