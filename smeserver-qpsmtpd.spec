@@ -1,10 +1,10 @@
-# $Id: smeserver-qpsmtpd.spec,v 1.35 2010/10/11 16:53:24 vip-ire Exp $
+# $Id: smeserver-qpsmtpd.spec,v 1.36 2010/10/14 21:41:14 vip-ire Exp $
 
 Summary: SME Server qpsmtpd module
 %define name smeserver-qpsmtpd
 Name: %{name}
 %define version 2.2.0
-%define release 12
+%define release 13
 Version: %{version}
 Release: %{release}%{?dist}
 License: GPL
@@ -20,6 +20,7 @@ Patch7: smeserver-qpsmtpd-2.2.0-ciphers.patch
 Patch8: smeserver-qpsmtpd-2.2.0-fix_relay_auth_for_local_net.patch
 Patch9: smeserver-qpsmtpd-2.2.0-allow_fetchmail.patch
 Patch10: smeserver-qpsmtpd-2.2.0-log_to_stdout.patch
+Patch11: smeserver-qpsmtpd-2.2.0-configure_num_of_log_file_to_keep.patch
 BuildRoot: /var/tmp/%{name}-%{version}-%{release}-buildroot
 Requires: qpsmtpd >= 0.83
 Requires: perl(Mail::DKIM)
@@ -50,6 +51,9 @@ AutoReqProv: no
 SME Server qpsmtpd smtpd module
 
 %changelog
+* Thu Oct 14 2010 Daniel Berteaud <daniel@firewall-services.com> 2.2.0-13
+- Read number of log files to keep from the DB [SME: 2862]
+
 * Fri Oct 8 2010 Daniel Berteaud <daniel@firewall-services.com> 2.2.0-12
 - Log all the run script to stdout [SME: 5831]
 
@@ -687,6 +691,7 @@ SME Server qpsmtpd smtpd module
 %patch8 -p1
 %patch9 -p1
 %patch10 -p1
+%patch11 -p1
 
 %build
 perl createlinks
